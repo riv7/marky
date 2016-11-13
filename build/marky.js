@@ -20763,7 +20763,16 @@ var _components = require('./components/components');
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var students20162017 = [{ grade: '2014/2015' }, { grade: '2015/2016' }, { grade: '2016/2017' }];
+var students20162017 = [{
+  grade: '2014/2015',
+  students: [{ name: 'Max Maier' }, { name: 'Walter Vogel' }, { name: 'Slash Roses' }]
+}, {
+  grade: '2015/2016',
+  students: [{ name: 'Timo Baumgartl' }, { name: 'Alexandru Maxim' }, { name: 'Christian Gentner' }]
+}, {
+  grade: '2016/2017',
+  students: [{ name: 'Kimi Räikkönen' }, { name: 'Sebastian Vettel' }, { name: 'Max Verstappen' }]
+}];
 
 ReactDOM.render(React.createElement(_components.FilterableStudentsTable, { studentsOfYear: students20162017 }), document.getElementById('react-application'));
 
@@ -20774,6 +20783,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.GradeRow = GradeRow;
+exports.StudentRow = StudentRow;
 exports.StudentsTable = StudentsTable;
 exports.SearchBar = SearchBar;
 exports.YearSelectionBar = YearSelectionBar;
@@ -20791,8 +20801,29 @@ function GradeRow(props) {
   );
 }
 
+function StudentRow(props) {
+  var student = props.student;
+
+  return React.createElement(
+    'span',
+    null,
+    student.name
+  );
+}
+
 function StudentsTable(props) {
   var studentsOfYear = props.studentsOfYear;
+
+
+  function createStudents(dat) {
+    return dat.students.map(function (student) {
+      return React.createElement(
+        'li',
+        { key: student.name },
+        React.createElement(StudentRow, { student: student })
+      );
+    });
+  };
 
   return React.createElement(
     'div',
@@ -20804,7 +20835,8 @@ function StudentsTable(props) {
         return React.createElement(
           'li',
           { key: data.grade },
-          React.createElement(GradeRow, { grade: data.grade })
+          React.createElement(GradeRow, { grade: data.grade }),
+          createStudents(data)
         );
       })
     )

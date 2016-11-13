@@ -6,14 +6,27 @@ export function GradeRow(props) {
   return <span>{grade}</span>;
 }
 
+export function StudentRow(props) {
+  const {student} = props;
+  return <span>{student.name}</span>;
+}
+
 export function StudentsTable(props) {
   const {studentsOfYear} = props;
+
+  function createStudents(dat) {return dat.students.map(student => (
+    <li key={student.name}>
+      <StudentRow student={student} />
+    </li>
+  ))};
+
   return (
     <div>
       <ul>
         {studentsOfYear.map(data => (
           <li key={data.grade}>
             <GradeRow grade={data.grade} />
+            {createStudents(data)}
           </li>
         ))}
       </ul>
