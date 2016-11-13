@@ -1,38 +1,15 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-class Form extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {value: ''};
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+import {FilterableStudentsTable} from './components/components';
 
-  handleChange(event) {
-    this.setState({value: event.target.value});
-  }
-
-  handleSubmit(event) {
-    alert('Text field value is: ' + this.state.value);
-  }
-
-  render() {
-    return (
-      <div>
-        <input type="text"
-          placeholder="Hello!"
-          value={this.state.value}
-          onChange={this.handleChange} />
-        <button onClick={this.handleSubmit}>
-          Submit
-        </button>
-      </div>
-    );
-  }
-}
+const students20162017 = [
+  {grade: '2014/2015'},
+  {grade: '2015/2016'},
+  {grade: '2016/2017'},
+];
 
 ReactDOM.render(
-  <Form />,
+  <FilterableStudentsTable studentsOfYear={students20162017} />,
   document.getElementById('react-application')
 );

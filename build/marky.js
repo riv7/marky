@@ -20758,63 +20758,103 @@ module.exports = require('./lib/React');
 },{"./lib/React":53}],172:[function(require,module,exports){
 'use strict';
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+var _components = require('./components/components');
 
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var Form = function (_React$Component) {
-  _inherits(Form, _React$Component);
+var students20162017 = [{ grade: '2014/2015' }, { grade: '2015/2016' }, { grade: '2016/2017' }];
 
-  function Form(props) {
-    _classCallCheck(this, Form);
+ReactDOM.render(React.createElement(_components.FilterableStudentsTable, { studentsOfYear: students20162017 }), document.getElementById('react-application'));
 
-    var _this = _possibleConstructorReturn(this, (Form.__proto__ || Object.getPrototypeOf(Form)).call(this, props));
+},{"./components/components":173,"react":171,"react-dom":27}],173:[function(require,module,exports){
+'use strict';
 
-    _this.state = { value: '' };
-    _this.handleChange = _this.handleChange.bind(_this);
-    _this.handleSubmit = _this.handleSubmit.bind(_this);
-    return _this;
-  }
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.GradeRow = GradeRow;
+exports.StudentsTable = StudentsTable;
+exports.SearchBar = SearchBar;
+exports.YearSelectionBar = YearSelectionBar;
+exports.FilterableStudentsTable = FilterableStudentsTable;
+var React = require('react');
+var ReactDOM = require('react-dom');
 
-  _createClass(Form, [{
-    key: 'handleChange',
-    value: function handleChange(event) {
-      this.setState({ value: event.target.value });
-    }
-  }, {
-    key: 'handleSubmit',
-    value: function handleSubmit(event) {
-      alert('Text field value is: ' + this.state.value);
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return React.createElement(
-        'div',
-        null,
-        React.createElement('input', { type: 'text',
-          placeholder: 'Hello!',
-          value: this.state.value,
-          onChange: this.handleChange }),
-        React.createElement(
-          'button',
-          { onClick: this.handleSubmit },
-          'Submit'
-        )
-      );
-    }
-  }]);
+function GradeRow(props) {
+  var grade = props.grade;
 
-  return Form;
-}(React.Component);
+  return React.createElement(
+    'span',
+    null,
+    grade
+  );
+}
 
-ReactDOM.render(React.createElement(Form, null), document.getElementById('react-application'));
+function StudentsTable(props) {
+  var studentsOfYear = props.studentsOfYear;
+
+  return React.createElement(
+    'div',
+    null,
+    React.createElement(
+      'ul',
+      null,
+      studentsOfYear.map(function (data) {
+        return React.createElement(
+          'li',
+          { key: data.grade },
+          React.createElement(GradeRow, { grade: data.grade })
+        );
+      })
+    )
+  );
+}
+
+function SearchBar() {
+  return React.createElement(
+    'form',
+    null,
+    React.createElement('input', { type: 'text', placeholder: 'Serach...' })
+  );
+}
+
+function YearSelectionBar() {
+  return React.createElement(
+    'form',
+    null,
+    React.createElement(
+      'select',
+      null,
+      React.createElement(
+        'option',
+        { value: '2014/2015' },
+        '2014/2015'
+      ),
+      React.createElement(
+        'option',
+        { value: '2015/2016' },
+        '2015/2016'
+      ),
+      React.createElement(
+        'option',
+        { value: '2016/2017' },
+        '2016/2017'
+      )
+    )
+  );
+}
+
+function FilterableStudentsTable(props) {
+  var studentsOfYear = props.studentsOfYear;
+
+  return React.createElement(
+    'div',
+    null,
+    React.createElement(YearSelectionBar, null),
+    React.createElement(SearchBar, null),
+    React.createElement(StudentsTable, { studentsOfYear: studentsOfYear })
+  );
+}
 
 },{"react":171,"react-dom":27}]},{},[172]);
