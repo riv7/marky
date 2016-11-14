@@ -3,32 +3,35 @@ var ReactDOM = require('react-dom');
 
 export function GradeRow(props) {
   const {grade} = props;
-  return <span>{grade}</span>;
+  return <li><span>{grade}</span></li>;
 }
 
 export function StudentRow(props) {
   const {student} = props;
-  return <span>{student.name}</span>;
+  return <li><span>{student.name}</span></li>;
 }
 
 export function StudentsTable(props) {
   const {studentsOfYear} = props;
 
-  function createStudents(dat) {return dat.students.map(student => (
-    <li key={student.name}>
-      <StudentRow student={student} />
-    </li>
-  ))};
+  function createStudentsTable(students) {
+    var rows = [];
+    students.forEach(gradeData => {
+      if (!gradeData.students.isEmpty) {
+        rows.push(<GradeRow grade={gradeData.grade} key={gradeData.grade} />);
+
+        gradeData.students.forEach(student => {
+          rows.push(<StudentRow student={student} key={student.name} />);
+        });
+      };
+    })
+    return rows;
+  }
 
   return (
     <div>
       <ul>
-        {studentsOfYear.map(data => (
-          <li key={data.grade}>
-            <GradeRow grade={data.grade} />
-            {createStudents(data)}
-          </li>
-        ))}
+        {createStudentsTable(studentsOfYear)}
       </ul>
     </div>
   );

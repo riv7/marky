@@ -5,7 +5,7 @@ import {FilterableStudentsTable} from './components/components';
 
 const students20162017 = [
   {
-    grade: '2014/2015',
+    grade: '7d',
     students: [
       {name:'Max Maier'},
       {name:'Walter Vogel'},
@@ -13,7 +13,7 @@ const students20162017 = [
     ]
   },
   {
-    grade: '2015/2016',
+    grade: '8a',
     students: [
       {name:'Timo Baumgartl'},
       {name:'Alexandru Maxim'},
@@ -21,11 +21,11 @@ const students20162017 = [
     ]
   },
   {
-    grade: '2016/2017',
+    grade: '9c',
     students: [
       {name:'Kimi Räikkönen'},
       {name:'Sebastian Vettel'},
-      {name:'Max Verstappen'}      
+      {name:'Max Verstappen'}
     ]
   },
 ];

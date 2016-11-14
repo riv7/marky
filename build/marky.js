@@ -20764,13 +20764,13 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 var students20162017 = [{
-  grade: '2014/2015',
+  grade: '7d',
   students: [{ name: 'Max Maier' }, { name: 'Walter Vogel' }, { name: 'Slash Roses' }]
 }, {
-  grade: '2015/2016',
+  grade: '8a',
   students: [{ name: 'Timo Baumgartl' }, { name: 'Alexandru Maxim' }, { name: 'Christian Gentner' }]
 }, {
-  grade: '2016/2017',
+  grade: '9c',
   students: [{ name: 'Kimi Räikkönen' }, { name: 'Sebastian Vettel' }, { name: 'Max Verstappen' }]
 }];
 
@@ -20795,9 +20795,13 @@ function GradeRow(props) {
   var grade = props.grade;
 
   return React.createElement(
-    'span',
+    'li',
     null,
-    grade
+    React.createElement(
+      'span',
+      null,
+      grade
+    )
   );
 }
 
@@ -20805,9 +20809,13 @@ function StudentRow(props) {
   var student = props.student;
 
   return React.createElement(
-    'span',
+    'li',
     null,
-    student.name
+    React.createElement(
+      'span',
+      null,
+      student.name
+    )
   );
 }
 
@@ -20815,15 +20823,19 @@ function StudentsTable(props) {
   var studentsOfYear = props.studentsOfYear;
 
 
-  function createStudents(dat) {
-    return dat.students.map(function (student) {
-      return React.createElement(
-        'li',
-        { key: student.name },
-        React.createElement(StudentRow, { student: student })
-      );
+  function createStudentsTable(students) {
+    var rows = [];
+    students.forEach(function (gradeData) {
+      if (!gradeData.students.isEmpty) {
+        rows.push(React.createElement(GradeRow, { grade: gradeData.grade, key: gradeData.grade }));
+
+        gradeData.students.forEach(function (student) {
+          rows.push(React.createElement(StudentRow, { student: student, key: student.name }));
+        });
+      };
     });
-  };
+    return rows;
+  }
 
   return React.createElement(
     'div',
@@ -20831,14 +20843,7 @@ function StudentsTable(props) {
     React.createElement(
       'ul',
       null,
-      studentsOfYear.map(function (data) {
-        return React.createElement(
-          'li',
-          { key: data.grade },
-          React.createElement(GradeRow, { grade: data.grade }),
-          createStudents(data)
-        );
-      })
+      createStudentsTable(studentsOfYear)
     )
   );
 }
