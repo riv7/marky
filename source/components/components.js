@@ -3,12 +3,20 @@ var ReactDOM = require('react-dom');
 
 export function GradeRow(props) {
   const {grade} = props;
-  return <li><span>{grade}</span></li>;
+  return <li>
+    <span>
+      {grade}
+    </span>
+  </li>;
 }
 
 export function StudentRow(props) {
   const {student} = props;
-  return <li><span>{student.name}</span></li>;
+  return <li>
+    <span>
+      {student.name}
+    </span>
+  </li>;
 }
 
 export function StudentsTable(props) {
