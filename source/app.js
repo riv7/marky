@@ -1,6 +1,8 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
+require('../styles/app.css');
+
 import {FilterableStudentsTable} from './components/components';
 
 const students20162017 = [
