@@ -38604,18 +38604,25 @@ var ReactDOM = require('react-dom');
 
 require('../styles/app.css');
 
-var students20162017 = [{
+var gradesAndStudents20162017 = [{
+  id: 0,
   grade: '7d',
-  students: [{ name: 'Max Maier' }, { name: 'Walter Vogel' }, { name: 'Slash Roses' }]
+  students: [{ id: 0, name: 'Max Maier' }, { id: 1, name: 'Walter Vogel' }, { id: 2, name: 'Slash Roses' }]
 }, {
+  id: 1,
   grade: '8a',
-  students: [{ name: 'Timo Baumgartl' }, { name: 'Alexandru Maxim' }, { name: 'Christian Gentner' }]
+  students: [{ id: 3, name: 'Timo Baumgartl' }, { id: 4, name: 'Alexandru Maxim' }, { id: 5, name: 'Christian Gentner' }]
 }, {
+  id: 2,
   grade: '9c',
-  students: [{ name: 'Kimi Räikkönen' }, { name: 'Sebastian Vettel' }, { name: 'Max Verstappen' }]
+  students: [{ id: 6, name: 'Kimi Räikkönen' }, { id: 7, name: 'Sebastian Vettel' }, { id: 8, name: 'Max Verstappen' }]
 }];
 
-ReactDOM.render(React.createElement(_components.FilterableStudentsTable, { studentsOfYear: students20162017 }), document.getElementById('react-application'));
+var availableYears = [{ id: 0, name: '2016/2017' }, { id: 1, name: '2015/2016' }, { id: 2, name: '2014/2015' }];
+
+var gradesStudentsAndYears = [gradesAndStudents20162017, availableYears];
+
+ReactDOM.render(React.createElement(_components.FilterableStudentsTable, { gradesStudentsAndYears: gradesStudentsAndYears }), document.getElementById('react-application'));
 
 },{"../styles/app.css":427,"./components/components":426,"react":420,"react-dom":257}],426:[function(require,module,exports){
 'use strict';
@@ -38623,6 +38630,9 @@ ReactDOM.render(React.createElement(_components.FilterableStudentsTable, { stude
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 exports.GradeRow = GradeRow;
 exports.StudentRow = StudentRow;
 exports.StudentsTable = StudentsTable;
@@ -38635,60 +38645,14 @@ var _reactBootstrap = require('react-bootstrap');
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-//Just a test
-
-
-var buttonsInstance = React.createElement(
-  _reactBootstrap.ButtonToolbar,
-  null,
-  React.createElement(
-    _reactBootstrap.Button,
-    null,
-    'Default'
-  ),
-  React.createElement(
-    _reactBootstrap.Button,
-    { bsStyle: 'primary' },
-    'Primary'
-  ),
-  React.createElement(
-    _reactBootstrap.Button,
-    { bsStyle: 'success' },
-    'Success'
-  ),
-  React.createElement(
-    _reactBootstrap.Button,
-    { bsStyle: 'info' },
-    'Info'
-  ),
-  React.createElement(
-    _reactBootstrap.Button,
-    { bsStyle: 'warning' },
-    'Warning'
-  ),
-  React.createElement(
-    _reactBootstrap.Button,
-    { bsStyle: 'danger' },
-    'Danger'
-  ),
-  React.createElement(
-    _reactBootstrap.Button,
-    { bsStyle: 'link' },
-    'Link'
-  )
-);
-
+//imports react-bootstrap
 function GradeRow(props) {
   var grade = props.grade;
 
   return React.createElement(
-    'li',
-    null,
-    React.createElement(
-      'span',
-      null,
-      grade
-    )
+    _reactBootstrap.ListGroupItem,
+    { bsStyle: 'danger' },
+    grade
   );
 }
 
@@ -38696,13 +38660,9 @@ function StudentRow(props) {
   var student = props.student;
 
   return React.createElement(
-    'li',
+    _reactBootstrap.ListGroupItem,
     null,
-    React.createElement(
-      'span',
-      null,
-      student.name
-    )
+    student.name
   );
 }
 
@@ -38714,10 +38674,10 @@ function StudentsTable(props) {
     var rows = [];
     students.forEach(function (gradeData) {
       if (!gradeData.students.isEmpty) {
-        rows.push(React.createElement(GradeRow, { grade: gradeData.grade, key: gradeData.grade }));
+        rows.push(React.createElement(GradeRow, { grade: gradeData.grade, key: 'grade_' + gradeData.id }));
 
         gradeData.students.forEach(function (student) {
-          rows.push(React.createElement(StudentRow, { student: student, key: student.name }));
+          rows.push(React.createElement(StudentRow, { student: student, key: 'student_' + student.id }));
         });
       };
     });
@@ -38728,7 +38688,7 @@ function StudentsTable(props) {
     'div',
     null,
     React.createElement(
-      'ul',
+      _reactBootstrap.ListGroup,
       null,
       createStudentsTable(studentsOfYear)
     )
@@ -38737,48 +38697,92 @@ function StudentsTable(props) {
 
 function SearchBar() {
   return React.createElement(
-    'form',
+    _reactBootstrap.FormGroup,
     null,
-    React.createElement('input', { type: 'text', placeholder: 'Serach...' })
+    React.createElement(_reactBootstrap.FormControl, { type: 'text', placeholder: 'Search...' })
   );
 }
 
-function YearSelectionBar() {
+function YearSelectionBar(props) {
+  var years = props.years;
+
+
+  var dropdownItems = years.map(function (year) {
+    return React.createElement(
+      _reactBootstrap.MenuItem,
+      { key: year.id, eventKey: year.id },
+      year.name
+    );
+  });
+
   return React.createElement(
-    'form',
-    null,
+    _reactBootstrap.Navbar,
+    { inverse: true, collapseOnSelect: true },
     React.createElement(
-      'select',
+      _reactBootstrap.Navbar.Header,
       null,
       React.createElement(
-        'option',
-        { value: '2014/2015' },
-        '2014/2015'
+        _reactBootstrap.Navbar.Brand,
+        null,
+        React.createElement(
+          'a',
+          { href: '#' },
+          'marky'
+        )
+      ),
+      React.createElement(_reactBootstrap.Navbar.Toggle, null)
+    ),
+    React.createElement(
+      _reactBootstrap.Navbar.Collapse,
+      null,
+      React.createElement(
+        _reactBootstrap.Nav,
+        { pullRight: true },
+        React.createElement(
+          _reactBootstrap.NavDropdown,
+          {
+            eventKey: 0,
+            title: 'select year',
+            id: 'select year dropdown' },
+          dropdownItems
+        )
       ),
       React.createElement(
-        'option',
-        { value: '2015/2016' },
-        '2015/2016'
-      ),
-      React.createElement(
-        'option',
-        { value: '2016/2017' },
+        _reactBootstrap.Navbar.Text,
+        { pullRight: true },
         '2016/2017'
       )
     )
   );
+
+  //Simple select without React Bootstarp
+  //var entries = years.map((year) => {
+  //  return (<option value={year}>{year}</option>)
+  //});
+  //return (
+  //  <form>
+  //    <select>
+  //      {entries}
+  //    </select>
+  //  </form>
+  //);
 }
 
 function FilterableStudentsTable(props) {
-  var studentsOfYear = props.studentsOfYear;
+  var grades = props.gradesStudentsAndYears;
+
+  var _grades = _slicedToArray(grades, 2);
+
+  var gradesAndStudentsOfYear = _grades[0];
+  var years = _grades[1];
+
 
   return React.createElement(
-    'div',
+    _reactBootstrap.Grid,
     null,
-    React.createElement(YearSelectionBar, null),
+    React.createElement(YearSelectionBar, { years: years }),
     React.createElement(SearchBar, null),
-    React.createElement(StudentsTable, { studentsOfYear: studentsOfYear }),
-    buttonsInstance
+    React.createElement(StudentsTable, { studentsOfYear: gradesAndStudentsOfYear })
   );
 }
 

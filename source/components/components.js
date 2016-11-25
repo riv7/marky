@@ -1,52 +1,39 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-//Just a test
+//imports react-bootstrap
 import { Button } from 'react-bootstrap';
 import { ButtonToolbar } from 'react-bootstrap';
-
-const buttonsInstance = (
-  <ButtonToolbar>
-    {/* Standard button */}
-    <Button>Default</Button>
-
-    {/* Provides extra visual weight and identifies the primary action in a set of buttons */}
-    <Button bsStyle="primary">Primary</Button>
-
-    {/* Indicates a successful or positive action */}
-    <Button bsStyle="success">Success</Button>
-
-    {/* Contextual button for informational alert messages */}
-    <Button bsStyle="info">Info</Button>
-
-    {/* Indicates caution should be taken with this action */}
-    <Button bsStyle="warning">Warning</Button>
-
-    {/* Indicates a dangerous or potentially negative action */}
-    <Button bsStyle="danger">Danger</Button>
-
-    {/* Deemphasize a button by making it look like a link while maintaining button behavior */}
-    <Button bsStyle="link">Link</Button>
-  </ButtonToolbar>
-);
-
+import { SplitButton } from 'react-bootstrap';
+import { MenuItem } from 'react-bootstrap';
+import { Navbar } from 'react-bootstrap';
+import { Nav } from 'react-bootstrap';
+import { NavItem } from 'react-bootstrap';
+import { NavDropdown } from 'react-bootstrap';
+import { FormGroup } from 'react-bootstrap';
+import { FormControl } from 'react-bootstrap';
+import { ListGroup } from 'react-bootstrap';
+import { ListGroupItem } from 'react-bootstrap';
+import { Grid } from 'react-bootstrap';
+import { Row } from 'react-bootstrap';
+import { Col } from 'react-bootstrap';
 
 export function GradeRow(props) {
   const {grade} = props;
-  return <li>
-    <span>
+  return (
+    <ListGroupItem bsStyle="danger">
       {grade}
-    </span>
-  </li>;
+    </ListGroupItem>
+  );
 }
 
 export function StudentRow(props) {
   const {student} = props;
-  return <li>
-    <span>
+  return (
+    <ListGroupItem>
       {student.name}
-    </span>
-  </li>;
+    </ListGroupItem>
+  );
 }
 
 export function StudentsTable(props) {
@@ -56,10 +43,10 @@ export function StudentsTable(props) {
     var rows = [];
     students.forEach(gradeData => {
       if (!gradeData.students.isEmpty) {
-        rows.push(<GradeRow grade={gradeData.grade} key={gradeData.grade} />);
+        rows.push(<GradeRow grade={gradeData.grade} key={'grade_'+gradeData.id} />);
 
         gradeData.students.forEach(student => {
-          rows.push(<StudentRow student={student} key={student.name} />);
+          rows.push(<StudentRow student={student} key={'student_'+student.id} />);
         });
       };
     })
@@ -68,41 +55,77 @@ export function StudentsTable(props) {
 
   return (
     <div>
-      <ul>
+      <ListGroup>
         {createStudentsTable(studentsOfYear)}
-      </ul>
+      </ListGroup>
     </div>
   );
 }
 
 export function SearchBar() {
   return (
-    <form>
-      <input type="text" placeholder="Serach..." />
-    </form>
+    <FormGroup>
+      <FormControl type="text" placeholder="Search..." />
+    </FormGroup>
   );
 }
 
-export function YearSelectionBar() {
+export function YearSelectionBar(props) {
+  const {years} = props;
+
+  var dropdownItems = years.map((year) => {
+    return (
+      <MenuItem key={year.id} eventKey={year.id}>
+      {year.name}
+    </MenuItem>)
+  });
+
   return (
-    <form>
-      <select>
-        <option value="2014/2015">2014/2015</option>
-        <option value="2015/2016">2015/2016</option>
-        <option value="2016/2017">2016/2017</option>
-      </select>
-    </form>
-  );
+    <Navbar inverse collapseOnSelect>
+      <Navbar.Header>
+        <Navbar.Brand>
+          <a href="#">marky</a>
+        </Navbar.Brand>
+        <Navbar.Toggle />
+      </Navbar.Header>
+      <Navbar.Collapse>
+        <Nav pullRight>
+          <NavDropdown
+            eventKey={0}
+            title="select year"
+            id="select year dropdown">
+            {dropdownItems}
+          </NavDropdown>
+        </Nav>
+        <Navbar.Text pullRight>
+          2016/2017
+        </Navbar.Text>
+      </Navbar.Collapse>
+    </Navbar>
+  )
+
+  //Simple select without React Bootstarp
+  //var entries = years.map((year) => {
+  //  return (<option value={year}>{year}</option>)
+  //});
+  //return (
+  //  <form>
+  //    <select>
+  //      {entries}
+  //    </select>
+  //  </form>
+  //);
 }
 
 export function FilterableStudentsTable(props) {
-  const {studentsOfYear} = props;
+  var grades = props.gradesStudentsAndYears;
+  const [gradesAndStudentsOfYear, years] = grades;
+
   return (
-    <div>
-      <YearSelectionBar />
+    <Grid>
+      <YearSelectionBar years={years}/>
       <SearchBar />
-      <StudentsTable studentsOfYear={studentsOfYear} />
-      {buttonsInstance}
-  </div>
+      <StudentsTable studentsOfYear={gradesAndStudentsOfYear} />
+    </Grid>
   );
 }
