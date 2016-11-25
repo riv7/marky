@@ -17,11 +17,12 @@ import { ListGroupItem } from 'react-bootstrap';
 import { Grid } from 'react-bootstrap';
 import { Row } from 'react-bootstrap';
 import { Col } from 'react-bootstrap';
+import { PageHeader } from 'react-bootstrap';
 
 export function GradeRow(props) {
   const {grade} = props;
   return (
-    <ListGroupItem bsStyle="danger">
+    <ListGroupItem bsStyle="info">
       {grade}
     </ListGroupItem>
   );
@@ -124,6 +125,7 @@ export function FilterableStudentsTable(props) {
   return (
     <Grid>
       <YearSelectionBar years={years}/>
+      <PageHeader>marky <small>search class or student</small></PageHeader>
       <SearchBar />
       <StudentsTable studentsOfYear={gradesAndStudentsOfYear} />
     </Grid>

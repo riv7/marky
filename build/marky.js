@@ -38651,7 +38651,7 @@ function GradeRow(props) {
 
   return React.createElement(
     _reactBootstrap.ListGroupItem,
-    { bsStyle: 'danger' },
+    { bsStyle: 'info' },
     grade
   );
 }
@@ -38781,6 +38781,16 @@ function FilterableStudentsTable(props) {
     _reactBootstrap.Grid,
     null,
     React.createElement(YearSelectionBar, { years: years }),
+    React.createElement(
+      _reactBootstrap.PageHeader,
+      null,
+      'marky ',
+      React.createElement(
+        'small',
+        null,
+        'search class or student'
+      )
+    ),
     React.createElement(SearchBar, null),
     React.createElement(StudentsTable, { studentsOfYear: gradesAndStudentsOfYear })
   );
