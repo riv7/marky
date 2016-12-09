@@ -22,6 +22,7 @@ import { ControlLabel } from 'react-bootstrap';
 //import other
 import {filterStudents} from './filter';
 import {filterGrades} from './filter';
+import { StatefullSearchBar } from '../containers/containers';
 
 const GradeRow = ({grade}) => {
   return (
@@ -67,43 +68,12 @@ const StudentsTable = ({studentsOfYear, filterText}) => {
   );
 }
 
-class SearchBar2 extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {value: props.filterText};
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  handleChange(event) {
-    this.setState({value: event.target.value});
-    this.props.onUserInput(event.target.value)
-  }
-
-  render() {
-    return (
-      <FormGroup>
-        <ControlLabel>enter search criteria - class or student:</ControlLabel>
-        <FormControl
-          type="text"
-          placeholder="Search..."
-          value={this.state.value}
-          onChange={this.handleChange}
-        />
-      </FormGroup>
-    )
-  }
-}
-
-const SearchBar = ({filterText, onUserInput}) => {
-  let temp = filterText;
+export const SearchBar = ({filterChanged, filterText}) => {
 
   const handleChange = (event) => {
     const input = event.target;
     const text = input.value;
-
-    onUserInput(
-      text
-    );
+    filterChanged(text);
   };
 
   return (
@@ -112,7 +82,7 @@ const SearchBar = ({filterText, onUserInput}) => {
       <FormControl
         type="text"
         placeholder="Search..."
-        value={temp}
+        value={filterText}
         onChange={handleChange}
       />
     </FormGroup>
@@ -150,36 +120,16 @@ const YearSelectionBar = ({years}) => {
       </Navbar.Collapse>
     </Navbar>
   )
-
-  //Simple select without React Bootstarp
-  //var entries = years.map((year) => {
-  //  return (<option value={year}>{year}</option>)
-  //});
-  //return (
-  //  <form>
-  //    <select>
-  //      {entries}
-  //    </select>
-  //  </form>
-  //);
 }
 
-export const FilterableStudentsTable =
-  ({filterChanged, filterText, gradesStudentsAndYears}) => {
+export const FilterableStudentsTable = ({filterText, gradesStudentsAndYears}) => {
   const [gradesAndStudentsOfYear, years] = gradesStudentsAndYears;
-
-  const handleUserInput = (filterText) => {
-    filterChanged(filterText);
-  };
 
   return (
     <Grid>
       <YearSelectionBar years={years}/>
       <PageHeader>marky <small>search class or student</small></PageHeader>
-      <SearchBar2
-        filterText={filterText}
-        onUserInput={handleUserInput}
-      />
+      <StatefullSearchBar />
       <StudentsTable
         studentsOfYear={gradesAndStudentsOfYear}
         filterText={filterText}

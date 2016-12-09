@@ -40109,21 +40109,15 @@ ReactDOM.render(React.createElement(
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.FilterableStudentsTable = undefined;
+exports.FilterableStudentsTable = exports.SearchBar = undefined;
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _reactBootstrap = require('react-bootstrap');
 
 var _filter = require('./filter');
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+var _containers = require('../containers/containers');
 
 var React = require('react');
 var ReactDOM = require('react-dom');
@@ -40187,60 +40181,16 @@ var StudentsTable = function StudentsTable(_ref3) {
   );
 };
 
-var SearchBar2 = function (_React$Component) {
-  _inherits(SearchBar2, _React$Component);
-
-  function SearchBar2(props) {
-    _classCallCheck(this, SearchBar2);
-
-    var _this = _possibleConstructorReturn(this, (SearchBar2.__proto__ || Object.getPrototypeOf(SearchBar2)).call(this, props));
-
-    _this.state = { value: props.filterText };
-    _this.handleChange = _this.handleChange.bind(_this);
-    return _this;
-  }
-
-  _createClass(SearchBar2, [{
-    key: 'handleChange',
-    value: function handleChange(event) {
-      this.setState({ value: event.target.value });
-      this.props.onUserInput(event.target.value);
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return React.createElement(
-        _reactBootstrap.FormGroup,
-        null,
-        React.createElement(
-          _reactBootstrap.ControlLabel,
-          null,
-          'enter search criteria - class or student:'
-        ),
-        React.createElement(_reactBootstrap.FormControl, {
-          type: 'text',
-          placeholder: 'Search...',
-          value: this.state.value,
-          onChange: this.handleChange
-        })
-      );
-    }
-  }]);
-
-  return SearchBar2;
-}(React.Component);
-
-var SearchBar = function SearchBar(_ref4) {
+var SearchBar = exports.SearchBar = function SearchBar(_ref4) {
+  var filterChanged = _ref4.filterChanged;
   var filterText = _ref4.filterText;
-  var onUserInput = _ref4.onUserInput;
 
-  var temp = filterText;
 
   var handleChange = function handleChange(event) {
     var input = event.target;
     var text = input.value;
 
-    onUserInput(text);
+    filterChanged(text);
   };
 
   return React.createElement(
@@ -40254,7 +40204,7 @@ var SearchBar = function SearchBar(_ref4) {
     React.createElement(_reactBootstrap.FormControl, {
       type: 'text',
       placeholder: 'Search...',
-      value: temp,
+      value: filterText,
       onChange: handleChange
     })
   );
@@ -40325,7 +40275,6 @@ var YearSelectionBar = function YearSelectionBar(_ref5) {
 };
 
 var FilterableStudentsTable = exports.FilterableStudentsTable = function FilterableStudentsTable(_ref6) {
-  var filterChanged = _ref6.filterChanged;
   var filterText = _ref6.filterText;
   var gradesStudentsAndYears = _ref6.gradesStudentsAndYears;
 
@@ -40334,10 +40283,6 @@ var FilterableStudentsTable = exports.FilterableStudentsTable = function Filtera
   var gradesAndStudentsOfYear = _gradesStudentsAndYea[0];
   var years = _gradesStudentsAndYea[1];
 
-
-  var handleUserInput = function handleUserInput(filterText) {
-    filterChanged(filterText);
-  };
 
   return React.createElement(
     _reactBootstrap.Grid,
@@ -40353,10 +40298,7 @@ var FilterableStudentsTable = exports.FilterableStudentsTable = function Filtera
         'search class or student'
       )
     ),
-    React.createElement(SearchBar2, {
-      filterText: filterText,
-      onUserInput: handleUserInput
-    }),
+    React.createElement(_containers.StatefullSearchBar, null),
     React.createElement(StudentsTable, {
       studentsOfYear: gradesAndStudentsOfYear,
       filterText: filterText
@@ -40364,7 +40306,7 @@ var FilterableStudentsTable = exports.FilterableStudentsTable = function Filtera
   );
 };
 
-},{"./filter":454,"react":432,"react-bootstrap":247,"react-dom":258}],454:[function(require,module,exports){
+},{"../containers/containers":455,"./filter":454,"react":432,"react-bootstrap":247,"react-dom":258}],454:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -40434,7 +40376,7 @@ var containsDigit = function containsDigit(text) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.FilterableStudentsTable = undefined;
+exports.StatefullSearchBar = exports.FilterableStudentsTable = undefined;
 
 var _reactRedux = require('react-redux');
 
@@ -40458,6 +40400,19 @@ var FilterableStudentsTable = exports.FilterableStudentsTable = (0, _reactRedux.
     }
   };
 })(components.FilterableStudentsTable);
+
+var StatefullSearchBar = exports.StatefullSearchBar = (0, _reactRedux.connect)(function mapStateToProps(state, ownProps) {
+  return {
+    ownProps: ownProps,
+    filterText: state
+  };
+}, function mapDispatchToProps(dispatch) {
+  return {
+    filterChanged: function filterChanged(filterText) {
+      return dispatch((0, _actions.filterChanged)(filterText));
+    }
+  };
+})(components.SearchBar);
 
 },{"../actions/actions":451,"../components/components":453,"react-redux":280}],456:[function(require,module,exports){
 "use strict";

@@ -15,3 +15,17 @@ export const FilterableStudentsTable = connect(
     };
   }
 )(components.FilterableStudentsTable);
+
+export const StatefullSearchBar = connect(
+  function mapStateToProps(state, ownProps) {
+    return {
+      ownProps,
+      filterText: state
+    };
+  },
+  function mapDispatchToProps(dispatch) {
+    return {
+      filterChanged: filterText => dispatch(filterChanged(filterText))
+    };
+  }
+)(components.SearchBar);
