@@ -19,6 +19,10 @@ import { Col } from 'react-bootstrap';
 import { PageHeader } from 'react-bootstrap';
 import { ControlLabel } from 'react-bootstrap';
 
+//import other
+import {filterStudents} from './filter';
+import {filterGrades} from './filter';
+
 const GradeRow = ({grade}) => {
   return (
     <ListGroupItem bsStyle="info">
@@ -37,66 +41,9 @@ const StudentRow  = ({student}) => {
 
 const StudentsTable = ({studentsOfYear, filterText}) => {
 
-  const containsDigit = (text) => {
-    var regex = /\d/;
-    return text.match(regex) !== null;
-  }
-
-  const filterArray = filterText.split(" ");
-  const filterGradesArray = filterArray.filter(containsDigit);
-  const filterStudentsArray = filterArray.filter(x => !containsDigit(x));
-
-  const filterGrades = (studentsAndGrades) => {
-    const containsFilter = (stringToCheck) => {
-      var containsRes = filterGradesArray.filter(filterValue =>
-        filterValue === stringToCheck
-      );
-      return containsRes.length > 0;
-    }
-
-    const filteredGrades = studentsAndGrades.filter(gradeData =>
-      !filterGradesArray
-      || filterGradesArray.length === 0
-      || containsFilter(gradeData.grade)
-    );
-    if (filterGrades.length === 0) {
-      return studentsAndGrades;
-    }
-    return filteredGrades;
-  }
-
-  const filterStudents = (studentsAndGrades) => {
-    const containsFilter = (stringToCheck) => {
-      const containsRes = filterStudentsArray.filter(filterValue =>
-        stringToCheck.includes(filterValue)
-      );
-      return containsRes.length === filterStudentsArray.length;
-    }
-
-    const filterInternal = (students) => {
-      const result = students.filter(student =>
-        !filterStudentsArray
-        || filterStudentsArray.length === 0
-        || containsFilter(student.name)
-      );
-      return result;
-    }
-
-    const studentsAndGradesFiltered = studentsAndGrades.map(gradeData => {
-      const filteredStuds = filterInternal(gradeData.students);
-      const newInstance = {
-        id: gradeData.id,
-        grade: gradeData.grade,
-        students: filteredStuds
-      };
-      return newInstance;
-    });
-    return studentsAndGradesFiltered;
-  }
-
   const createStudentsTable = (studentsOfYear) => {
-    const filteredStudents = filterStudents(studentsOfYear);
-    const filteredGStudentsAndGrades = filterGrades(filteredStudents);
+    const filteredStudents = filterStudents(studentsOfYear, filterText);
+    const filteredGStudentsAndGrades = filterGrades(filteredStudents, filterText);
 
     var rows = [];
     filteredGStudentsAndGrades.forEach(gradeData => {
