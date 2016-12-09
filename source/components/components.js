@@ -2,7 +2,6 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 //imports react-bootstrap
-import { Button } from 'react-bootstrap';
 import { ButtonToolbar } from 'react-bootstrap';
 import { SplitButton } from 'react-bootstrap';
 import { MenuItem } from 'react-bootstrap';
@@ -18,9 +17,9 @@ import { Grid } from 'react-bootstrap';
 import { Row } from 'react-bootstrap';
 import { Col } from 'react-bootstrap';
 import { PageHeader } from 'react-bootstrap';
+import { ControlLabel } from 'react-bootstrap';
 
-export function GradeRow(props) {
-  const {grade} = props;
+const GradeRow = ({grade}) => {
   return (
     <ListGroupItem bsStyle="info">
       {grade}
@@ -28,8 +27,7 @@ export function GradeRow(props) {
   );
 }
 
-export function StudentRow(props) {
-  const {student} = props;
+const StudentRow  = ({student}) => {
   return (
     <ListGroupItem>
       {student.name}
@@ -37,12 +35,71 @@ export function StudentRow(props) {
   );
 }
 
-export function StudentsTable(props) {
-  const {studentsOfYear} = props;
+const StudentsTable = ({studentsOfYear, filterText}) => {
 
-  function createStudentsTable(students) {
+  const containsDigit = (text) => {
+    var regex = /\d/;
+    return text.match(regex) !== null;
+  }
+
+  const filterArray = filterText.split(" ");
+  const filterGradesArray = filterArray.filter(containsDigit);
+  const filterStudentsArray = filterArray.filter(x => !containsDigit(x));
+
+  const filterGrades = (studentsAndGrades) => {
+    const containsFilter = (stringToCheck) => {
+      var containsRes = filterGradesArray.filter(filterValue =>
+        filterValue === stringToCheck
+      );
+      return containsRes.length > 0;
+    }
+
+    const filteredGrades = studentsAndGrades.filter(gradeData =>
+      !filterGradesArray
+      || filterGradesArray.length === 0
+      || containsFilter(gradeData.grade)
+    );
+    if (filterGrades.length === 0) {
+      return studentsAndGrades;
+    }
+    return filteredGrades;
+  }
+
+  const filterStudents = (studentsAndGrades) => {
+    const containsFilter = (stringToCheck) => {
+      const containsRes = filterStudentsArray.filter(filterValue =>
+        stringToCheck.includes(filterValue)
+      );
+      return containsRes.length === filterStudentsArray.length;
+    }
+
+    const filterInternal = (students) => {
+      const result = students.filter(student =>
+        !filterStudentsArray
+        || filterStudentsArray.length === 0
+        || containsFilter(student.name)
+      );
+      return result;
+    }
+
+    const studentsAndGradesFiltered = studentsAndGrades.map(gradeData => {
+      const filteredStuds = filterInternal(gradeData.students);
+      const newInstance = {
+        id: gradeData.id,
+        grade: gradeData.grade,
+        students: filteredStuds
+      };
+      return newInstance;
+    });
+    return studentsAndGradesFiltered;
+  }
+
+  const createStudentsTable = (studentsOfYear) => {
+    const filteredStudents = filterStudents(studentsOfYear);
+    const filteredGStudentsAndGrades = filterGrades(filteredStudents);
+
     var rows = [];
-    students.forEach(gradeData => {
+    filteredGStudentsAndGrades.forEach(gradeData => {
       if (!gradeData.students.isEmpty) {
         rows.push(<GradeRow grade={gradeData.grade} key={'grade_'+gradeData.id} />);
 
@@ -63,18 +120,60 @@ export function StudentsTable(props) {
   );
 }
 
-export function SearchBar() {
+class SearchBar2 extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {value: props.filterText};
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({value: event.target.value});
+    this.props.onUserInput(event.target.value)
+  }
+
+  render() {
+    return (
+      <FormGroup>
+        <ControlLabel>enter search criteria - class or student:</ControlLabel>
+        <FormControl
+          type="text"
+          placeholder="Search..."
+          value={this.state.value}
+          onChange={this.handleChange}
+        />
+      </FormGroup>
+    )
+  }
+}
+
+const SearchBar = ({filterText, onUserInput}) => {
+  let temp = filterText;
+
+  const handleChange = (event) => {
+    const input = event.target;
+    const text = input.value;
+
+    onUserInput(
+      text
+    );
+  };
+
   return (
     <FormGroup>
-      <FormControl type="text" placeholder="Search..." />
+      <ControlLabel>enter search criteria - class or student:</ControlLabel>
+      <FormControl
+        type="text"
+        placeholder="Search..."
+        value={temp}
+        onChange={handleChange}
+      />
     </FormGroup>
   );
 }
 
-export function YearSelectionBar(props) {
-  const {years} = props;
-
-  var dropdownItems = years.map((year) => {
+const YearSelectionBar = ({years}) => {
+  const dropdownItems = years.map((year) => {
     return (
       <MenuItem key={year.id} eventKey={year.id}>
       {year.name}
@@ -118,16 +217,26 @@ export function YearSelectionBar(props) {
   //);
 }
 
-export function FilterableStudentsTable(props) {
-  var grades = props.gradesStudentsAndYears;
-  const [gradesAndStudentsOfYear, years] = grades;
+export const FilterableStudentsTable =
+  ({filterChanged, filterText, gradesStudentsAndYears}) => {
+  const [gradesAndStudentsOfYear, years] = gradesStudentsAndYears;
+
+  const handleUserInput = (filterText) => {
+    filterChanged(filterText);
+  };
 
   return (
     <Grid>
       <YearSelectionBar years={years}/>
       <PageHeader>marky <small>search class or student</small></PageHeader>
-      <SearchBar />
-      <StudentsTable studentsOfYear={gradesAndStudentsOfYear} />
+      <SearchBar2
+        filterText={filterText}
+        onUserInput={handleUserInput}
+      />
+      <StudentsTable
+        studentsOfYear={gradesAndStudentsOfYear}
+        filterText={filterText}
+      />
     </Grid>
   );
 }

@@ -3,7 +3,10 @@ var ReactDOM = require('react-dom');
 
 require('../styles/app.css');
 
-import {FilterableStudentsTable} from './components/components';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import reducer from './reducer/reducer';
+import { FilterableStudentsTable } from './containers/containers';
 
 const gradesAndStudents20162017 = [
   {
@@ -46,7 +49,11 @@ const gradesStudentsAndYears = [
     availableYears
 ];
 
+const store = createStore(reducer);
+
 ReactDOM.render(
-  <FilterableStudentsTable gradesStudentsAndYears={gradesStudentsAndYears} />,
+  <Provider store={store}>
+    <FilterableStudentsTable gradesStudentsAndYears={gradesStudentsAndYears}/>
+  </Provider>,
   document.getElementById('react-application')
 );
