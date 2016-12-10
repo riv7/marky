@@ -123,7 +123,21 @@ const YearSelectionBar = ({years}) => {
 }
 
 export const FilterableStudentsTable = ({filterText, gradesStudentsAndYears}) => {
-  const [gradesAndStudentsOfYear, years] = gradesStudentsAndYears;
+
+  const years = gradesStudentsAndYears.map(yearData => {
+    const year = {
+      id: yearData.id,
+      name: yearData.year
+    };
+    return year;
+  });
+
+  const gradesAndStudentsOfYear = gradesStudentsAndYears
+    .find(yearData => yearData.year === '2016/2017')
+    .gradesAndStudents;
+
+
+
 
   return (
     <Grid>
