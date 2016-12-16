@@ -1,9 +1,10 @@
-export default function(filterText="", action) {
-  switch(action.type) {
-    case 'FILTER_STUDENTS':
-      return action.payload;
+import { combineReducers } from 'redux';
+import search from './search';
+import year from './year';
 
-    default:
-      return filterText;
-  }
-}
+const reducer = combineReducers({
+  search,
+  year
+});
+
+export default reducer
