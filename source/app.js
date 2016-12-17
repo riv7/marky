@@ -6,7 +6,7 @@ require('../styles/app.css');
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import reducer from './reducer/reducer';
-import StatefullFilterableStudentsTable from './containers/filterabletable';
+import FilterableStudentsTable from './components/filterabletable';
 
 const gradesStudentsAndYears = [
   {
@@ -114,7 +114,7 @@ const store = createStore(reducer);
 
 ReactDOM.render(
   <Provider store={store}>
-    <StatefullFilterableStudentsTable gradesStudentsAndYears={gradesStudentsAndYears}/>
+    <FilterableStudentsTable gradesStudentsAndYears={gradesStudentsAndYears}/>
   </Provider>,
   document.getElementById('react-application')
 );

@@ -1,3 +1,8 @@
+export const filterYear = (gradesStudentsAndYears, year) => {
+  return gradesStudentsAndYears.find(yearData => yearData.year === year)
+  .gradesAndStudents;
+}
+
 export const filterGrades = (studentsAndGrades, filterText) => {
   const filterArray = filterText.split(" ");
   const filterGradesArray = filterArray.filter(containsDigit);
