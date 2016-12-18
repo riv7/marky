@@ -7,6 +7,7 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import reducer from './reducer/reducer';
 import FilterableStudentsTable from './components/filterabletable';
+import { getLatestYear } from './uiservice/year';
 
 const gradesStudentsAndYears = [
   {
@@ -110,7 +111,8 @@ const gradesStudentsAndYears = [
   }
 ];
 
-const store = createStore(reducer);
+const latestYear = getLatestYear(gradesStudentsAndYears)
+const store = createStore(reducer, {year: latestYear});
 
 ReactDOM.render(
   <Provider store={store}>

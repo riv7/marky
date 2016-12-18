@@ -7,17 +7,10 @@ import { PageHeader } from 'react-bootstrap';
 import StatefullStudentsTable from '../containers/studentstable'
 import StatefullYearSelectionBar from '../containers/year'
 import StatefullSearchBar from '../containers/search'
-
+import { getYears } from '../uiservice/year';
 
 const FilterableStudentsTable = ({gradesStudentsAndYears}) => {
-
-  const years = gradesStudentsAndYears.map(yearData => {
-    const year = {
-      id: yearData.id,
-      name: yearData.year
-    };
-    return year;
-  });
+  const years = getYears(gradesStudentsAndYears)
 
   return (
     <Grid>
