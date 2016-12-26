@@ -40464,8 +40464,6 @@ var _studentstable = require('../components/studentstable');
 
 var _studentstable2 = _interopRequireDefault(_studentstable);
 
-var _actions = require('../actions/actions');
-
 var _filter = require('../uiservice/filter');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -40480,19 +40478,11 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
   };
 };
 
-var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {
-    filterChanged: function filterChanged(filterText) {
-      return dispatch((0, _actions.filterChanged)(filterText));
-    }
-  };
-};
-
-var StatefullStudentsTable = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_studentstable2.default);
+var StatefullStudentsTable = (0, _reactRedux.connect)(mapStateToProps)(_studentstable2.default);
 
 exports.default = StatefullStudentsTable;
 
-},{"../actions/actions":451,"../components/studentstable":457,"../uiservice/filter":465,"react-redux":280}],461:[function(require,module,exports){
+},{"../components/studentstable":457,"../uiservice/filter":465,"react-redux":280}],461:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

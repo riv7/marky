@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import StudentsTable from '../components/studentstable';
-import { filterChanged } from '../actions/actions';
 import { filterStudents } from '../uiservice/filter';
 import { filterGrades } from '../uiservice/filter';
 import { filterYear } from '../uiservice/filter';
@@ -15,15 +14,8 @@ const mapStateToProps = (state, ownProps) => {
   }
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    filterChanged: filterText => dispatch(filterChanged(filterText))
-  }
-};
-
 const StatefullStudentsTable = connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(StudentsTable);
 
 export default StatefullStudentsTable;
