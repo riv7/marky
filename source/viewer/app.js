@@ -1,7 +1,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-require('../styles/app.css');
+require('../../styles/app.css');
 
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
