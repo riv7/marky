@@ -9,33 +9,45 @@ import { PageHeader } from 'react-bootstrap';
 import GradeNav from './gradenav';
 import CourseNav from './coursenav';
 import StudentTable from './studenttable';
+import HeadNav from './headnav';
 
 const MarkyEditor = () => {
 
+  {/*const pageHeader = (
+    <PageHeader>
+      <div className="white">
+        marky <small className="orange">enter marks</small>
+      </div>
+    </PageHeader>
+  );*/}
+
   const pageHeader = (
     <PageHeader>
-      marky <small>search class or student</small>
+      marky <small>enter marks</small>
     </PageHeader>
   );
 
   const basicGrid = (
-    <Grid>
-      <Row className="show-grid">
-        <Col md={12}><code>&lt;{'Col md={12}'} /&gt;</code></Col>
+    <Grid fluid="true">
+      <Row>
+        <Col>
+          <HeadNav />
+        </Col>
       </Row>
-      <Row className="show-grid">
+      <Row>
         <Col md={12}>
           {pageHeader}
         </Col>
       </Row>
-      <Row className="show-grid">
-        <Col md={2}>
+      <Row></Row>
+      <Row>
+        <Col className="border-right" md={1}>
           <GradeNav />
         </Col>
-        <Col md={2}>
+        <Col className="border-right" md={1}>
           <CourseNav />
         </Col>
-        <Col md={8}>
+        <Col md={10}>
           <StudentTable />
         </Col>
       </Row>

@@ -7,19 +7,10 @@ import { Nav } from 'react-bootstrap';
 import { NavItem } from 'react-bootstrap';
 import { NavDropdown } from 'react-bootstrap';
 
-const YearSelectionBar = ({year, yearChanged, years}) => {
+const HeadNav = () => {
 
   const handleSelect = (eventKey) => {
-    const text = eventKey;
-    yearChanged(text);
   };
-
-  const dropdownItems = years.map((ye) => {
-    return (
-      <MenuItem key={ye.id} eventKey={ye.name}>
-      {ye.name}
-    </MenuItem>)
-  });
 
   return (
     <Navbar inverse collapseOnSelect>
@@ -35,15 +26,15 @@ const YearSelectionBar = ({year, yearChanged, years}) => {
             eventKey={0}
             title="select year"
             id="select year dropdown">
-            {dropdownItems}
+            {"ye"}
           </NavDropdown>
         </Nav>
         <Navbar.Text pullRight>
-          {year}
+          {"year"}
         </Navbar.Text>
       </Navbar.Collapse>
     </Navbar>
   )
 }
 
-export default YearSelectionBar;
+export default HeadNav

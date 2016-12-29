@@ -13,32 +13,130 @@ const StudentTable = () => {
   }
 
   const tableInstance = (
-    <Table striped bordered condensed hover>
+    <Table striped condensed hover>
       <thead>
         <tr>
-          <th>#</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Username</th>
+          <th>Pupil</th>
+          <th>KA1</th>
+          <th>KA2</th>
+          <th>KA3</th>
+          <th>Test1</th>
+          <th>Test2</th>
+          <th>Test3</th>
+          <th>Mündlich</th>
+          <th>Durchschnitt</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>1</td>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
+          <td>Nico Rosberg</td>
+          <td>1.5</td>
+          <td>2.5</td>
+          <td>3.5</td>
+          <td>1.0</td>
+          <td>4.5</td>
+          <td>1.0</td>
+          <td>2.0</td>
+          <td>2.0</td>
         </tr>
         <tr>
-          <td>2</td>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
+          <td>Lewis Hamilton</td>
+          <td>1.5</td>
+          <td>2.5</td>
+          <td>3.5</td>
+          <td>1.0</td>
+          <td>4.5</td>
+          <td>1.0</td>
+          <td>2.0</td>
+          <td>2.0</td>
         </tr>
         <tr>
-          <td>3</td>
-          <td colSpan="2">Larry the Bird</td>
-          <td>@twitter</td>
+          <td>Sebastian Vettel</td>
+          <td>1.5</td>
+          <td>2.5</td>
+          <td>3.5</td>
+          <td>1.0</td>
+          <td>4.5</td>
+          <td>1.0</td>
+          <td>2.0</td>
+          <td>2.0</td>
+        </tr>
+        <tr>
+          <td>Kimi Räikkönen</td>
+          <td>1.5</td>
+          <td>2.5</td>
+          <td>3.5</td>
+          <td>1.0</td>
+          <td>4.5</td>
+          <td>1.0</td>
+          <td>2.0</td>
+          <td>2.0</td>
+        </tr>
+        <tr>
+          <td>Dani Ricciardo</td>
+          <td>1.5</td>
+          <td>2.5</td>
+          <td>3.5</td>
+          <td>1.0</td>
+          <td>4.5</td>
+          <td>1.0</td>
+          <td>2.0</td>
+          <td>2.0</td>
+        </tr>
+        <tr>
+          <td>Max Verstappen</td>
+          <td>1.5</td>
+          <td>2.5</td>
+          <td>3.5</td>
+          <td>1.0</td>
+          <td>4.5</td>
+          <td>1.0</td>
+          <td>2.0</td>
+          <td>2.0</td>
+        </tr>
+        <tr>
+          <td>Niko Hülkenberg</td>
+          <td>1.5</td>
+          <td>2.5</td>
+          <td>3.5</td>
+          <td>1.0</td>
+          <td>4.5</td>
+          <td>1.0</td>
+          <td>2.0</td>
+          <td>2.0</td>
+        </tr>
+        <tr>
+          <td>Sergio Perez</td>
+          <td>1.5</td>
+          <td>2.5</td>
+          <td>3.5</td>
+          <td>1.0</td>
+          <td>4.5</td>
+          <td>1.0</td>
+          <td>2.0</td>
+          <td>2.0</td>
+        </tr>
+        <tr>
+          <td>Fernando Alonso</td>
+          <td>1.5</td>
+          <td>2.5</td>
+          <td>3.5</td>
+          <td>1.0</td>
+          <td>4.5</td>
+          <td>1.0</td>
+          <td>2.0</td>
+          <td>2.0</td>
+        </tr>
+        <tr>
+          <td>Stoffel van Doorn</td>
+          <td>1.5</td>
+          <td>2.5</td>
+          <td>3.5</td>
+          <td>1.0</td>
+          <td>4.5</td>
+          <td>1.0</td>
+          <td>2.0</td>
+          <td>2.0</td>
         </tr>
       </tbody>
     </Table>

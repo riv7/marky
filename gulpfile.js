@@ -4,8 +4,16 @@ var babelify = require('babelify');
 var browserifycss = require('browserify-css')
 var source = require('vinyl-source-stream');
 var webserver = require('gulp-webserver');
+var less = require('gulp-less');
 
-gulp.task('build_editor', function () {
+// Compiles LESS > CSS
+gulp.task('build-less', function(){
+    return gulp.src('styles/marky.less')
+        .pipe(less())
+        .pipe(gulp.dest('./build/css'));
+});
+
+gulp.task('build-editor', ['build-less'], function () {
   return browserify('./source/editor/app.js')
         .transform(browserifycss, {global: true})
         .transform(babelify, {presets: ["es2015", "react"]})
@@ -14,7 +22,7 @@ gulp.task('build_editor', function () {
         .pipe(gulp.dest('./build/editor'));
 });
 
-gulp.task('build_viewer', function () {
+gulp.task('build-viewer', ['build-less'], function () {
   return browserify('./source/viewer/app.js')
         .transform(browserifycss, {global: true})
         .transform(babelify, {presets: ["es2015", "react"]})
@@ -23,7 +31,7 @@ gulp.task('build_viewer', function () {
         .pipe(gulp.dest('./build/viewer'));
 });
 
-gulp.task('serve_viewer', function() {
+gulp.task('serve-viewer', function() {
   gulp.src('build/viewer')
     .pipe(webserver({
       livereload: true,
@@ -32,7 +40,7 @@ gulp.task('serve_viewer', function() {
     }));
 });
 
-gulp.task('serve_editor', function() {
+gulp.task('serve-editor', function() {
   gulp.src('build/editor')
     .pipe(webserver({
       livereload: true,
@@ -41,4 +49,4 @@ gulp.task('serve_editor', function() {
     }));
 });
 
-gulp.task('default', ['build', 'serve']);
+gulp.task('default', ['build-editor', 'serve-editor']);
