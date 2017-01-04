@@ -28,7 +28,7 @@ const MarkyEditor = () => {
   );
 
   const basicGrid = (
-    <Grid fluid="true">
+    <Grid fluid={true}>
       <Row>
         <Col>
           <HeadNav />

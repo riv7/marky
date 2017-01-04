@@ -6,14 +6,31 @@ var source = require('vinyl-source-stream');
 var webserver = require('gulp-webserver');
 var less = require('gulp-less');
 
-// Compiles LESS > CSS
-gulp.task('build-less', function(){
-    return gulp.src('styles/marky.less')
-        .pipe(less())
-        .pipe(gulp.dest('./build/css'));
+gulp.task('fonts-viewer', function() {
+    return gulp.src('./lib/bootstrap-3.3.7/fonts/**/*')
+        .pipe(gulp.dest('./build/viewer/fonts'));
 });
 
-gulp.task('build-editor', ['build-less'], function () {
+// Compiles LESS > CSS
+gulp.task('css-viewer', ['fonts-viewer'], function(){
+    return gulp.src('styles/marky.less')
+        .pipe(less())
+        .pipe(gulp.dest('./build/viewer/css'));
+});
+
+gulp.task('fonts-editor', function() {
+    return gulp.src('./lib/bootstrap-3.3.7/fonts/**/*')
+        .pipe(gulp.dest('./build/editor/fonts'));
+});
+
+// Compiles LESS > CSS
+gulp.task('css-editor', ['fonts-editor'], function(){
+    return gulp.src('styles/marky.less')
+        .pipe(less())
+        .pipe(gulp.dest('./build/editor/css'));
+});
+
+gulp.task('build-editor', ['css-editor'], function () {
   return browserify('./source/editor/app.js')
         .transform(browserifycss, {global: true})
         .transform(babelify, {presets: ["es2015", "react"]})
@@ -22,7 +39,7 @@ gulp.task('build-editor', ['build-less'], function () {
         .pipe(gulp.dest('./build/editor'));
 });
 
-gulp.task('build-viewer', ['build-less'], function () {
+gulp.task('build-viewer', ['css-viewer'], function () {
   return browserify('./source/viewer/app.js')
         .transform(browserifycss, {global: true})
         .transform(babelify, {presets: ["es2015", "react"]})
@@ -31,7 +48,7 @@ gulp.task('build-viewer', ['build-less'], function () {
         .pipe(gulp.dest('./build/viewer'));
 });
 
-gulp.task('serve-viewer', function() {
+gulp.task('serve-viewer', ['build-viewer'], function() {
   gulp.src('build/viewer')
     .pipe(webserver({
       livereload: true,
@@ -40,7 +57,7 @@ gulp.task('serve-viewer', function() {
     }));
 });
 
-gulp.task('serve-editor', function() {
+gulp.task('serve-editor', ['build-editor'], function() {
   gulp.src('build/editor')
     .pipe(webserver({
       livereload: true,
@@ -49,4 +66,4 @@ gulp.task('serve-editor', function() {
     }));
 });
 
-gulp.task('default', ['build-editor', 'serve-editor']);
+gulp.task('default', ['serve-editor']);

@@ -5,6 +5,8 @@ import { Table } from 'react-bootstrap';
 import { NavItem } from 'react-bootstrap';
 import { ButtonGroup } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
+import { Glyphicon } from 'react-bootstrap';
+import { Label } from 'react-bootstrap';
 
 const StudentTable = () => {
 
@@ -28,6 +30,49 @@ const StudentTable = () => {
         </tr>
       </thead>
       <tbody>
+        <tr>
+          <td></td>
+          <td>
+            <Button bsSize="xs"><Glyphicon glyph="edit" /></Button>
+            <Button bsSize="xs" ><Glyphicon glyph="remove" /></Button>
+            <h5><Label>Schritflich 1/6</Label></h5>
+          </td>
+          <td>
+            <Button bsSize="xs"><Glyphicon glyph="edit" /></Button>
+            <Button bsSize="xs" ><Glyphicon glyph="remove" /></Button>
+            <h5><Label>Schritflich 1/6</Label></h5>
+          </td>
+          <td>
+            <Button bsSize="xs"><Glyphicon glyph="edit" /></Button>
+            <Button bsSize="xs" ><Glyphicon glyph="remove" /></Button>
+            <h5><Label>Schritflich 1/6</Label></h5>
+          </td>
+          <td>
+            <Button bsSize="xs"><Glyphicon glyph="edit" /></Button>
+            <Button bsSize="xs" ><Glyphicon glyph="remove" /></Button>
+            <h5><Label>Schritflich 1/6</Label></h5>
+          </td>
+          <td>
+            <Button bsSize="xs"><Glyphicon glyph="edit" /></Button>
+            <Button bsSize="xs" ><Glyphicon glyph="remove" /></Button>
+            <h5><Label>Schritflich 1/6</Label></h5>
+          </td>
+          <td>
+            <Button bsSize="xs"><Glyphicon glyph="edit" /></Button>
+            <Button bsSize="xs" ><Glyphicon glyph="remove" /></Button>
+            <h5><Label>Schritflich 1/6</Label></h5>
+          </td>
+          <td>
+            <Button bsSize="xs"><Glyphicon glyph="edit" /></Button>
+            <Button bsSize="xs" ><Glyphicon glyph="remove" /></Button>
+            <h5><Label>Schritflich 1/6</Label></h5>
+          </td>
+          <td>
+            <Button bsSize="xs"><Glyphicon glyph="edit" /></Button>
+            <Button bsSize="xs" ><Glyphicon glyph="remove" /></Button>
+            <h5><Label>Schritflich 1/6</Label></h5>
+          </td>
+        </tr>
         <tr>
           <td>Nico Rosberg</td>
           <td>1.5</td>

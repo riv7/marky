@@ -1,7 +1,9 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-require('../../build/css/marky.css');
+
+
+require('../../build/editor/css/marky.css');
 
 import MarkyEditor from './components/markyeditor'
 
