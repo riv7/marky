@@ -38914,6 +38914,12 @@ var StudentTable = function StudentTable() {
     {/*alert('selected ' + selectedKey);*/}
   }
 
+  var addButton = React.createElement(
+    _reactBootstrap.Button,
+    null,
+    'add data'
+  );
+
   var tableInstance = React.createElement(
     _reactBootstrap.Table,
     { striped: true, condensed: true, hover: true },
@@ -38966,7 +38972,7 @@ var StudentTable = function StudentTable() {
         React.createElement(
           'th',
           null,
-          'Durchschnitt'
+          React.createElement(_reactBootstrap.Glyphicon, { glyph: 'asterisk' })
         )
       )
     ),
@@ -38995,7 +39001,7 @@ var StudentTable = function StudentTable() {
             null,
             React.createElement(
               _reactBootstrap.Label,
-              null,
+              { bsStyle: 'danger' },
               'Schritflich 1/6'
             )
           )
@@ -39018,7 +39024,7 @@ var StudentTable = function StudentTable() {
             null,
             React.createElement(
               _reactBootstrap.Label,
-              null,
+              { bsStyle: 'danger' },
               'Schritflich 1/6'
             )
           )
@@ -39041,7 +39047,7 @@ var StudentTable = function StudentTable() {
             null,
             React.createElement(
               _reactBootstrap.Label,
-              null,
+              { bsStyle: 'danger' },
               'Schritflich 1/6'
             )
           )
@@ -39064,7 +39070,7 @@ var StudentTable = function StudentTable() {
             null,
             React.createElement(
               _reactBootstrap.Label,
-              null,
+              { bsStyle: 'info' },
               'Schritflich 1/6'
             )
           )
@@ -39087,7 +39093,7 @@ var StudentTable = function StudentTable() {
             null,
             React.createElement(
               _reactBootstrap.Label,
-              null,
+              { bsStyle: 'info' },
               'Schritflich 1/6'
             )
           )
@@ -39110,7 +39116,7 @@ var StudentTable = function StudentTable() {
             null,
             React.createElement(
               _reactBootstrap.Label,
-              null,
+              { bsStyle: 'success' },
               'Schritflich 1/6'
             )
           )
@@ -39133,34 +39139,12 @@ var StudentTable = function StudentTable() {
             null,
             React.createElement(
               _reactBootstrap.Label,
-              null,
+              { bsStyle: 'success' },
               'Schritflich 1/6'
             )
           )
         ),
-        React.createElement(
-          'td',
-          null,
-          React.createElement(
-            _reactBootstrap.Button,
-            { bsSize: 'xs' },
-            React.createElement(_reactBootstrap.Glyphicon, { glyph: 'edit' })
-          ),
-          React.createElement(
-            _reactBootstrap.Button,
-            { bsSize: 'xs' },
-            React.createElement(_reactBootstrap.Glyphicon, { glyph: 'remove' })
-          ),
-          React.createElement(
-            'h5',
-            null,
-            React.createElement(
-              _reactBootstrap.Label,
-              null,
-              'Schritflich 1/6'
-            )
-          )
-        )
+        React.createElement('td', null)
       ),
       React.createElement(
         'tr',
@@ -39208,7 +39192,11 @@ var StudentTable = function StudentTable() {
         React.createElement(
           'td',
           null,
-          '2.0'
+          React.createElement(
+            _reactBootstrap.Label,
+            { bsStyle: 'danger' },
+            '4.0'
+          )
         )
       ),
       React.createElement(
@@ -39257,7 +39245,11 @@ var StudentTable = function StudentTable() {
         React.createElement(
           'td',
           null,
-          '2.0'
+          React.createElement(
+            _reactBootstrap.Label,
+            { bsStyle: 'default' },
+            '4.0'
+          )
         )
       ),
       React.createElement(
@@ -39306,7 +39298,11 @@ var StudentTable = function StudentTable() {
         React.createElement(
           'td',
           null,
-          '2.0'
+          React.createElement(
+            _reactBootstrap.Label,
+            { bsStyle: 'default' },
+            '4.0'
+          )
         )
       ),
       React.createElement(
@@ -39355,7 +39351,11 @@ var StudentTable = function StudentTable() {
         React.createElement(
           'td',
           null,
-          '2.0'
+          React.createElement(
+            _reactBootstrap.Label,
+            { bsStyle: 'success' },
+            '4.0'
+          )
         )
       ),
       React.createElement(
@@ -39404,7 +39404,11 @@ var StudentTable = function StudentTable() {
         React.createElement(
           'td',
           null,
-          '2.0'
+          React.createElement(
+            _reactBootstrap.Label,
+            { bsStyle: 'danger' },
+            '4.0'
+          )
         )
       ),
       React.createElement(
@@ -39453,7 +39457,11 @@ var StudentTable = function StudentTable() {
         React.createElement(
           'td',
           null,
-          '2.0'
+          React.createElement(
+            _reactBootstrap.Label,
+            { bsStyle: 'default' },
+            '4.0'
+          )
         )
       ),
       React.createElement(
@@ -39502,7 +39510,11 @@ var StudentTable = function StudentTable() {
         React.createElement(
           'td',
           null,
-          '2.0'
+          React.createElement(
+            _reactBootstrap.Label,
+            { bsStyle: 'default' },
+            '4.0'
+          )
         )
       ),
       React.createElement(
@@ -39551,7 +39563,11 @@ var StudentTable = function StudentTable() {
         React.createElement(
           'td',
           null,
-          '2.0'
+          React.createElement(
+            _reactBootstrap.Label,
+            { bsStyle: 'default' },
+            '4.0'
+          )
         )
       ),
       React.createElement(
@@ -39600,7 +39616,11 @@ var StudentTable = function StudentTable() {
         React.createElement(
           'td',
           null,
-          '2.0'
+          React.createElement(
+            _reactBootstrap.Label,
+            { bsStyle: 'default' },
+            '4.0'
+          )
         )
       ),
       React.createElement(
@@ -39649,13 +39669,96 @@ var StudentTable = function StudentTable() {
         React.createElement(
           'td',
           null,
-          '2.0'
+          React.createElement(
+            _reactBootstrap.Label,
+            { bsStyle: 'success' },
+            '4.0'
+          )
         )
+      ),
+      React.createElement('tr', null),
+      React.createElement(
+        'tr',
+        null,
+        React.createElement(
+          'td',
+          null,
+          React.createElement(_reactBootstrap.Glyphicon, { glyph: 'asterisk' })
+        ),
+        React.createElement(
+          'td',
+          null,
+          React.createElement(
+            _reactBootstrap.Label,
+            { bsStyle: 'danger' },
+            '4.0'
+          )
+        ),
+        React.createElement(
+          'td',
+          null,
+          React.createElement(
+            _reactBootstrap.Label,
+            { bsStyle: 'default' },
+            '4.0'
+          )
+        ),
+        React.createElement(
+          'td',
+          null,
+          React.createElement(
+            _reactBootstrap.Label,
+            { bsStyle: 'default' },
+            '4.0'
+          )
+        ),
+        React.createElement(
+          'td',
+          null,
+          React.createElement(
+            _reactBootstrap.Label,
+            { bsStyle: 'default' },
+            '4.0'
+          )
+        ),
+        React.createElement(
+          'td',
+          null,
+          React.createElement(
+            _reactBootstrap.Label,
+            { bsStyle: 'success' },
+            '4.0'
+          )
+        ),
+        React.createElement(
+          'td',
+          null,
+          React.createElement(
+            _reactBootstrap.Label,
+            { bsStyle: 'success' },
+            '4.0'
+          )
+        ),
+        React.createElement(
+          'td',
+          null,
+          React.createElement(
+            _reactBootstrap.Label,
+            { bsStyle: 'default' },
+            '4.0'
+          )
+        ),
+        React.createElement('td', null)
       )
     )
   );
 
-  return tableInstance;
+  return React.createElement(
+    'div',
+    null,
+    tableInstance,
+    addButton
+  );
 };
 
 exports.default = StudentTable;
