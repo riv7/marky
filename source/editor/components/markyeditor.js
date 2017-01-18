@@ -11,7 +11,7 @@ import CourseNav from './coursenav';
 import StudentTable from './studenttable';
 import HeadNav from './headnav';
 
-const MarkyEditor = () => {
+const MarkyEditor = ({marksTableViewModel}) => {
 
   {/*const pageHeader = (
     <PageHeader>
@@ -48,7 +48,7 @@ const MarkyEditor = () => {
           <CourseNav />
         </Col>
         <Col md={10}>
-          <StudentTable />
+          <StudentTable marksTableViewModel={marksTableViewModel}/>
         </Col>
       </Row>
     </Grid>
