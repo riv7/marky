@@ -43968,31 +43968,37 @@ var StudentTable = function StudentTable(_ref) {
   };
 
   var createCategoriesRow = function createCategoriesRow() {
-    return marksTableViewModel.get('cats').map(function (cat, index) {
-      return React.createElement(
-        'td',
-        { key: cat.get('name') + '_' + index },
-        React.createElement(
-          _reactBootstrap.Button,
-          { bsSize: 'xs' },
-          React.createElement(_reactBootstrap.Glyphicon, { glyph: 'edit' })
-        ),
-        React.createElement(
-          _reactBootstrap.Button,
-          { bsSize: 'xs' },
-          React.createElement(_reactBootstrap.Glyphicon, { glyph: 'remove' })
-        ),
-        React.createElement(
-          'h5',
-          null,
+    return React.createElement(
+      'tr',
+      null,
+      React.createElement('td', null),
+      marksTableViewModel.get('cats').map(function (cat, index) {
+        return React.createElement(
+          'td',
+          { key: cat.get('name') + '_' + index },
           React.createElement(
-            _reactBootstrap.Label,
-            { bsStyle: cat.get('color') },
-            cat.get('name')
+            _reactBootstrap.Button,
+            { bsSize: 'xs' },
+            React.createElement(_reactBootstrap.Glyphicon, { glyph: 'edit' })
+          ),
+          React.createElement(
+            _reactBootstrap.Button,
+            { bsSize: 'xs' },
+            React.createElement(_reactBootstrap.Glyphicon, { glyph: 'remove' })
+          ),
+          React.createElement(
+            'h5',
+            null,
+            React.createElement(
+              _reactBootstrap.Label,
+              { bsStyle: cat.get('color') },
+              cat.get('name')
+            )
           )
-        )
-      );
-    });
+        );
+      }),
+      React.createElement('td', null)
+    );
   };
 
   var createStudentRow = function createStudentRow() {
@@ -44012,17 +44018,43 @@ var StudentTable = function StudentTable(_ref) {
             markObject.get('mark')
           );
         }),
-        React.createElement(
-          'td',
-          { key: data.get('studentName') + '_avg' },
-          React.createElement(
-            _reactBootstrap.Label,
-            { bsStyle: 'danger' },
-            data.get('avg')
-          )
-        )
+        createStudentAvgCell(data.get('avg'))
       );
     });
+  };
+
+  var createStudentAvgCell = function createStudentAvgCell(avg) {
+    if (avg >= 5) {
+      return React.createElement(
+        'td',
+        null,
+        React.createElement(
+          _reactBootstrap.Label,
+          { bsStyle: 'danger' },
+          avg
+        )
+      );
+    } else if (avg >= 4) {
+      return React.createElement(
+        'td',
+        null,
+        React.createElement(
+          _reactBootstrap.Label,
+          { bsStyle: 'warning' },
+          avg
+        )
+      );
+    } else {
+      return React.createElement(
+        'td',
+        null,
+        React.createElement(
+          _reactBootstrap.Label,
+          { bsStyle: 'success' },
+          avg
+        )
+      );
+    }
   };
 
   var tableInstance = React.createElement(
@@ -44032,21 +44064,7 @@ var StudentTable = function StudentTable(_ref) {
     React.createElement(
       'tbody',
       null,
-      React.createElement(
-        'tr',
-        null,
-        React.createElement('td', null),
-        createCategoriesRow(),
-        React.createElement(
-          'td',
-          null,
-          React.createElement(
-            _reactBootstrap.Button,
-            { bsSize: 'xs' },
-            React.createElement(_reactBootstrap.Glyphicon, { glyph: 'edit' })
-          )
-        )
-      ),
+      createCategoriesRow(),
       createStudentRow()
     )
   );
@@ -44127,14 +44145,18 @@ var createStudentsViewModel = exports.createStudentsViewModel = function createS
       sliceValue = sliceValue + avgTuple.size;
       return partRes;
     });
-    var avgStudent = avgOfStudentList.reduce(function (prev, current) {
+    var avgStudent = round2(avgOfStudentList.reduce(function (prev, current) {
       return prev + current;
-    }) / sumFaktor;
+    }) / sumFaktor);
 
     return (0, _immutable.Map)({ 'studentName': studentName, 'marks': marksOfStudent, 'avg': avgStudent });
   });
 
   return (0, _immutable.Map)({ 'headers': headers, 'cats': cats, 'studentsTableData': studentsTableData });
+};
+
+var round2 = function round2(doublevalue) {
+  return Math.round(doublevalue * 100) / 100;
 };
 
 },{"immutable":158}]},{},[427]);

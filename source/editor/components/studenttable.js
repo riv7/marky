@@ -32,13 +32,17 @@ const StudentTable = ({marksTableViewModel}) => {
 
   const createCategoriesRow = () => {
     return (
-      marksTableViewModel.get('cats').map((cat, index) =>
-        <td key={cat.get('name')+'_'+index}>
-          <Button bsSize="xs"><Glyphicon glyph="edit" /></Button>
-          <Button bsSize="xs" ><Glyphicon glyph="remove" /></Button>
-          <h5><Label bsStyle={cat.get('color')}>{cat.get('name')}</Label></h5>
-        </td>
-      )
+      <tr>
+        <td></td>
+          {marksTableViewModel.get('cats').map((cat, index) =>
+            <td key={cat.get('name')+'_'+index}>
+              <Button bsSize="xs"><Glyphicon glyph="edit" /></Button>
+              <Button bsSize="xs" ><Glyphicon glyph="remove" /></Button>
+              <h5><Label bsStyle={cat.get('color')}>{cat.get('name')}</Label></h5>
+            </td>
+          )}
+        <td></td>
+      </tr>
     );
   }
 
@@ -53,174 +57,31 @@ const StudentTable = ({marksTableViewModel}) => {
                 <td key={data.get('studentName')+'_'+index}>{markObject.get('mark')}</td>
               )
             }
-            <td key={data.get('studentName')+'_avg'}><Label bsStyle="danger">{data.get('avg')}</Label></td>
+            {createStudentAvgCell(data.get('avg'))}            
           </tr>
         );
       })
     );
   }
 
+  const createStudentAvgCell = (avg) => {
+    if (avg >= 5) {
+      return <td><Label bsStyle="danger">{avg}</Label></td>;
+    } else if (avg >= 4) {
+      return <td><Label bsStyle="warning">{avg}</Label></td>;
+    } else {
+      return <td><Label bsStyle="success">{avg}</Label></td>;
+    }
+  }
+
   const tableInstance = (
     <Table striped condensed hover>
       {createHeaders()}
       <tbody>
-        <tr>
-          <td></td>
-          {createCategoriesRow()}
-          <td><Button bsSize="xs"><Glyphicon glyph="edit" /></Button></td>
-        </tr>
+        {createCategoriesRow()}
         {createStudentRow()}
-        {/*}<tr>
-          <td></td>
-          <td>
-            <Button bsSize="xs"><Glyphicon glyph="edit" /></Button>
-            <Button bsSize="xs" ><Glyphicon glyph="remove" /></Button>
-            <h5><Label bsStyle="danger">Schritflich 1/6</Label></h5>
-          </td>
-          <td>
-            <Button bsSize="xs"><Glyphicon glyph="edit" /></Button>
-            <Button bsSize="xs" ><Glyphicon glyph="remove" /></Button>
-            <h5><Label bsStyle="danger">Schritflich 1/6</Label></h5>
-          </td>
-          <td>
-            <Button bsSize="xs"><Glyphicon glyph="edit" /></Button>
-            <Button bsSize="xs" ><Glyphicon glyph="remove" /></Button>
-            <h5><Label bsStyle="danger">Schritflich 1/6</Label></h5>
-          </td>
-          <td>
-            <Button bsSize="xs"><Glyphicon glyph="edit" /></Button>
-            <Button bsSize="xs" ><Glyphicon glyph="remove" /></Button>
-            <h5><Label bsStyle="info">Schritflich 1/6</Label></h5>
-          </td>
-          <td>
-            <Button bsSize="xs"><Glyphicon glyph="edit" /></Button>
-            <Button bsSize="xs" ><Glyphicon glyph="remove" /></Button>
-            <h5><Label bsStyle="info">Schritflich 1/6</Label></h5>
-          </td>
-          <td>
-            <Button bsSize="xs"><Glyphicon glyph="edit" /></Button>
-            <Button bsSize="xs" ><Glyphicon glyph="remove" /></Button>
-            <h5><Label bsStyle="success">Schritflich 1/6</Label></h5>
-          </td>
-          <td>
-            <Button bsSize="xs"><Glyphicon glyph="edit" /></Button>
-            <Button bsSize="xs" ><Glyphicon glyph="remove" /></Button>
-            <h5><Label bsStyle="success">Schritflich 1/6</Label></h5>
-          </td>
-          <td>
-          </td>
-        </tr>
-        <tr>
-          <td>Nico Rosberg</td>
-          <td>1.5</td>
-          <td>2.5</td>
-          <td>3.5</td>
-          <td>1.0</td>
-          <td>4.5</td>
-          <td>1.0</td>
-          <td>2.0</td>
-          <td><Label bsStyle="danger">4.0</Label></td>
-        </tr>
-        <tr>
-          <td>Lewis Hamilton</td>
-          <td>1.5</td>
-          <td>2.5</td>
-          <td>3.5</td>
-          <td>1.0</td>
-          <td>4.5</td>
-          <td>1.0</td>
-          <td>2.0</td>
-          <td><Label bsStyle="default">4.0</Label></td>
-        </tr>
-        <tr>
-          <td>Sebastian Vettel</td>
-          <td>1.5</td>
-          <td>2.5</td>
-          <td>3.5</td>
-          <td>1.0</td>
-          <td>4.5</td>
-          <td>1.0</td>
-          <td>2.0</td>
-          <td><Label bsStyle="default">4.0</Label></td>
-        </tr>
-        <tr>
-          <td>Kimi Räikkönen</td>
-          <td>1.5</td>
-          <td>2.5</td>
-          <td>3.5</td>
-          <td>1.0</td>
-          <td>4.5</td>
-          <td>1.0</td>
-          <td>2.0</td>
-          <td><Label bsStyle="success">4.0</Label></td>
-        </tr>
-        <tr>
-          <td>Dani Ricciardo</td>
-          <td>1.5</td>
-          <td>2.5</td>
-          <td>3.5</td>
-          <td>1.0</td>
-          <td>4.5</td>
-          <td>1.0</td>
-          <td>2.0</td>
-          <td><Label bsStyle="danger">4.0</Label></td>
-        </tr>
-        <tr>
-          <td>Max Verstappen</td>
-          <td>1.5</td>
-          <td>2.5</td>
-          <td>3.5</td>
-          <td>1.0</td>
-          <td>4.5</td>
-          <td>1.0</td>
-          <td>2.0</td>
-          <td><Label bsStyle="default">4.0</Label></td>
-        </tr>
-        <tr>
-          <td>Niko Hülkenberg</td>
-          <td>1.5</td>
-          <td>2.5</td>
-          <td>3.5</td>
-          <td>1.0</td>
-          <td>4.5</td>
-          <td>1.0</td>
-          <td>2.0</td>
-          <td><Label bsStyle="default">4.0</Label></td>
-        </tr>
-        <tr>
-          <td>Sergio Perez</td>
-          <td>1.5</td>
-          <td>2.5</td>
-          <td>3.5</td>
-          <td>1.0</td>
-          <td>4.5</td>
-          <td>1.0</td>
-          <td>2.0</td>
-          <td><Label bsStyle="default">4.0</Label></td>
-        </tr>
-        <tr>
-          <td>Fernando Alonso</td>
-          <td>1.5</td>
-          <td>2.5</td>
-          <td>3.5</td>
-          <td>1.0</td>
-          <td>4.5</td>
-          <td>1.0</td>
-          <td>2.0</td>
-          <td><Label bsStyle="default">4.0</Label></td>
-        </tr>
-        <tr>
-          <td>Stoffel van Doorn</td>
-          <td>1.5</td>
-          <td>2.5</td>
-          <td>3.5</td>
-          <td>1.0</td>
-          <td>4.5</td>
-          <td>1.0</td>
-          <td>2.0</td>
-          <td><Label bsStyle="success">4.0</Label></td>
-        </tr>
-        <tr></tr>
+
+        {/*}<tr></tr>
           <tr>
             <td><Glyphicon glyph="asterisk" /></td>
             <td><Label bsStyle="danger">4.0</Label></td>

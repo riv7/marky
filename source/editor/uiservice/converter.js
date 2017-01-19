@@ -42,10 +42,14 @@ export const createStudentsViewModel = (students, tests, categories) => {
       sliceValue = sliceValue+avgTuple.size;
       return partRes;
     });
-    const avgStudent = avgOfStudentList.reduce((prev,current) => prev+current)/sumFaktor;
+    const avgStudent = round2(avgOfStudentList.reduce((prev,current) => prev+current)/sumFaktor);
 
     return Map({'studentName': studentName, 'marks': marksOfStudent, 'avg': avgStudent});
   });
 
   return Map({'headers': headers, 'cats': cats, 'studentsTableData': studentsTableData});
+}
+
+const round2 = (doublevalue) => {
+  return Math.round(doublevalue * 100) / 100
 }
