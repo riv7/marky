@@ -82,7 +82,7 @@ const tests = List([
 
 const categories = List([
   Map({id: 0, name: 'schriftlich', color: "danger", sortingrank: "A", faktor: 6}),
-  Map({id: 2, name: 'mümdlich', color: "info", sortingrank: "B", faktor: 7})
+  Map({id: 2, name: 'mündlich', color: "info", sortingrank: "B", faktor: 7})
 ]);
 
 //sort

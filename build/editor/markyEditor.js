@@ -43619,7 +43619,7 @@ var tests = (0, _immutable.List)([(0, _immutable.Map)({
   average: 2.5
 })]);
 
-var categories = (0, _immutable.List)([(0, _immutable.Map)({ id: 0, name: 'schriftlich', color: "danger", sortingrank: "A", faktor: 6 }), (0, _immutable.Map)({ id: 2, name: 'mümdlich', color: "info", sortingrank: "B", faktor: 7 })]);
+var categories = (0, _immutable.List)([(0, _immutable.Map)({ id: 0, name: 'schriftlich', color: "danger", sortingrank: "A", faktor: 6 }), (0, _immutable.Map)({ id: 2, name: 'mündlich', color: "info", sortingrank: "B", faktor: 7 })]);
 
 //sort
 
@@ -43936,7 +43936,7 @@ var StudentTable = function StudentTable(_ref) {
   var addButton = React.createElement(
     _reactBootstrap.Button,
     null,
-    'add data'
+    'add test'
   );
 
   var createHeaders = function createHeaders() {
@@ -44000,6 +44000,39 @@ var StudentTable = function StudentTable(_ref) {
       React.createElement('td', null)
     );
   };
+
+  var createAvgTestsRow = function createAvgTestsRow() {
+    return React.createElement(
+      'tr',
+      null,
+      React.createElement(
+        'td',
+        null,
+        React.createElement(
+          'b',
+          null,
+          'Average'
+        )
+      ),
+      marksTableViewModel.get('avgOfTests').map(function (avg, index) {
+        return createStudentAvgCell(avg);
+      }),
+      React.createElement('td', null)
+    );
+  };
+
+  {/*}<tr></tr>
+     <tr>
+       <td><Glyphicon glyph="asterisk" /></td>
+       <td><Label bsStyle="danger">4.0</Label></td>
+       <td><Label bsStyle="default">4.0</Label></td>
+       <td><Label bsStyle="default">4.0</Label></td>
+       <td><Label bsStyle="default">4.0</Label></td>
+       <td><Label bsStyle="success">4.0</Label></td>
+       <td><Label bsStyle="success">4.0</Label></td>
+       <td><Label bsStyle="default">4.0</Label></td>
+       <td></td>
+     </tr>*/}
 
   var createStudentRow = function createStudentRow() {
     return marksTableViewModel.get('studentsTableData').map(function (data) {
@@ -44065,7 +44098,8 @@ var StudentTable = function StudentTable(_ref) {
       'tbody',
       null,
       createCategoriesRow(),
-      createStudentRow()
+      createStudentRow(),
+      createAvgTestsRow()
     )
   );
 
@@ -44111,6 +44145,15 @@ var createStudentsViewModel = exports.createStudentsViewModel = function createS
   });
   var testsSorted = sortedByDate.toList().flatten(true);
 
+  var avgOfTests = testsSorted.map(function (test) {
+    var sumTest = test.get('marks').map(function (ma) {
+      return ma.get('mark');
+    }).reduce(function (prev, current) {
+      return prev + current;
+    });
+    return round2(sumTest / test.get('marks').size);
+  });
+
   //get temp data to calculate averages of students
   var faktorSizeTuple = sortedByDate.toList().map(function (x) {
     return { 'faktor': x.first().get('category').get('faktor'), 'size': x.size };
@@ -44152,7 +44195,11 @@ var createStudentsViewModel = exports.createStudentsViewModel = function createS
     return (0, _immutable.Map)({ 'studentName': studentName, 'marks': marksOfStudent, 'avg': avgStudent });
   });
 
-  return (0, _immutable.Map)({ 'headers': headers, 'cats': cats, 'studentsTableData': studentsTableData });
+  return (0, _immutable.Map)({ 'headers': headers,
+    'cats': cats,
+    'studentsTableData': studentsTableData,
+    'avgOfTests': avgOfTests
+  });
 };
 
 var round2 = function round2(doublevalue) {

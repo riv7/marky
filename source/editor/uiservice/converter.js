@@ -17,6 +17,13 @@ export const createStudentsViewModel = (students, tests, categories) => {
   });
   const testsSorted = sortedByDate.toList().flatten(true);
 
+  const avgOfTests = testsSorted.map(test => {
+    const sumTest = test.get('marks')
+      .map(ma => ma.get('mark'))
+      .reduce((prev,current) => prev+current);
+    return round2(sumTest / test.get('marks').size);
+  });
+
   //get temp data to calculate averages of students
   const faktorSizeTuple = sortedByDate.toList().map(x => {
      return ({'faktor': x.first().get('category').get('faktor'), 'size': x.size})
@@ -47,7 +54,11 @@ export const createStudentsViewModel = (students, tests, categories) => {
     return Map({'studentName': studentName, 'marks': marksOfStudent, 'avg': avgStudent});
   });
 
-  return Map({'headers': headers, 'cats': cats, 'studentsTableData': studentsTableData});
+  return Map({'headers': headers,
+              'cats': cats,
+              'studentsTableData': studentsTableData,
+              'avgOfTests': avgOfTests
+            });
 }
 
 const round2 = (doublevalue) => {

@@ -15,7 +15,7 @@ const StudentTable = ({marksTableViewModel}) => {
   }
 
   const addButton = (
-    <Button>add data</Button>
+    <Button>add test</Button>
   );
 
   const createHeaders = () => {
@@ -46,6 +46,31 @@ const StudentTable = ({marksTableViewModel}) => {
     );
   }
 
+  const createAvgTestsRow = () => {
+    return (
+      <tr>
+        <td><b>Average</b></td>
+          {marksTableViewModel.get('avgOfTests').map((avg, index) =>
+            createStudentAvgCell(avg)
+          )}
+        <td></td>
+      </tr>
+    );
+  }
+
+  {/*}<tr></tr>
+    <tr>
+      <td><Glyphicon glyph="asterisk" /></td>
+      <td><Label bsStyle="danger">4.0</Label></td>
+      <td><Label bsStyle="default">4.0</Label></td>
+      <td><Label bsStyle="default">4.0</Label></td>
+      <td><Label bsStyle="default">4.0</Label></td>
+      <td><Label bsStyle="success">4.0</Label></td>
+      <td><Label bsStyle="success">4.0</Label></td>
+      <td><Label bsStyle="default">4.0</Label></td>
+      <td></td>
+    </tr>*/}
+
   const createStudentRow = () => {
     return (
       marksTableViewModel.get('studentsTableData').map(data => {
@@ -57,7 +82,7 @@ const StudentTable = ({marksTableViewModel}) => {
                 <td key={data.get('studentName')+'_'+index}>{markObject.get('mark')}</td>
               )
             }
-            {createStudentAvgCell(data.get('avg'))}            
+            {createStudentAvgCell(data.get('avg'))}
           </tr>
         );
       })
@@ -80,6 +105,8 @@ const StudentTable = ({marksTableViewModel}) => {
       <tbody>
         {createCategoriesRow()}
         {createStudentRow()}
+        {createAvgTestsRow()}
+
 
         {/*}<tr></tr>
           <tr>
