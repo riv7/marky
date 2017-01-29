@@ -6,12 +6,12 @@ import { Row } from 'react-bootstrap';
 import { Col } from 'react-bootstrap';
 import { PageHeader } from 'react-bootstrap';
 
-import GradeNav from './gradenav';
-import CourseNav from './coursenav';
-import StudentTable from './studenttable';
+import GradeNavContainer from '../containers/grade';
+import SubjectNavContainer from '../containers/subject';
+import StudentTableContainer from '../containers/student';
 import HeadNav from './headnav';
 
-const MarkyEditor = ({marksTableViewModel}) => {
+const MarkyEditor = () => {
 
   {/*const pageHeader = (
     <PageHeader>
@@ -42,13 +42,13 @@ const MarkyEditor = ({marksTableViewModel}) => {
       <Row></Row>
       <Row>
         <Col className="border-right" md={1}>
-          <GradeNav />
+          <GradeNavContainer />
         </Col>
         <Col className="border-right" md={1}>
-          <CourseNav />
+          <SubjectNavContainer />
         </Col>
         <Col md={10}>
-          <StudentTable marksTableViewModel={marksTableViewModel}/>
+          <StudentTableContainer/>
         </Col>
       </Row>
     </Grid>

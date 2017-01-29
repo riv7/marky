@@ -4,7 +4,7 @@ var ReactDOM = require('react-dom');
 require('../../styles/app.css');
 
 import { createStore } from 'redux';
-import { Provider } from 'react-redux';
+import { Provider } from 'react -redux';
 import reducer from './reducer/reducer';
 import FilterableStudentsTable from './components/filterabletable';
 import { getLatestYear } from './uiservice/year';

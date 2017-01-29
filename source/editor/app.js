@@ -3,9 +3,25 @@ var ReactDOM = require('react-dom');
 
 require('../../build/editor/css/marky.css');
 
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import reducer from './reducer/reducer';
+
 import { List, Map } from 'immutable';
 import MarkyEditor from './components/markyeditor'
 import { createStudentsViewModel } from './uiservice/converter';
+
+const subjects = List([
+  Map({id: 0, name: 'Mathe'}),
+  Map({id: 1, name: 'Physik'}),
+  Map({id: 2, name: 'Religion'})
+]);
+
+const grades = List([
+  Map({id: 0, name: 'Klasse 7a'}),
+  Map({id: 1, name: 'Klasse 8b'}),
+  Map({id: 2, name: 'Klasse 10c'})
+]);
 
 const students = List([
   Map({ id: 0, name: 'Nico Rosberg'}),
@@ -86,10 +102,17 @@ const categories = List([
 ]);
 
 //sort
-
-const marksTableViewModel = createStudentsViewModel(students, tests, categories);
+const store = createStore(reducer, {
+  grades: grades,
+  subjects: subjects,
+  students: students,
+  tests: tests,
+  categories: categories
+});
 
 ReactDOM.render(
-  <MarkyEditor marksTableViewModel={marksTableViewModel}/>,
+  <Provider store={store}>
+    <MarkyEditor />
+  </Provider>,
   document.getElementById('react-application')
 );
