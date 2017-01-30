@@ -45036,10 +45036,10 @@ var uid = function uid() {
   return Math.random().toString(34).slice(2);
 };
 
-var gradeSelected = exports.gradeSelected = function gradeSelected(grade) {
+var gradeSelected = exports.gradeSelected = function gradeSelected(gradeId) {
   return {
     type: 'GRADE_SELECTED',
-    payload: grade
+    payload: gradeId
   };
 };
 
@@ -45188,19 +45188,20 @@ var ReactDOM = require('react-dom');
 
 var GradeNav = function GradeNav(_ref) {
   var gradeData = _ref.gradeData;
+  var gradeSelected = _ref.gradeSelected;
 
 
   function handleSelect(selectedKey) {
-    {/*alert('selected ' + selectedKey);*/}
+    gradeSelected(selectedKey);
   }
 
   var navInstance = React.createElement(
     _reactBootstrap.Nav,
-    { bsStyle: 'pills', stacked: true, onSelect: handleSelect },
+    { bsStyle: 'pills', stacked: true, activeKey: gradeData.get('selectedGrade'), onSelect: handleSelect },
     gradeData.get('grades').map(function (grade) {
       return React.createElement(
         _reactBootstrap.NavItem,
-        { eventKey: 1, href: '/home' },
+        { eventKey: grade.get('id'), href: '/home' },
         grade.get('name')
       );
     })
@@ -45583,19 +45584,22 @@ var ReactDOM = require('react-dom');
 
 var SubjectNav = function SubjectNav(_ref) {
   var subjectData = _ref.subjectData;
+  var subjectSelected = _ref.subjectSelected;
 
 
   function handleSelect(selectedKey) {
-    {/*alert('selected ' + selectedKey);*/}
+    subjectSelected(selectedKey);
   }
 
   var navInstance = React.createElement(
     _reactBootstrap.Nav,
-    { bsStyle: 'pills', stacked: true, onSelect: handleSelect },
+    { bsStyle: 'pills', stacked: true,
+      activeKey: subjectData.get('selectedSubject'),
+      onSelect: handleSelect },
     subjectData.get('subjects').map(function (subject) {
       return React.createElement(
         _reactBootstrap.NavItem,
-        { eventKey: 1, href: '/home' },
+        { eventKey: subject.get('id'), href: '/home' },
         subject.get('name')
       );
     })

@@ -6,17 +6,21 @@ import { NavItem } from 'react-bootstrap';
 import { ButtonGroup } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 
-const SubjectNav = ({subjectData}) => {
+const SubjectNav = ({subjectData, subjectSelected}) => {
 
   function handleSelect(selectedKey) {
-    {/*alert('selected ' + selectedKey);*/}
+    subjectSelected(selectedKey);
   }
 
   const navInstance = (
-    <Nav bsStyle="pills" stacked onSelect={handleSelect}>
+    <Nav bsStyle="pills" stacked
+      activeKey={subjectData.get('selectedSubject')}
+      onSelect={handleSelect}>
       {
         subjectData.get('subjects').map(subject =>
-          <NavItem eventKey={1} href="/home">{subject.get('name')}</NavItem>)
+          <NavItem eventKey={subject.get('id')} href="/home">
+            {subject.get('name')}
+          </NavItem>)
       }
     </Nav>
   );

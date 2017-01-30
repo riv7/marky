@@ -6,17 +6,21 @@ import { NavItem } from 'react-bootstrap';
 import { ButtonGroup } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 
-const GradeNav = ({gradeData}) => {
+const GradeNav = ({gradeData, gradeSelected}) => {
 
   function handleSelect(selectedKey) {
-    {/*alert('selected ' + selectedKey);*/}
+    gradeSelected(selectedKey);
   }
 
   const navInstance = (
-    <Nav bsStyle="pills" stacked onSelect={handleSelect}>
+    <Nav bsStyle="pills" stacked
+      activeKey={gradeData.get('selectedGrade')}
+      onSelect={handleSelect}>
       {
         gradeData.get('grades').map(grade =>
-          <NavItem eventKey={1} href="/home">{grade.get('name')}</NavItem>)
+          <NavItem eventKey={grade.get('id')} href="/home">
+            {grade.get('name')}
+          </NavItem>)
       }
     </Nav>
   );

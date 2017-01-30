@@ -1,10 +1,10 @@
 // succinct hack for generating passable unique ids
 const uid = () => Math.random().toString(34).slice(2);
 
-export const gradeSelected = (grade) => {
+export const gradeSelected = (gradeId) => {
   return {
     type: 'GRADE_SELECTED',
-    payload: grade
+    payload: gradeId
   };
 }
 
