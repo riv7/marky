@@ -45036,13 +45036,6 @@ var uid = function uid() {
   return Math.random().toString(34).slice(2);
 };
 
-var gradeSelected = exports.gradeSelected = function gradeSelected(gradeId) {
-  return {
-    type: 'GRADE_SELECTED',
-    payload: gradeId
-  };
-};
-
 var gradeAdded = exports.gradeAdded = function gradeAdded(gradeName) {
   return {
     type: 'GRADE_ADDED',
@@ -45053,10 +45046,10 @@ var gradeAdded = exports.gradeAdded = function gradeAdded(gradeName) {
   };
 };
 
-var subjectSelected = exports.subjectSelected = function subjectSelected(subject) {
+var subjectSelected = exports.subjectSelected = function subjectSelected(subjectId) {
   return {
     type: 'SUBJECT_SELECTED',
-    payload: subject
+    payload: subjectId
   };
 };
 
@@ -45076,6 +45069,16 @@ var studentAdded = exports.studentAdded = function studentAdded(studentName) {
     payload: {
       id: uid(),
       name: studentName
+    }
+  };
+};
+
+var addedStudentToSubject = exports.addedStudentToSubject = function addedStudentToSubject(studentId, subjectId) {
+  return {
+    type: 'ADDED_STUDENT_TO_SUBJECT',
+    payload: {
+      studentId: studentId,
+      subjectId: subjectId
     }
   };
 };
@@ -45128,42 +45131,73 @@ var ReactDOM = require('react-dom');
 
 require('../../build/editor/css/marky.css');
 
-var subjects = (0, _immutable.List)([(0, _immutable.Map)({ id: 0, name: 'Mathe' }), (0, _immutable.Map)({ id: 1, name: 'Physik' }), (0, _immutable.Map)({ id: 2, name: 'Religion' })]);
+var grades = (0, _immutable.List)([(0, _immutable.Map)({ id: 0, name: 'Klasse 7a' }), (0, _immutable.Map)({ id: 1, name: 'Klasse 8b' }), (0, _immutable.Map)({ id: 2, name: 'Klasse 10a' }), (0, _immutable.Map)({ id: 3, name: 'Klasse 10c' })]);
 
-var grades = (0, _immutable.List)([(0, _immutable.Map)({ id: 0, name: 'Klasse 7a' }), (0, _immutable.Map)({ id: 1, name: 'Klasse 8b' }), (0, _immutable.Map)({ id: 2, name: 'Klasse 10c' })]);
+var subjects = (0, _immutable.List)([(0, _immutable.Map)({ id: 0, name: 'Mathe', scope: '7a' }), (0, _immutable.Map)({ id: 1, name: 'Physik', scope: '8b' }), (0, _immutable.Map)({ id: 2, name: 'Religion', scope: '10' })]);
 
-var students = (0, _immutable.List)([(0, _immutable.Map)({ id: 0, name: 'Nico Rosberg' }), (0, _immutable.Map)({ id: 1, name: 'Lewis Hamilton' }), (0, _immutable.Map)({ id: 2, name: 'Sebastian Vettel' }), (0, _immutable.Map)({ id: 3, name: 'Kimi Räikkönen' }), (0, _immutable.Map)({ id: 4, name: 'Dani Ricciardo' }), (0, _immutable.Map)({ id: 5, name: 'Max Verstappen' }), (0, _immutable.Map)({ id: 6, name: 'Nico Hülkenberg' }), (0, _immutable.Map)({ id: 7, name: 'Sergio Perez' }), (0, _immutable.Map)({ id: 8, name: 'Fernando Alonso' }), (0, _immutable.Map)({ id: 9, name: 'Stoffel van Doorn' })]);
+var students = (0, _immutable.List)([(0, _immutable.Map)({ id: 0, name: 'Nico Rosberg', grade: 0 }), (0, _immutable.Map)({ id: 1, name: 'Lewis Hamilton', grade: 0 }), (0, _immutable.Map)({ id: 2, name: 'Sebastian Vettel', grade: 0 }), (0, _immutable.Map)({ id: 3, name: 'Kimi Räikkönen', grade: 0 }), (0, _immutable.Map)({ id: 4, name: 'Dani Ricciardo', grade: 0 }), (0, _immutable.Map)({ id: 5, name: 'Max Verstappen', grade: 0 }), (0, _immutable.Map)({ id: 6, name: 'Nico Hülkenberg', grade: 0 }), (0, _immutable.Map)({ id: 7, name: 'Sergio Perez', grade: 0 }), (0, _immutable.Map)({ id: 8, name: 'Fernando Alonso', grade: 0 }), (0, _immutable.Map)({ id: 9, name: 'Stoffel van Doorn', grade: 0 }), (0, _immutable.Map)({ id: 10, name: 'Valtteri Bottas', grade: 1 }), (0, _immutable.Map)({ id: 11, name: 'Felipe Massa', grade: 1 }), (0, _immutable.Map)({ id: 12, name: 'Pascal Wehrlein', grade: 1 }), (0, _immutable.Map)({ id: 13, name: 'Esteban Ocon', grade: 1 }), (0, _immutable.Map)({ id: 14, name: 'Romain Grosjean', grade: 2 }), (0, _immutable.Map)({ id: 15, name: 'Esteban Gutierez', grade: 3 })]);
+
+var subjects2students = (0, _immutable.List)([(0, _immutable.Map)({ subjectId: 0, studentId: 0 }), (0, _immutable.Map)({ subjectId: 0, studentId: 1 }), (0, _immutable.Map)({ subjectId: 0, studentId: 2 }), (0, _immutable.Map)({ subjectId: 0, studentId: 3 }), (0, _immutable.Map)({ subjectId: 0, studentId: 4 }), (0, _immutable.Map)({ subjectId: 0, studentId: 5 }), (0, _immutable.Map)({ subjectId: 0, studentId: 6 }), (0, _immutable.Map)({ subjectId: 0, studentId: 7 }), (0, _immutable.Map)({ subjectId: 0, studentId: 8 }), (0, _immutable.Map)({ subjectId: 0, studentId: 9 }), (0, _immutable.Map)({ subjectId: 1, studentId: 10 }), (0, _immutable.Map)({ subjectId: 1, studentId: 11 }), (0, _immutable.Map)({ subjectId: 1, studentId: 12 }), (0, _immutable.Map)({ subjectId: 1, studentId: 13 }), (0, _immutable.Map)({ subjectId: 2, studentId: 14 }), (0, _immutable.Map)({ subjectId: 2, studentId: 15 })]);
 
 var tests = (0, _immutable.List)([(0, _immutable.Map)({
-  id: 1,
+  id: 2,
   name: 'Mündlich',
-  category: 2,
   written: '2017-01-01',
   marks: (0, _immutable.List)([(0, _immutable.Map)({ student: 0, mark: 3.0 }), (0, _immutable.Map)({ student: 1, mark: 1.5 }), (0, _immutable.Map)({ student: 2, mark: 1.5 }), (0, _immutable.Map)({ student: 3, mark: 5.5 }), (0, _immutable.Map)({ student: 4, mark: 1.5 }), (0, _immutable.Map)({ student: 5, mark: 1.5 }), (0, _immutable.Map)({ student: 6, mark: 3.0 }), (0, _immutable.Map)({ student: 7, mark: 1.5 }), (0, _immutable.Map)({ student: 8, mark: 1.5 }), (0, _immutable.Map)({ student: 9, mark: 1.5 })]),
-  average: 3.5
+  category: 2,
+  subject: 0
 }), (0, _immutable.Map)({
-  id: 0,
+  id: 1,
   name: 'KA2',
-  category: 0,
   written: '2016-08-01',
   marks: (0, _immutable.List)([(0, _immutable.Map)({ student: 0, mark: 1.5 }), (0, _immutable.Map)({ student: 1, mark: 2.5 }), (0, _immutable.Map)({ student: 2, mark: 1.5 }), (0, _immutable.Map)({ student: 3, mark: 4.5 }), (0, _immutable.Map)({ student: 4, mark: 1.5 }), (0, _immutable.Map)({ student: 5, mark: 1.5 }), (0, _immutable.Map)({ student: 6, mark: 4.5 }), (0, _immutable.Map)({ student: 7, mark: 1.0 }), (0, _immutable.Map)({ student: 8, mark: 1.5 }), (0, _immutable.Map)({ student: 9, mark: 2.0 })]),
-  average: 2.5
+  category: 0,
+  subject: 0
 }), (0, _immutable.Map)({
   id: 0,
   name: 'KA1',
-  category: 0,
   written: '2016-01-01',
   marks: (0, _immutable.List)([(0, _immutable.Map)({ student: 0, mark: 4.0 }), (0, _immutable.Map)({ student: 1, mark: 2.5 }), (0, _immutable.Map)({ student: 2, mark: 1.5 }), (0, _immutable.Map)({ student: 3, mark: 4.5 }), (0, _immutable.Map)({ student: 4, mark: 1.5 }), (0, _immutable.Map)({ student: 5, mark: 5.5 }), (0, _immutable.Map)({ student: 6, mark: 4.5 }), (0, _immutable.Map)({ student: 7, mark: 1.0 }), (0, _immutable.Map)({ student: 8, mark: 1.5 }), (0, _immutable.Map)({ student: 9, mark: 2.0 })]),
-  average: 2.5
+  category: 0,
+  subject: 0
+}), (0, _immutable.Map)({
+  id: 3,
+  name: 'KA3',
+  written: '2017-07-07',
+  marks: (0, _immutable.List)([(0, _immutable.Map)({ student: 0, mark: 2.5 }), (0, _immutable.Map)({ student: 1, mark: 2.5 }), (0, _immutable.Map)({ student: 2, mark: 4.5 }), (0, _immutable.Map)({ student: 3, mark: 5.5 }), (0, _immutable.Map)({ student: 4, mark: 3.5 }), (0, _immutable.Map)({ student: 5, mark: 4.0 }), (0, _immutable.Map)({ student: 6, mark: 4.5 }), (0, _immutable.Map)({ student: 7, mark: 2.0 }), (0, _immutable.Map)({ student: 8, mark: 1.5 }), (0, _immutable.Map)({ student: 9, mark: 2.0 })]),
+  category: 0,
+  subject: 0
+}), (0, _immutable.Map)({
+  id: 4,
+  name: 'Mündl',
+  written: '2017-05-05',
+  marks: (0, _immutable.List)([(0, _immutable.Map)({ student: 10, mark: 1.5 }), (0, _immutable.Map)({ student: 11, mark: 2.5 }), (0, _immutable.Map)({ student: 12, mark: 3.5 }), (0, _immutable.Map)({ student: 13, mark: 4.5 })]),
+  category: 2,
+  subject: 1
+}), (0, _immutable.Map)({
+  id: 5,
+  name: 'KA1',
+  written: '2017-07-05',
+  marks: (0, _immutable.List)([(0, _immutable.Map)({ student: 10, mark: 5.5 }), (0, _immutable.Map)({ student: 11, mark: 3.5 }), (0, _immutable.Map)({ student: 12, mark: 3.5 }), (0, _immutable.Map)({ student: 13, mark: 4.5 })]),
+  category: 0,
+  subject: 1
+}), (0, _immutable.Map)({
+  id: 6,
+  name: 'Mündl',
+  written: '2017-05-05',
+  marks: (0, _immutable.List)([(0, _immutable.Map)({ student: 14, mark: 3.5 }), (0, _immutable.Map)({ student: 15, mark: 4.5 })]),
+  category: 1,
+  subject: 2
 })]);
 
-var categories = (0, _immutable.List)([(0, _immutable.Map)({ id: 0, name: 'schriftlich', color: "danger", sortingrank: "A", faktor: 6 }), (0, _immutable.Map)({ id: 2, name: 'mündlich', color: "info", sortingrank: "B", faktor: 7 })]);
+var categories = (0, _immutable.List)([(0, _immutable.Map)({ id: 0, name: 'schriftlich', color: "danger", sortingrank: "A", faktor: 6 }), (0, _immutable.Map)({ id: 1, name: 'test', color: "warning", sortingrank: "A", faktor: 6 }), (0, _immutable.Map)({ id: 2, name: 'mündlich', color: "info", sortingrank: "B", faktor: 7 })]);
 
 //sort
 var store = (0, _redux.createStore)(_reducer2.default, {
   grades: grades,
   subjects: subjects,
   students: students,
+  subjects2students: subjects2students,
   tests: tests,
   categories: categories
 });
@@ -45174,45 +45208,7 @@ ReactDOM.render(React.createElement(
   React.createElement(_markyeditor2.default, null)
 ), document.getElementById('react-application'));
 
-},{"../../build/editor/css/marky.css":1,"./components/markyeditor":457,"./reducer/reducer":465,"./uiservice/converter":469,"immutable":159,"react":434,"react-dom":260,"react-redux":282,"redux":440}],455:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _reactBootstrap = require('react-bootstrap');
-
-var React = require('react');
-var ReactDOM = require('react-dom');
-
-var GradeNav = function GradeNav(_ref) {
-  var gradeData = _ref.gradeData;
-  var gradeSelected = _ref.gradeSelected;
-
-
-  function handleSelect(selectedKey) {
-    gradeSelected(selectedKey);
-  }
-
-  var navInstance = React.createElement(
-    _reactBootstrap.Nav,
-    { bsStyle: 'pills', stacked: true, activeKey: gradeData.get('selectedGrade'), onSelect: handleSelect },
-    gradeData.get('grades').map(function (grade) {
-      return React.createElement(
-        _reactBootstrap.NavItem,
-        { eventKey: grade.get('id'), href: '/home' },
-        grade.get('name')
-      );
-    })
-  );
-
-  return navInstance;
-};
-
-exports.default = GradeNav;
-
-},{"react":434,"react-bootstrap":249,"react-dom":260}],456:[function(require,module,exports){
+},{"../../build/editor/css/marky.css":1,"./components/markyeditor":456,"./reducer/reducer":463,"./uiservice/converter":467,"immutable":159,"react":434,"react-dom":260,"react-redux":282,"redux":440}],455:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -45271,7 +45267,7 @@ var HeadNav = function HeadNav() {
 
 exports.default = HeadNav;
 
-},{"react":434,"react-bootstrap":249,"react-dom":260}],457:[function(require,module,exports){
+},{"react":434,"react-bootstrap":249,"react-dom":260}],456:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -45279,10 +45275,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var _reactBootstrap = require('react-bootstrap');
-
-var _grade = require('../containers/grade');
-
-var _grade2 = _interopRequireDefault(_grade);
 
 var _subject = require('../containers/subject');
 
@@ -45350,11 +45342,6 @@ var MarkyEditor = function MarkyEditor() {
       React.createElement(
         _reactBootstrap.Col,
         { className: 'border-right', md: 1 },
-        React.createElement(_grade2.default, null)
-      ),
-      React.createElement(
-        _reactBootstrap.Col,
-        { className: 'border-right', md: 1 },
         React.createElement(_subject2.default, null)
       ),
       React.createElement(
@@ -45370,7 +45357,7 @@ var MarkyEditor = function MarkyEditor() {
 
 exports.default = MarkyEditor;
 
-},{"../containers/grade":460,"../containers/student":461,"../containers/subject":462,"./headnav":456,"react":434,"react-bootstrap":249,"react-dom":260}],458:[function(require,module,exports){
+},{"../containers/student":459,"../containers/subject":460,"./headnav":455,"react":434,"react-bootstrap":249,"react-dom":260}],457:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -45382,13 +45369,103 @@ var _reactBootstrap = require('react-bootstrap');
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var StudentTable = function StudentTable(_ref) {
-  var marksTableViewModel = _ref.marksTableViewModel;
+var AverageCell = function AverageCell(_ref) {
+  var avg = _ref.avg;
 
-
-  function handleSelect(selectedKey) {
-    {/*alert('selected ' + selectedKey);*/}
+  if (avg >= 5) {
+    return React.createElement(
+      'td',
+      null,
+      React.createElement(
+        _reactBootstrap.Label,
+        { bsStyle: 'danger' },
+        avg
+      )
+    );
+  } else if (avg >= 4) {
+    return React.createElement(
+      'td',
+      null,
+      React.createElement(
+        _reactBootstrap.Label,
+        { bsStyle: 'warning' },
+        avg
+      )
+    );
+  } else {
+    return React.createElement(
+      'td',
+      null,
+      React.createElement(
+        _reactBootstrap.Label,
+        { bsStyle: 'success' },
+        avg
+      )
+    );
   }
+};
+
+var HeaderCell = function HeaderCell(_ref2) {
+  var header = _ref2.header;
+
+  return React.createElement(
+    'th',
+    null,
+    header
+  );
+};
+
+var CategoryCell = function CategoryCell(_ref3) {
+  var category = _ref3.category;
+
+  return React.createElement(
+    'td',
+    null,
+    React.createElement(
+      _reactBootstrap.Button,
+      { bsSize: 'xs' },
+      React.createElement(_reactBootstrap.Glyphicon, { glyph: 'edit' })
+    ),
+    React.createElement(
+      _reactBootstrap.Button,
+      { bsSize: 'xs' },
+      React.createElement(_reactBootstrap.Glyphicon, { glyph: 'remove' })
+    ),
+    React.createElement(
+      'h5',
+      null,
+      React.createElement(
+        _reactBootstrap.Label,
+        { bsStyle: category.get('color') },
+        category.get('name')
+      )
+    )
+  );
+};
+
+var StudentNameCell = function StudentNameCell(_ref4) {
+  var data = _ref4.data;
+
+  return React.createElement(
+    'td',
+    null,
+    data.get('studentName')
+  );
+};
+
+var StudentMarkCell = function StudentMarkCell(_ref5) {
+  var markObject = _ref5.markObject;
+
+  return React.createElement(
+    'td',
+    null,
+    markObject.get('mark')
+  );
+};
+
+var StudentTable = function StudentTable(_ref6) {
+  var marksTableViewModel = _ref6.marksTableViewModel;
+
 
   var addButton = React.createElement(
     _reactBootstrap.Button,
@@ -45405,19 +45482,15 @@ var StudentTable = function StudentTable(_ref) {
         null,
         React.createElement(
           'th',
-          { key: 'pupil' },
+          null,
           'Pupil'
         ),
         marksTableViewModel.get('headers').map(function (header) {
-          return React.createElement(
-            'th',
-            { key: header.toString() },
-            header
-          );
+          return React.createElement(HeaderCell, { key: header.toString(), header: header });
         }),
         React.createElement(
           'th',
-          { key: 'avg' },
+          null,
           'Average'
         )
       )
@@ -45430,29 +45503,10 @@ var StudentTable = function StudentTable(_ref) {
       null,
       React.createElement('td', null),
       marksTableViewModel.get('cats').map(function (cat, index) {
-        return React.createElement(
-          'td',
-          { key: cat.get('name') + '_' + index },
-          React.createElement(
-            _reactBootstrap.Button,
-            { bsSize: 'xs' },
-            React.createElement(_reactBootstrap.Glyphicon, { glyph: 'edit' })
-          ),
-          React.createElement(
-            _reactBootstrap.Button,
-            { bsSize: 'xs' },
-            React.createElement(_reactBootstrap.Glyphicon, { glyph: 'remove' })
-          ),
-          React.createElement(
-            'h5',
-            null,
-            React.createElement(
-              _reactBootstrap.Label,
-              { bsStyle: cat.get('color') },
-              cat.get('name')
-            )
-          )
-        );
+        return React.createElement(CategoryCell, {
+          key: cat.get('name') + '_' + index,
+          category: cat
+        });
       }),
       React.createElement('td', null)
     );
@@ -45472,79 +45526,27 @@ var StudentTable = function StudentTable(_ref) {
         )
       ),
       marksTableViewModel.get('avgOfTests').map(function (avg, index) {
-        return createStudentAvgCell(avg);
+        return React.createElement(AverageCell, { key: 'avg' + index, avg: avg });
       }),
       React.createElement('td', null)
     );
   };
-
-  {/*}<tr></tr>
-     <tr>
-       <td><Glyphicon glyph="asterisk" /></td>
-       <td><Label bsStyle="danger">4.0</Label></td>
-       <td><Label bsStyle="default">4.0</Label></td>
-       <td><Label bsStyle="default">4.0</Label></td>
-       <td><Label bsStyle="default">4.0</Label></td>
-       <td><Label bsStyle="success">4.0</Label></td>
-       <td><Label bsStyle="success">4.0</Label></td>
-       <td><Label bsStyle="default">4.0</Label></td>
-       <td></td>
-     </tr>*/}
 
   var createStudentRow = function createStudentRow() {
     return marksTableViewModel.get('studentsTableData').map(function (data) {
       return React.createElement(
         'tr',
         { key: data.get('studentName') + '_tr' },
-        React.createElement(
-          'td',
-          { key: data.get('studentName') + '_td' },
-          data.get('studentName')
-        ),
+        React.createElement(StudentNameCell, { key: data.get('studentName') + '_td', data: data }),
         data.get('marks').map(function (markObject, index) {
-          return React.createElement(
-            'td',
-            { key: data.get('studentName') + '_' + index },
-            markObject.get('mark')
-          );
+          return React.createElement(StudentMarkCell, {
+            key: data.get('studentName') + '_' + index,
+            markObject: markObject
+          });
         }),
-        createStudentAvgCell(data.get('avg'))
+        React.createElement(AverageCell, { key: data.get('studentName') + '_avg', avg: data.get('avg') })
       );
     });
-  };
-
-  var createStudentAvgCell = function createStudentAvgCell(avg) {
-    if (avg >= 5) {
-      return React.createElement(
-        'td',
-        null,
-        React.createElement(
-          _reactBootstrap.Label,
-          { bsStyle: 'danger' },
-          avg
-        )
-      );
-    } else if (avg >= 4) {
-      return React.createElement(
-        'td',
-        null,
-        React.createElement(
-          _reactBootstrap.Label,
-          { bsStyle: 'warning' },
-          avg
-        )
-      );
-    } else {
-      return React.createElement(
-        'td',
-        null,
-        React.createElement(
-          _reactBootstrap.Label,
-          { bsStyle: 'success' },
-          avg
-        )
-      );
-    }
   };
 
   var tableInstance = React.createElement(
@@ -45570,7 +45572,7 @@ var StudentTable = function StudentTable(_ref) {
 
 exports.default = StudentTable;
 
-},{"react":434,"react-bootstrap":249,"react-dom":260}],459:[function(require,module,exports){
+},{"react":434,"react-bootstrap":249,"react-dom":260}],458:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -45599,7 +45601,9 @@ var SubjectNav = function SubjectNav(_ref) {
     subjectData.get('subjects').map(function (subject) {
       return React.createElement(
         _reactBootstrap.NavItem,
-        { eventKey: subject.get('id'), href: '/home' },
+        {
+          key: subject.get('id'),
+          eventKey: subject.get('id'), href: '/home' },
         subject.get('name')
       );
     })
@@ -45610,52 +45614,7 @@ var SubjectNav = function SubjectNav(_ref) {
 
 exports.default = SubjectNav;
 
-},{"react":434,"react-bootstrap":249,"react-dom":260}],460:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _reactRedux = require('react-redux');
-
-var _immutable = require('immutable');
-
-var _gradenav = require('../components/gradenav');
-
-var _gradenav2 = _interopRequireDefault(_gradenav);
-
-var _actions = require('../actions/actions');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var mapStateToProps = function mapStateToProps(state) {
-  var result = (0, _immutable.Map)({
-    selectedGrade: state.selectedGrade,
-    grades: state.grades
-  });
-
-  return {
-    gradeData: result
-  };
-};
-
-var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {
-    gradeSelected: function gradeSelected(grade) {
-      return dispatch((0, _actions.gradeSelected)(grade));
-    },
-    gradeAdded: function gradeAdded(gradeName) {
-      return dispatch((0, _actions.gradeAdded)(gradeName));
-    }
-  };
-};
-
-var GradeNavContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_gradenav2.default);
-
-exports.default = GradeNavContainer;
-
-},{"../actions/actions":453,"../components/gradenav":455,"immutable":159,"react-redux":282}],461:[function(require,module,exports){
+},{"react":434,"react-bootstrap":249,"react-dom":260}],459:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -45675,8 +45634,21 @@ var _converter = require('../uiservice/converter');
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapStateToProps = function mapStateToProps(state) {
+
+  var students = state.subjects2students.filter(function (sub2stud) {
+    return sub2stud.get('subjectId') === state.selectedSubject;
+  }).map(function (sub2studFiltered) {
+    return state.students.find(function (student) {
+      return student.get('id') === sub2studFiltered.get('studentId');
+    });
+  });
+
+  var tests = state.tests.filter(function (test) {
+    return test.get("subject") === state.selectedSubject;
+  });
+
   return {
-    marksTableViewModel: (0, _converter.createStudentsViewModel)(state.students, state.tests, state.categories)
+    marksTableViewModel: (0, _converter.createStudentsViewModel)(students, tests, state.categories)
   };
 };
 
@@ -45684,7 +45656,7 @@ var StudentTableContainer = (0, _reactRedux.connect)(mapStateToProps)(_studentta
 
 exports.default = StudentTableContainer;
 
-},{"../components/studenttable":458,"../uiservice/converter":469,"immutable":159,"react-redux":282}],462:[function(require,module,exports){
+},{"../components/studenttable":457,"../uiservice/converter":467,"immutable":159,"react-redux":282}],460:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -45729,7 +45701,7 @@ var SubjectNavContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchT
 
 exports.default = SubjectNavContainer;
 
-},{"../actions/actions":453,"../components/subjectnav":459,"immutable":159,"react-redux":282}],463:[function(require,module,exports){
+},{"../actions/actions":453,"../components/subjectnav":458,"immutable":159,"react-redux":282}],461:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -45752,28 +45724,15 @@ var categories = exports.categories = function categories() {
   }
 };
 
-},{"immutable":159}],464:[function(require,module,exports){
+},{"immutable":159}],462:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.grades = exports.selectedGrade = undefined;
+exports.grades = undefined;
 
 var _immutable = require('immutable');
-
-var selectedGrade = exports.selectedGrade = function selectedGrade() {
-  var grade = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '7a';
-  var action = arguments[1];
-
-  switch (action.type) {
-    case 'GRADE_SELECTED':
-      return action.payload;
-
-    default:
-      return grade;
-  }
-};
 
 var grades = exports.grades = function grades() {
   var grades = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : (0, _immutable.List)([]);
@@ -45788,7 +45747,7 @@ var grades = exports.grades = function grades() {
   }
 };
 
-},{"immutable":159}],465:[function(require,module,exports){
+},{"immutable":159}],463:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -45808,10 +45767,10 @@ var _tests = require('./tests');
 var _category = require('./category');
 
 var reducer = (0, _redux.combineReducers)({
-  selectedGrade: _grade.selectedGrade,
   grades: _grade.grades,
   selectedSubject: _subject.selectedSubject,
   subjects: _subject.subjects,
+  subjects2students: _subject.subjects2students,
   students: _students.students,
   tests: _tests.tests,
   categories: _category.categories
@@ -45819,7 +45778,7 @@ var reducer = (0, _redux.combineReducers)({
 
 exports.default = reducer;
 
-},{"./category":463,"./grade":464,"./students":466,"./subject":467,"./tests":468,"redux":440}],466:[function(require,module,exports){
+},{"./category":461,"./grade":462,"./students":464,"./subject":465,"./tests":466,"redux":440}],464:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -45842,18 +45801,18 @@ var students = exports.students = function students() {
   }
 };
 
-},{"immutable":159}],467:[function(require,module,exports){
+},{"immutable":159}],465:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.subjects = exports.selectedSubject = undefined;
+exports.subjects2students = exports.subjects = exports.selectedSubject = undefined;
 
 var _immutable = require('immutable');
 
 var selectedSubject = exports.selectedSubject = function selectedSubject() {
-  var subject = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'Mathe';
+  var subject = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
   var action = arguments[1];
 
   switch (action.type) {
@@ -45878,7 +45837,20 @@ var subjects = exports.subjects = function subjects() {
   }
 };
 
-},{"immutable":159}],468:[function(require,module,exports){
+var subjects2students = exports.subjects2students = function subjects2students() {
+  var subjects2students = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : (0, _immutable.List)([]);
+  var action = arguments[1];
+
+  switch (action.type) {
+    case 'ADDED_STUDENT_TO_SUBJECT':
+      return subjects2students.push((0, _immutable.Map)(action.payload));
+
+    default:
+      return subjects2students;
+  }
+};
+
+},{"immutable":159}],466:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -45901,7 +45873,7 @@ var tests = exports.tests = function tests() {
   }
 };
 
-},{"immutable":159}],469:[function(require,module,exports){
+},{"immutable":159}],467:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

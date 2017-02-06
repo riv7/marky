@@ -6,7 +6,6 @@ import { Row } from 'react-bootstrap';
 import { Col } from 'react-bootstrap';
 import { PageHeader } from 'react-bootstrap';
 
-import GradeNavContainer from '../containers/grade';
 import SubjectNavContainer from '../containers/subject';
 import StudentTableContainer from '../containers/student';
 import HeadNav from './headnav';
@@ -41,9 +40,6 @@ const MarkyEditor = () => {
       </Row>
       <Row></Row>
       <Row>
-        <Col className="border-right" md={1}>
-          <GradeNavContainer />
-        </Col>
         <Col className="border-right" md={1}>
           <SubjectNavContainer />
         </Col>

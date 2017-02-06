@@ -18,7 +18,9 @@ const SubjectNav = ({subjectData, subjectSelected}) => {
       onSelect={handleSelect}>
       {
         subjectData.get('subjects').map(subject =>
-          <NavItem eventKey={subject.get('id')} href="/home">
+          <NavItem
+              key={subject.get('id')}
+              eventKey={subject.get('id')} href="/home">
             {subject.get('name')}
           </NavItem>)
       }

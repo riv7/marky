@@ -1,15 +1,15 @@
 import { combineReducers } from 'redux';
-import { selectedSubject, subjects} from './subject';
-import { selectedGrade, grades} from './grade';
+import { selectedSubject, subjects, subjects2students} from './subject';
+import { grades} from './grade';
 import { students } from './students';
 import { tests } from './tests';
 import { categories } from './category';
 
 const reducer = combineReducers({
-  selectedGrade,
   grades,
   selectedSubject,
   subjects,
+  subjects2students,
   students,
   tests,
   categories

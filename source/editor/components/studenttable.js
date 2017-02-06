@@ -8,11 +8,39 @@ import { Button } from 'react-bootstrap';
 import { Glyphicon } from 'react-bootstrap';
 import { Label } from 'react-bootstrap';
 
-const StudentTable = ({marksTableViewModel}) => {
-
-  function handleSelect(selectedKey) {
-    {/*alert('selected ' + selectedKey);*/}
+const AverageCell = ({avg}) => {
+  if (avg >= 5) {
+    return <td><Label bsStyle="danger">{avg}</Label></td>;
+  } else if (avg >= 4) {
+    return <td><Label bsStyle="warning">{avg}</Label></td>;
+  } else {
+    return <td><Label bsStyle="success">{avg}</Label></td>;
   }
+}
+
+const HeaderCell = ({header}) => {
+  return <th>{header}</th>
+}
+
+const CategoryCell = ({category}) => {
+  return (
+    <td>
+      <Button bsSize="xs"><Glyphicon glyph="edit" /></Button>
+      <Button bsSize="xs"><Glyphicon glyph="remove" /></Button>
+      <h5><Label bsStyle={category.get('color')}>{category.get('name')}</Label></h5>
+    </td>
+  );
+}
+
+const StudentNameCell = ({data}) => {
+  return <td>{data.get('studentName')}</td>
+}
+
+const StudentMarkCell = ({markObject}) => {
+  return <td>{markObject.get('mark')}</td>
+}
+
+const StudentTable = ({marksTableViewModel}) => {
 
   const addButton = (
     <Button>add test</Button>
@@ -22,9 +50,11 @@ const StudentTable = ({marksTableViewModel}) => {
     return (
       <thead>
         <tr>
-          <th key='pupil'>Pupil</th>
-          {marksTableViewModel.get('headers').map(header => <th key={header.toString()}>{header}</th>)}
-          <th key='avg'>Average</th>
+          <th>Pupil</th>
+          {marksTableViewModel.get('headers').map(header =>
+            <HeaderCell key={header.toString()} header={header} />
+          )}
+          <th>Average</th>
         </tr>
       </thead>
     );
@@ -35,11 +65,10 @@ const StudentTable = ({marksTableViewModel}) => {
       <tr>
         <td></td>
           {marksTableViewModel.get('cats').map((cat, index) =>
-            <td key={cat.get('name')+'_'+index}>
-              <Button bsSize="xs"><Glyphicon glyph="edit" /></Button>
-              <Button bsSize="xs" ><Glyphicon glyph="remove" /></Button>
-              <h5><Label bsStyle={cat.get('color')}>{cat.get('name')}</Label></h5>
-            </td>
+            <CategoryCell
+              key={cat.get('name')+'_'+index}
+              category={cat}
+            />
           )}
         <td></td>
       </tr>
@@ -51,52 +80,30 @@ const StudentTable = ({marksTableViewModel}) => {
       <tr>
         <td><b>Average</b></td>
           {marksTableViewModel.get('avgOfTests').map((avg, index) =>
-            createStudentAvgCell(avg)
+            <AverageCell key={'avg'+index} avg={avg} />
           )}
         <td></td>
       </tr>
     );
   }
 
-  {/*}<tr></tr>
-    <tr>
-      <td><Glyphicon glyph="asterisk" /></td>
-      <td><Label bsStyle="danger">4.0</Label></td>
-      <td><Label bsStyle="default">4.0</Label></td>
-      <td><Label bsStyle="default">4.0</Label></td>
-      <td><Label bsStyle="default">4.0</Label></td>
-      <td><Label bsStyle="success">4.0</Label></td>
-      <td><Label bsStyle="success">4.0</Label></td>
-      <td><Label bsStyle="default">4.0</Label></td>
-      <td></td>
-    </tr>*/}
-
   const createStudentRow = () => {
     return (
       marksTableViewModel.get('studentsTableData').map(data => {
         return (
           <tr key={data.get('studentName')+'_tr'}>
-            <td key={data.get('studentName')+'_td'}>{data.get('studentName')}</td>
-            {
-              data.get('marks').map((markObject,index) =>
-                <td key={data.get('studentName')+'_'+index}>{markObject.get('mark')}</td>
-              )
-            }
-            {createStudentAvgCell(data.get('avg'))}
+            <StudentNameCell key={data.get('studentName')+'_td'} data={data} />
+            {data.get('marks').map((markObject,index) =>
+              <StudentMarkCell
+                key={data.get('studentName')+'_'+index}
+                markObject={markObject}
+              />
+            )}
+            <AverageCell key={data.get('studentName')+'_avg'} avg={data.get('avg')} />
           </tr>
         );
       })
     );
-  }
-
-  const createStudentAvgCell = (avg) => {
-    if (avg >= 5) {
-      return <td><Label bsStyle="danger">{avg}</Label></td>;
-    } else if (avg >= 4) {
-      return <td><Label bsStyle="warning">{avg}</Label></td>;
-    } else {
-      return <td><Label bsStyle="success">{avg}</Label></td>;
-    }
   }
 
   const tableInstance = (
@@ -106,24 +113,9 @@ const StudentTable = ({marksTableViewModel}) => {
         {createCategoriesRow()}
         {createStudentRow()}
         {createAvgTestsRow()}
-
-
-        {/*}<tr></tr>
-          <tr>
-            <td><Glyphicon glyph="asterisk" /></td>
-            <td><Label bsStyle="danger">4.0</Label></td>
-            <td><Label bsStyle="default">4.0</Label></td>
-            <td><Label bsStyle="default">4.0</Label></td>
-            <td><Label bsStyle="default">4.0</Label></td>
-            <td><Label bsStyle="success">4.0</Label></td>
-            <td><Label bsStyle="success">4.0</Label></td>
-            <td><Label bsStyle="default">4.0</Label></td>
-            <td></td>
-          </tr>*/}
       </tbody>
     </Table>
   );
-
 
   return (
     <div>

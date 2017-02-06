@@ -1,13 +1,6 @@
 // succinct hack for generating passable unique ids
 const uid = () => Math.random().toString(34).slice(2);
 
-export const gradeSelected = (gradeId) => {
-  return {
-    type: 'GRADE_SELECTED',
-    payload: gradeId
-  };
-}
-
 export const gradeAdded = (gradeName) => {
   return {
     type: 'GRADE_ADDED',
@@ -18,10 +11,10 @@ export const gradeAdded = (gradeName) => {
   };
 }
 
-export const subjectSelected = (subject) => {
+export const subjectSelected = (subjectId) => {
   return {
     type: 'SUBJECT_SELECTED',
-    payload: subject
+    payload: subjectId
   };
 }
 
@@ -41,6 +34,16 @@ export const studentAdded = (studentName) => {
     payload: {
       id:  uid(),
       name: studentName
+    }
+  };
+}
+
+export const addedStudentToSubject = (studentId, subjectId) => {
+  return {
+    type: 'ADDED_STUDENT_TO_SUBJECT',
+    payload: {
+      studentId: studentId,
+      subjectId: subjectId
     }
   };
 }
