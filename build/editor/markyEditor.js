@@ -45885,42 +45885,9 @@ var _immutable = require('immutable');
 
 var createStudentsViewModel = exports.createStudentsViewModel = function createStudentsViewModel(students, tests, categories) {
 
-  //sort by category (sortingrank) and date
-  var testsWithCategories = tests.map(function (test) {
-    var matchingCategory = categories.filter(function (category) {
-      return category.get('id') === test.get('category');
-    }).first();
-    return test.set('category', matchingCategory);
-  });
-  var sortedByRank = testsWithCategories.sort(function (a, b) {
-    return a.get('category').get('sortingrank').localeCompare(b.get('category').get('sortingrank'));
-  });
-  var groupedByCategory = sortedByRank.groupBy(function (x) {
-    return x.get('category').get('id');
-  });
-  var sortedByDate = groupedByCategory.map(function (group) {
-    return group.sort(function (a, b) {
-      return a.get('written').localeCompare(b.get('written'));
-    });
-  });
+  //sort by category (sortingrank) and written date
+  var sortedByDate = groupByCategoryAndSorted(tests, categories);
   var testsSorted = sortedByDate.toList().flatten(true);
-
-  var avgOfTests = testsSorted.map(function (test) {
-    var sumTest = test.get('marks').map(function (ma) {
-      return ma.get('mark');
-    }).reduce(function (prev, current) {
-      return prev + current;
-    });
-    return round2(sumTest / test.get('marks').size);
-  });
-
-  //get temp data to calculate averages of students
-  var faktorSizeTuple = sortedByDate.toList().map(function (x) {
-    return { 'faktor': x.first().get('category').get('faktor'), 'size': x.size };
-  });
-  var sumFaktor = faktorSizeTuple.reduce(function (prev, current) {
-    return prev.faktor + current.faktor;
-  });
 
   //get view model data to display
   var headers = testsSorted.map(function (test) {
@@ -45929,6 +45896,63 @@ var createStudentsViewModel = exports.createStudentsViewModel = function createS
   var cats = testsSorted.map(function (test) {
     return test.get('category');
   });
+  var studentsTableData = getStudentsTableData(students, testsSorted, sortedByDate);
+  var avgOfTests = getAveragesOfTests(testsSorted);
+
+  return (0, _immutable.Map)({
+    'headers': headers,
+    'cats': cats,
+    'studentsTableData': studentsTableData,
+    'avgOfTests': avgOfTests
+  });
+};
+
+var groupByCategoryAndSorted = function groupByCategoryAndSorted(tests, categories) {
+  //sort by category (sortingrank) and date
+  var testsWithCategories = tests.map(function (test) {
+    var matchingCategory = categories.filter(function (category) {
+      return category.get('id') === test.get('category');
+    }).first();
+    return test.set('category', matchingCategory);
+  });
+
+  var sortedByRank = testsWithCategories.sort(function (a, b) {
+    return a.get('category').get('sortingrank').localeCompare(b.get('category').get('sortingrank'));
+  });
+
+  var groupedByCategory = sortedByRank.groupBy(function (x) {
+    return x.get('category').get('id');
+  });
+  return groupedByCategory.map(function (group) {
+    return group.sort(function (a, b) {
+      return a.get('written').localeCompare(b.get('written'));
+    });
+  });
+};
+
+var getAveragesOfTests = function getAveragesOfTests(testsSorted) {
+  return testsSorted.map(function (test) {
+    var sumTest = test.get('marks').map(function (ma) {
+      return ma.get('mark');
+    }).reduce(function (prev, current) {
+      return prev + current;
+    });
+    return round2(sumTest / test.get('marks').size);
+  });
+};
+
+var getStudentsTableData = function getStudentsTableData(students, testsSorted, sortedByDate) {
+
+  //get temp data to calculate averages of students
+  var faktorSizeTuple = sortedByDate.toList().map(function (x) {
+    return { 'faktor': x.first().get('category').get('faktor'), 'size': x.size };
+  });
+  var sumFaktor = faktorSizeTuple.map(function (tuple) {
+    return tuple.faktor;
+  }).reduce(function (prev, current) {
+    return prev + current;
+  });
+
   var studentsTableData = students.map(function (student) {
     var studentName = student.get('name');
     var marksOfStudent = testsSorted.map(function (test) {
@@ -45955,11 +45979,7 @@ var createStudentsViewModel = exports.createStudentsViewModel = function createS
     return (0, _immutable.Map)({ 'studentName': studentName, 'marks': marksOfStudent, 'avg': avgStudent });
   });
 
-  return (0, _immutable.Map)({ 'headers': headers,
-    'cats': cats,
-    'studentsTableData': studentsTableData,
-    'avgOfTests': avgOfTests
-  });
+  return studentsTableData;
 };
 
 var round2 = function round2(doublevalue) {

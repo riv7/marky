@@ -2,37 +2,61 @@ import { List, Map } from 'immutable';
 
 export const createStudentsViewModel = (students, tests, categories) => {
 
+  //sort by category (sortingrank) and written date
+  const sortedByDate = groupByCategoryAndSorted(tests, categories);
+  const testsSorted = sortedByDate.toList().flatten(true);
+
+  //get view model data to display
+  const headers = testsSorted.map(test => test.get('name'));
+  const cats = testsSorted.map(test => test.get('category'));
+  const studentsTableData = getStudentsTableData(students, testsSorted, sortedByDate);
+  const avgOfTests = getAveragesOfTests(testsSorted);
+
+  return Map({
+    'headers': headers,
+    'cats': cats,
+    'studentsTableData': studentsTableData,
+    'avgOfTests': avgOfTests
+  });
+}
+
+const groupByCategoryAndSorted = (tests, categories) => {
   //sort by category (sortingrank) and date
   const testsWithCategories = tests.map(test => {
     const matchingCategory = categories.filter(
       category => category.get('id') === test.get('category')).first();
     return test.set('category', matchingCategory);
   });
+
   const sortedByRank = testsWithCategories.sort((a,b) =>
     a.get('category').get('sortingrank').localeCompare(b.get('category').get('sortingrank'))
   );
+
   const groupedByCategory = sortedByRank.groupBy(x => x.get('category').get('id'));
-  const sortedByDate = groupedByCategory.map(group => {
+  return groupedByCategory.map(group => {
     return group.sort((a, b) => a.get('written').localeCompare(b.get('written')));
   });
-  const testsSorted = sortedByDate.toList().flatten(true);
+}
 
-  const avgOfTests = testsSorted.map(test => {
+const getAveragesOfTests = (testsSorted) => {
+  return testsSorted.map(test => {
     const sumTest = test.get('marks')
       .map(ma => ma.get('mark'))
       .reduce((prev,current) => prev+current);
     return round2(sumTest / test.get('marks').size);
   });
+}
+
+const getStudentsTableData = (students, testsSorted, sortedByDate) => {
 
   //get temp data to calculate averages of students
   const faktorSizeTuple = sortedByDate.toList().map(x => {
      return ({'faktor': x.first().get('category').get('faktor'), 'size': x.size})
    });
-  const sumFaktor = faktorSizeTuple.reduce((prev,current) => prev.faktor+current.faktor);
+  const sumFaktor = faktorSizeTuple
+    .map(tuple => tuple.faktor)
+    .reduce((prev,current) => prev+current);
 
-  //get view model data to display
-  const headers = testsSorted.map(test => test.get('name'));
-  const cats = testsSorted.map(test => test.get('category'));
   const studentsTableData = students.map(student => {
     const studentName = student.get('name');
     const marksOfStudent = testsSorted.map(test =>
@@ -49,16 +73,12 @@ export const createStudentsViewModel = (students, tests, categories) => {
       sliceValue = sliceValue+avgTuple.size;
       return partRes;
     });
-    const avgStudent = round2(avgOfStudentList.reduce((prev,current) => prev+current)/sumFaktor);
+    const avgStudent = round2((avgOfStudentList.reduce((prev,current) => prev+current))/sumFaktor);
 
     return Map({'studentName': studentName, 'marks': marksOfStudent, 'avg': avgStudent});
   });
 
-  return Map({'headers': headers,
-              'cats': cats,
-              'studentsTableData': studentsTableData,
-              'avgOfTests': avgOfTests
-            });
+  return studentsTableData;
 }
 
 const round2 = (doublevalue) => {
