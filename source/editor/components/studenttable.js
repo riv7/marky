@@ -52,7 +52,10 @@ const StudentTable = ({marksTableViewModel}) => {
         <tr>
           <th>Pupil</th>
           {marksTableViewModel.get('headers').map(header =>
-            <HeaderCell key={header.toString()} header={header} />
+            <HeaderCell
+              key={header.get('testId')}
+              header={header.get('testName')}
+            />
           )}
           <th>Average</th>
         </tr>
@@ -64,10 +67,10 @@ const StudentTable = ({marksTableViewModel}) => {
     return (
       <tr>
         <td></td>
-          {marksTableViewModel.get('cats').map((cat, index) =>
+          {marksTableViewModel.get('cats').map(cat =>
             <CategoryCell
-              key={cat.get('name')+'_'+index}
-              category={cat}
+              key={cat.get('testId')+'_'+cat.get('category').get('id')}
+              category={cat.get('category')}
             />
           )}
         <td></td>
@@ -79,8 +82,11 @@ const StudentTable = ({marksTableViewModel}) => {
     return (
       <tr>
         <td><b>Average</b></td>
-          {marksTableViewModel.get('avgOfTests').map((avg, index) =>
-            <AverageCell key={'avg'+index} avg={avg} />
+          {marksTableViewModel.get('avgOfTests').map(avg =>
+            <AverageCell
+              key={avg.get('testId')+'_'+'avg'}
+              avg={avg.get('testAvg')}
+            />
           )}
         <td></td>
       </tr>
@@ -91,15 +97,18 @@ const StudentTable = ({marksTableViewModel}) => {
     return (
       marksTableViewModel.get('studentsTableData').map(data => {
         return (
-          <tr key={data.get('studentName')+'_tr'}>
-            <StudentNameCell key={data.get('studentName')+'_td'} data={data} />
+          <tr key={data.get('studentId')+'_tr'}>
+            <StudentNameCell
+               key={data.get('studentId')+'_td'}
+               data={data}
+            />
             {data.get('marks').map((markObject,index) =>
               <StudentMarkCell
-                key={data.get('studentName')+'_'+index}
+                key={data.get('studentId')+'_'+index}
                 markObject={markObject}
               />
             )}
-            <AverageCell key={data.get('studentName')+'_avg'} avg={data.get('avg')} />
+            <AverageCell key={data.get('studentId')+'_avg'} avg={data.get('avg')} />
           </tr>
         );
       })

@@ -45486,7 +45486,10 @@ var StudentTable = function StudentTable(_ref6) {
           'Pupil'
         ),
         marksTableViewModel.get('headers').map(function (header) {
-          return React.createElement(HeaderCell, { key: header.toString(), header: header });
+          return React.createElement(HeaderCell, {
+            key: header.get('testId'),
+            header: header.get('testName')
+          });
         }),
         React.createElement(
           'th',
@@ -45502,10 +45505,10 @@ var StudentTable = function StudentTable(_ref6) {
       'tr',
       null,
       React.createElement('td', null),
-      marksTableViewModel.get('cats').map(function (cat, index) {
+      marksTableViewModel.get('cats').map(function (cat) {
         return React.createElement(CategoryCell, {
-          key: cat.get('name') + '_' + index,
-          category: cat
+          key: cat.get('testId') + '_' + cat.get('category').get('id'),
+          category: cat.get('category')
         });
       }),
       React.createElement('td', null)
@@ -45525,8 +45528,11 @@ var StudentTable = function StudentTable(_ref6) {
           'Average'
         )
       ),
-      marksTableViewModel.get('avgOfTests').map(function (avg, index) {
-        return React.createElement(AverageCell, { key: 'avg' + index, avg: avg });
+      marksTableViewModel.get('avgOfTests').map(function (avg) {
+        return React.createElement(AverageCell, {
+          key: avg.get('testId') + '_' + 'avg',
+          avg: avg.get('testAvg')
+        });
       }),
       React.createElement('td', null)
     );
@@ -45536,15 +45542,18 @@ var StudentTable = function StudentTable(_ref6) {
     return marksTableViewModel.get('studentsTableData').map(function (data) {
       return React.createElement(
         'tr',
-        { key: data.get('studentName') + '_tr' },
-        React.createElement(StudentNameCell, { key: data.get('studentName') + '_td', data: data }),
+        { key: data.get('studentId') + '_tr' },
+        React.createElement(StudentNameCell, {
+          key: data.get('studentId') + '_td',
+          data: data
+        }),
         data.get('marks').map(function (markObject, index) {
           return React.createElement(StudentMarkCell, {
-            key: data.get('studentName') + '_' + index,
+            key: data.get('studentId') + '_' + index,
             markObject: markObject
           });
         }),
-        React.createElement(AverageCell, { key: data.get('studentName') + '_avg', avg: data.get('avg') })
+        React.createElement(AverageCell, { key: data.get('studentId') + '_avg', avg: data.get('avg') })
       );
     });
   };
@@ -45891,10 +45900,16 @@ var createStudentsViewModel = exports.createStudentsViewModel = function createS
 
   //get view model data to display
   var headers = testsSorted.map(function (test) {
-    return test.get('name');
+    return (0, _immutable.Map)({
+      testId: test.get('id'),
+      testName: test.get('name')
+    });
   });
   var cats = testsSorted.map(function (test) {
-    return test.get('category');
+    return (0, _immutable.Map)({
+      testId: test.get('id'),
+      category: test.get('category')
+    });
   });
   var studentsTableData = getStudentsTableData(students, testsSorted, sortedByDate);
   var avgOfTests = getAveragesOfTests(testsSorted);
@@ -45937,7 +45952,10 @@ var getAveragesOfTests = function getAveragesOfTests(testsSorted) {
     }).reduce(function (prev, current) {
       return prev + current;
     });
-    return round2(sumTest / test.get('marks').size);
+    return (0, _immutable.Map)({
+      testId: test.get('id'),
+      testAvg: round2(sumTest / test.get('marks').size)
+    });
   });
 };
 
@@ -45976,7 +45994,12 @@ var getStudentsTableData = function getStudentsTableData(students, testsSorted, 
       return prev + current;
     }) / sumFaktor);
 
-    return (0, _immutable.Map)({ 'studentName': studentName, 'marks': marksOfStudent, 'avg': avgStudent });
+    return (0, _immutable.Map)({
+      'studentId': student.get('id'),
+      'studentName': studentName,
+      'marks': marksOfStudent,
+      'avg': avgStudent
+    });
   });
 
   return studentsTableData;

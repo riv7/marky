@@ -7,8 +7,14 @@ export const createStudentsViewModel = (students, tests, categories) => {
   const testsSorted = sortedByDate.toList().flatten(true);
 
   //get view model data to display
-  const headers = testsSorted.map(test => test.get('name'));
-  const cats = testsSorted.map(test => test.get('category'));
+  const headers = testsSorted.map(test => Map({
+    testId: test.get('id'),
+    testName: test.get('name')
+  }));
+  const cats = testsSorted.map(test => Map({
+    testId: test.get('id'),
+    category: test.get('category')
+  }));
   const studentsTableData = getStudentsTableData(students, testsSorted, sortedByDate);
   const avgOfTests = getAveragesOfTests(testsSorted);
 
@@ -43,7 +49,10 @@ const getAveragesOfTests = (testsSorted) => {
     const sumTest = test.get('marks')
       .map(ma => ma.get('mark'))
       .reduce((prev,current) => prev+current);
-    return round2(sumTest / test.get('marks').size);
+    return Map({
+      testId: test.get('id'),
+      testAvg: round2(sumTest / test.get('marks').size)
+    })
   });
 }
 
@@ -75,7 +84,12 @@ const getStudentsTableData = (students, testsSorted, sortedByDate) => {
     });
     const avgStudent = round2((avgOfStudentList.reduce((prev,current) => prev+current))/sumFaktor);
 
-    return Map({'studentName': studentName, 'marks': marksOfStudent, 'avg': avgStudent});
+    return Map({
+      'studentId': student.get('id'),
+      'studentName': studentName,
+      'marks': marksOfStudent,
+      'avg': avgStudent
+    });
   });
 
   return studentsTableData;
