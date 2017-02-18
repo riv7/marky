@@ -16,9 +16,9 @@ const YearSelectionBar = ({year, yearChanged, years}) => {
 
   const dropdownItems = years.map((ye) => {
     return (
-      <MenuItem key={ye.id} eventKey={ye.name}>
-      {ye.name}
-    </MenuItem>)
+      <MenuItem key={ye.get('id')} eventKey={ye.get('name')}>
+        {ye.get('name')}
+      </MenuItem>)
   });
 
   return (

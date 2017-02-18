@@ -11,13 +11,11 @@ const StudentsTable = ({studentsOfYear}) => {
   const createStudentsTable = () => {
     let rows = [];
     studentsOfYear.forEach(gradeData => {
-      if (!gradeData.students.isEmpty) {
-        rows.push(<GradeRow grade={gradeData.grade} key={'grade_'+gradeData.id} />);
+      rows.push(<GradeRow grade={gradeData.get('grade')} key={'grade_'+gradeData.get('id')} />);
 
-        gradeData.students.forEach(student => {
-          rows.push(<StudentRow student={student} key={'student_'+student.id} />);
-        });
-      };
+      gradeData.get('students').forEach(student => {
+        rows.push(<StudentRow student={student} key={'student_'+student.get('id')} />);
+      });
     })
     return rows;
   }

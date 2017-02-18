@@ -6,7 +6,7 @@ import { ListGroupItem } from 'react-bootstrap';
 const StudentRow  = ({student}) => {
   return (
     <ListGroupItem>
-      {student.name}
+      {student.get('name')}
     </ListGroupItem>
   );
 }

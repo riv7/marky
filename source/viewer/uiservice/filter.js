@@ -1,6 +1,8 @@
+import { List, Map } from 'immutable';
+
 export const filterYear = (gradesStudentsAndYears, year) => {
-  return gradesStudentsAndYears.find(yearData => yearData.year === year)
-  .gradesAndStudents;
+  return gradesStudentsAndYears.find(yearData => yearData.get('year') === year)
+  .get('gradesAndStudents');
 }
 
 export const filterGrades = (studentsAndGrades, filterText) => {
@@ -17,7 +19,7 @@ export const filterGrades = (studentsAndGrades, filterText) => {
   const filteredGrades = studentsAndGrades.filter(gradeData =>
     !filterGradesArray
     || filterGradesArray.length === 0
-    || containsFilter(gradeData.grade)
+    || containsFilter(gradeData.get('grade'))
   );
   if (filterGrades.length === 0) {
     return studentsAndGrades;
@@ -40,18 +42,18 @@ export const filterStudents = (studentsAndGrades, filterText) => {
     const result = students.filter(student =>
       !filterStudentsArray
       || filterStudentsArray.length === 0
-      || containsFilter(student.name)
+      || containsFilter(student.get('name'))
     );
     return result;
   }
 
   const studentsAndGradesFiltered = studentsAndGrades.map(gradeData => {
-    const filteredStuds = filterInternal(gradeData.students);
-    const newInstance = {
-      id: gradeData.id,
-      grade: gradeData.grade,
+    const filteredStuds = filterInternal(gradeData.get('students'));
+    const newInstance = Map({
+      id: gradeData.get('id'),
+      grade: gradeData.get('grade'),
       students: filteredStuds
-    };
+    });
     return newInstance;
   });
   return studentsAndGradesFiltered;
