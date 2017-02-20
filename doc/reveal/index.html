@@ -28,11 +28,158 @@
 					<h1>react ist dem redux sein immutablejs</h1>
 					<h3>eine react-bootstrap slideshow</h3>
 					<p>
-						<small>Created by wolfram gulde / <a href="http://twitter.com/hakimel">@hakimel</a></small>
+						<small>Created by wolfram gulde / <a href="https://github.com/riv7">wolfram.gulde@github</a></small>
 					</p>
 				</section>
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<section>
+					<h2>create a mock</h2>
+					<img width="40%" data-src="img/marky_mock.jpg" alt="marky mock">
+				</section>
+				<section>
+					<section>
+						<h2>the data model</h2>
+						<pre><code class="hljs" data-trim contenteditable>
+							const gradesStudentsAndYears = [
+							  {
+							    id:0,
+							    year:'2016/2017',
+							    gradesAndStudents: [
+							      {
+							        id: 0,
+							        grade: '7d',
+							        students: [
+									{id: 3, name:'Timo Baumgartl'},
+									{id: 4, name:'Alexandru Maxim'},
+									{id: 5, name:'Christian Gentner'}
+							        ]
+							      }
+							    ]
+							  }
+						</code></pre>
+					</section>
+					<section>
+						<h2>the immutable data model</h2>
+						<pre><code class="hljs" data-trim contenteditable>
+							const gradesStudentsAndYears = List([
+							  Map({
+							    id:0,
+							    year:'2016/2017',
+							    gradesAndStudents: List([
+							      Map({
+							        id: 0,
+							        grade: '7d',
+							        students: [
+									Map({id: 3, name:'Timo Baumgartl'}),
+									Map({id: 4, name:'Alexandru Maxim'}),
+									Map({id: 5, name:'Christian Gentner'})
+							        ])
+							      })
+							    ])
+							  })
+						</code></pre>
+					</section>
+					<section>
+						<h2>immutable js</h2>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>break into components</h2>
+						<img width="65%" data-src="img/marky_mock_components_adjusted.png" alt="marky mock components">
+					</section>
+					<section>
+						<h2>and hierarchical</h2>
+						<ul>
+							<li>FilterableTable</li>
+							<ul>
+								<li>YearSelectionBar</li>
+								<li>HeaderBar</li>
+								<li>SearchBar</li>
+								<li>StudentsTable</li>
+								<ul>
+									<li>GradeRow</li>
+									<li>StudentRow</li>
+								</ul>
+							</ul>
+						</ul>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>build a static version</h2>
+					</section>
+					<section>
+						<h2>1.level (FilterableTable)</h2>
+						<pre><code class="hljs" data-trim contenteditable>
+						<FilterableTable data={gradesAndStudents} />
+						</code></pre>
+					</section>
+					<section>
+						<h2>2.level</h2>
+						<pre><code class="hljs" data-trim contenteditable>
+						<YearSelectionBar years={years}></YearSelectionBar>
+		    <PageHeader>marky</PageHeader>
+		    <SearchBar></SearchBar>
+			  	<StudentsTable data={studentsData}></StudentsTable>
+						</code></pre>
+					</section>
+					<section>
+						<h2>3.level (StudentsTable)</h2>
+						<pre><code class="hljs" data-trim contenteditable>
+						  const createStudentsTable = (studentsOfYear) => {
+						    let rows = [];
+						    studentsOfYear.forEach(gradeData => {
+						      rows.push(
+						        <GradeRow grade={gradeData.get('grade')}>
+						        </GradeRow>);
+
+						      gradeData.get('students').forEach(student => {
+						        rows.push(
+						          <StudentRow student={student}>
+						          </StudentRow>);
+						      });
+						    })
+						    return rows;
+						  }
+						</code></pre>
+					</section>
+					<section>
+						<h2>passing props</h2>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>identifying the ui state</h2>
+					</section>
+					<section>
+						<h2>recap the app data</h2>
+						<ul>
+							<li>the original students list</li>
+							<li>the selected year</li>
+							<li>the header</li>
+							<li>the entered search text</li>
+							<li>the filtered students list</li>
+						</ul>
+					</section>
+					<section>
+						<h2>questions to identify state</h2>
+						<ul>
+							<li>Is it passed in from a parent via props? If so, it probably isn't state.</li>
+							<li>Does it remain unchanged over time? If so, it probably isn't state.</li>
+							<li>Can you compute it based on any other state or props in your component? If so, it isn't state.</li>
+						</ul>
+					</section>
+					<section id="fragments">
+						<h2>our app state</h2>
+						<ul>
+							<li class="fragment fade-out">the original students list</li>
+							<li><span class="fragment highlight-green">the selected year</span></li>
+							<li class="fragment fade-out">the header</li>
+							<li><span class="fragment highlight-green">the entered search text</span></li>
+							<li class="fragment fade-out">the filtered students list</li>
+						</ul>
+					</section>
+				</section>
 			</div>
 		</div>
 
