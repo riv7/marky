@@ -109,26 +109,26 @@
 						<h2>build a static version</h2>
 					</section>
 					<section>
-						<h2>1.level (FilterableTable)</h2>
+						<h2>1.level (app.js)</h2>
 						<pre><code class="hljs" data-trim contenteditable>
 						<FilterableTable data={gradesAndStudents} />
 						</code></pre>
 					</section>
 					<section>
-						<h2>2.level</h2>
+						<h2>2.level (filterabletable.js)</h2>
 						<pre><code class="hljs" data-trim contenteditable>
-						<YearSelectionBar years={years}></YearSelectionBar>
+						<YearSelectionBar></YearSelectionBar>
 		    <PageHeader>marky</PageHeader>
 		    <SearchBar></SearchBar>
-			  	<StudentsTable data={studentsData}></StudentsTable>
+			  	<StudentsTable data={gradesAndStudents}></StudentsTable>
 						</code></pre>
 					</section>
 					<section>
-						<h2>3.level (StudentsTable)</h2>
+						<h2>3.level (studentstable.js)</h2>
 						<pre><code class="hljs" data-trim contenteditable>
-						  const createStudentsTable = (studentsOfYear) => {
+						  const createStudentsTable = (gradesAndStudents) => {
 						    let rows = [];
-						    studentsOfYear.forEach(gradeData => {
+						    gradesAndStudents.forEach(gradeData => {
 						      rows.push(
 						        <GradeRow grade={gradeData.get('grade')}>
 						        </GradeRow>);
@@ -180,6 +180,161 @@
 						</ul>
 					</section>
 				</section>
+				<section>
+					<section>
+						<h2>implememting the state with redux</h2>
+					</section>
+					<section>
+						<h2>redux state diagram</h2>
+					</section>
+					<section>
+						<h2>implementing the actions</h2>
+						<pre><code class="hljs" data-trim contenteditable>
+						export const filterChanged = (filterText) => {
+						  return {
+						    type: 'FILTER_STUDENTS',
+						    payload: filterText
+						  };
+						}
+
+						export const yearChanged = (year) => {
+						  return {
+						    type: 'YEAR_CHANGED',
+						    payload: year
+						  };
+						}
+						</code></pre>
+					</section>
+					<section>
+						<h2>implementing the reducers</h2>
+						<pre><code class="hljs" data-trim contenteditable>
+							const search = (filterText="", action) => {
+							  switch(action.type) {
+							    case 'FILTER_STUDENTS': return action.payload;
+							    default: return filterText;
+							  }
+							}
+
+							const year = (year="2016/2017", action) => {
+							  switch(action.type) {
+							    case 'YEAR_CHANGED': return action.payload;
+							    default: return year;
+							  }
+							}
+						</code></pre>
+					</section>
+					<section>
+						<h2>connecting static app with state</h2>
+						<ul>
+							<li>FilterableTable</li>
+							<ul>
+								<li><span class="fragment highlight-green">YearSelectionBar</span></li>
+								<li>HeaderBar</li>
+								<li><span class="fragment highlight-green">SearchBar</span></li>
+								<li><span class="fragment highlight-green">StudentsTable</span></li>
+								<ul>
+									<li>GradeRow</li>
+									<li>StudentRow</li>
+								</ul>
+							</ul>
+						</ul>
+					</section>
+					<section>
+						<h2>implementing the containers</h2>
+						<pre><code class="hljs" data-trim contenteditable>
+							const SearchContainer = connect(
+							  mapStateToProps,
+							  mapDispatchToProps
+							)(SearchBar);
+
+							const SearchBar = ({filterChanged, filterText}) => {
+							  const handleChange = (event) => {
+							    const input = event.target;
+							    const text = input.value;
+							    filterChanged(text);
+							  };
+							}
+						</code></pre>
+					</section>
+					<section>
+						<h2>implementing the containers</h2>
+						<pre><code class="hljs" data-trim contenteditable>
+						const YearContainer = connect(
+						  mapStateToProps,
+						  mapDispatchToProps
+						)(YearSelectionBar);
+
+						const YearSelectionBar = ({year, yearChanged}) => {
+	  	    const handleSelect = (eventKey) => {
+          const text = eventKey;
+	         yearChanged(text);
+		  	   };
+						}
+						</code></pre>
+					</section>
+					<section>
+						<h2>implementing the containers</h2>
+						<pre><code class="hljs" data-trim contenteditable>
+							const mapStateToProps = (state, ownProps) => {
+					    const year = filterYear(ownProps.fullList, state.year);
+					    const students = filterStudents(year, state.search);
+					    const filteredList = filterGrades(students, state.search);
+
+						   return {
+						     studentsOfYear: filteredList
+						   }
+							};
+
+							const StudentsContainer = connect(
+						   mapStateToProps
+							)(StudentsTable);
+							</code></pre>
+						</section>
+						<section>
+							<h2>1.level (FilterableTable)</h2>
+							<pre><code class="hljs" data-trim contenteditable>
+								<FilterableTable data={gradesAndStudents}></FilterableTable>
+							</code></pre>
+						</section>
+						<section>
+							<h2>2.level</h2>
+							<pre><code class="hljs" data-trim contenteditable>
+								<YearContainer></YearContainer>
+								<PageHeader>marky</PageHeader>
+								<SearchContainer></SearchContainer>
+								<StudentsContainer data={gradesAndStudents}></StudentsContainer>
+							</code></pre>
+						</section>
+						<section>
+							<h2>3.level (StudentsTable)</h2>
+							<pre><code class="hljs" data-trim contenteditable>
+								const createStudentsTable = (gradesAndStudents) => {
+								  let rows = [];
+								  gradesAndStudents.forEach(gradeData => {
+								    rows.push(
+								      <GradeRow grade={gradeData.get('grade')}>
+								      </GradeRow>);
+
+								      gradeData.get('students').forEach(student => {
+									rows.push(
+									  <StudentRow student={student}>
+									  </StudentRow>);
+								    });
+								  })
+								  return rows;
+								}
+							</code></pre>
+						</section>
+					</section>
+					<section>
+						<h2>and action...</h2>
+						<h3>with react-bootstrap</h3>
+					</section>
+					<section>
+						<h2>thats it</h2>
+						<p><small>now go, use react with redux und immutablejs...or do some other cool stuff;)</small></p>
+						<h2>any questions?</h3>
+					</section>
 			</div>
 		</div>
 
