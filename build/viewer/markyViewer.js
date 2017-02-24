@@ -45362,6 +45362,24 @@ var StudentsTable = function StudentsTable(_ref) {
     return rows;
   };
 
+  var createStudentsTable2 = function createStudentsTable2() {
+    var rows = [];
+    studentsOfYear.forEach(function (gradeData) {
+      rows.push(React.createElement(_graderow2.default, {
+        grade: gradeData.get('grade'),
+        key: gradeData.get('id')
+      }));
+
+      gradeData.get('students').forEach(function (student) {
+        rows.push(React.createElement(_studentrow2.default, {
+          student: student,
+          key: student.get('id')
+        }));
+      });
+    });
+    return rows;
+  };
+
   return React.createElement(
     'div',
     null,

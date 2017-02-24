@@ -92,6 +92,9 @@
 					<section>
 						<h2>immutable js</h2>
 						<pre><code class="hljs" data-trim contenteditable>
+							//get attribute
+							gradeData.get('students')
+
 							//immutable from JS
 							const immutableMap = Immutable.fromJS(javaScriptObject);
 
@@ -100,9 +103,6 @@
 
 							//full ES6 support
 							foo.map(x => x * x);
-
-							//get attribute
-							gradeData.get('students')
 						</code></pre>
 					</section>
 				</section>
@@ -216,9 +216,9 @@ const studentstable = (students) => {
 						<h2>identifying the ui state</h2>
 						<ul>
 							<li class="fragment fade-out">the original students list</li>
-							<li><span class="fragment highlight-green">the selected year</span></li>
+							<li><span class="fragment highlight-blue">the selected year</span></li>
 							<li class="fragment fade-out">the header</li>
-							<li><span class="fragment highlight-green">the entered search text</span></li>
+							<li><span class="fragment highlight-blue">the entered search text</span></li>
 							<li class="fragment fade-out">the filtered students list</li>
 						</ul>
 					</section>
@@ -229,6 +229,7 @@ const studentstable = (students) => {
 					</section>
 					<section>
 						<h2>redux state diagram</h2>
+						<img width="70%" data-src="img/redux_diagram.gif" alt="redux diagram">
 					</section>
 					<section>
 						<h2>implementing the actions</h2>
@@ -271,10 +272,10 @@ const studentstable = (students) => {
 						<ul>
 							<li>FilterableTable</li>
 							<ul>
-								<li><span class="fragment highlight-green">YearSelectionBar</span></li>
+								<li><span class="fragment highlight-blue">YearSelectionBar</span></li>
 								<li>HeaderBar</li>
-								<li><span class="fragment highlight-green">SearchBar</span></li>
-								<li><span class="fragment highlight-green">StudentsTable</span></li>
+								<li><span class="fragment highlight-blue">SearchBar</span></li>
+								<li><span class="fragment highlight-blue">StudentsTable</span></li>
 								<ul>
 									<li>GradeRow</li>
 									<li>StudentRow</li>
@@ -283,7 +284,7 @@ const studentstable = (students) => {
 						</ul>
 					</section>
 					<section>
-						<h2>implementing the containers</h2>
+						<h2>the search containers</h2>
 						<pre><code class="hljs" data-trim contenteditable>
 							const SearchContainer = connect(
 							  mapStateToProps,
@@ -300,7 +301,7 @@ const studentstable = (students) => {
 						</code></pre>
 					</section>
 					<section>
-						<h2>implementing the containers</h2>
+						<h2>the year containers</h2>
 						<pre><code class="hljs" data-trim contenteditable>
 						const YearContainer = connect(
 						  mapStateToProps,
@@ -316,7 +317,7 @@ const studentstable = (students) => {
 						</code></pre>
 					</section>
 					<section>
-						<h2>implementing the containers</h2>
+						<h2>the students containers</h2>
 						<pre><code class="hljs" data-trim contenteditable>
 							const mapStateToProps = (state, ownProps) => {
 					    const year = filterYear(ownProps.fullList, state.year);
@@ -334,38 +335,42 @@ const studentstable = (students) => {
 							</code></pre>
 						</section>
 						<section>
-							<h2>1.level (FilterableTable)</h2>
+							<h2>1.level</h2>
 							<pre><code class="hljs" data-trim contenteditable>
-								<FilterableTable data={gradesAndStudents}></FilterableTable>
+const app = () => {
+  <FilterableTable data={students}></FilterableTable>
+}
 							</code></pre>
 						</section>
 						<section>
 							<h2>2.level</h2>
 							<pre><code class="hljs" data-trim contenteditable>
-								<YearContainer></YearContainer>
-								<PageHeader>marky</PageHeader>
-								<SearchContainer></SearchContainer>
-								<StudentsContainer data={gradesAndStudents}></StudentsContainer>
+const filterabletable = ({students}) => {
+  <YearContainer></YearContainer>
+  <PageHeader>marky</PageHeader>
+  <SearchContainer></SearchContainer>
+  <StudentsContainer data={students}></StudentsContainer>
+}
 							</code></pre>
 						</section>
 						<section>
 							<h2>3.level (StudentsTable)</h2>
 							<pre><code class="hljs" data-trim contenteditable>
-								const createStudentsTable = (gradesAndStudents) => {
-								  let rows = [];
-								  gradesAndStudents.forEach(gradeData => {
-								    rows.push(
-								      <GradeRow grade={gradeData.get('grade')}>
-								      </GradeRow>);
+const studentstable = (students) => {
+  let rows = [];
+  students.forEach(gradeData => {
+    rows.push(
+      <GradeRow grade={gradeData.get('grade')}>
+      </GradeRow>);
 
-								      gradeData.get('students').forEach(student => {
-									rows.push(
-									  <StudentRow student={student}>
-									  </StudentRow>);
-								    });
-								  })
-								  return rows;
-								}
+    gradeData.get('students').forEach(student => {
+      rows.push(
+        <StudentRow student={student}>
+        </StudentRow>);
+    });
+  })
+  return rows;
+}
 							</code></pre>
 						</section>
 					</section>
