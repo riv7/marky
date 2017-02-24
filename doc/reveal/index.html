@@ -28,8 +28,19 @@
 					<h1>react ist dem redux sein immutablejs</h1>
 					<h3>eine react-bootstrap slideshow</h3>
 					<p>
-						<small>Created by wolfram gulde / <a href="https://github.com/riv7">wolfram.gulde@github</a></small>
+						<small>Created by wolfram gulde / <a href="mailto:wolfram.gulde@exxcellent.de">wolfram.gulde@exxcellent.de</a></small>
 					</p>
+				</section>
+				<section>
+					<h2>inspired by</h2>
+					<img width="40%" data-src="img/harald_schmidt.jpg" alt="harald schmidt">
+				</section>
+				<section>
+					<h3><span class="fragment highlight-blue">create a mock</span></h3>
+					<h3>break into components</h3>
+					<h3>build a static version</h3>
+					<h3>adding state</h3>
+					<h3>live demo</h3>
 				</section>
 				<section>
 					<h2>create a mock</h2>
@@ -80,7 +91,27 @@
 					</section>
 					<section>
 						<h2>immutable js</h2>
+						<pre><code class="hljs" data-trim contenteditable>
+							//immutable from JS
+							const immutableMap = Immutable.fromJS(javaScriptObject);
+
+							//back to JS
+							const javascriptArray = javaScriptObject.toJS();
+
+							//full ES6 support
+							foo.map(x => x * x);
+
+							//get attribute
+							gradeData.get('students')
+						</code></pre>
 					</section>
+				</section>
+				<section>
+					<h3>create a mock</h3>
+					<h3><span class="fragment highlight-blue">break into components</span></h3>
+					<h3>build a static version</h3>
+					<h3>adding state</h3>
+					<h3>live demo</h3>
 				</section>
 				<section>
 					<section>
@@ -105,42 +136,50 @@
 					</section>
 				</section>
 				<section>
+					<h3>create a mock</h3>
+					<h3>break into components</h3>
+					<h3><span class="fragment highlight-blue">build a static version</span></h3>
+					<h3>adding state</h3>
+					<h3>live demo</h3>
+				</section>
+				<section>
 					<section>
-						<h2>build a static version</h2>
-					</section>
-					<section>
-						<h2>1.level (app.js)</h2>
+						<h2>1.level</h2>
 						<pre><code class="hljs" data-trim contenteditable>
-						<FilterableTable data={gradesAndStudents} />
+const app = () => {
+  <FilterableTable data={students}></FilterableTable>
+}
 						</code></pre>
 					</section>
 					<section>
-						<h2>2.level (filterabletable.js)</h2>
+						<h2>2.level</h2>
 						<pre><code class="hljs" data-trim contenteditable>
-						<YearSelectionBar></YearSelectionBar>
-		    <PageHeader>marky</PageHeader>
-		    <SearchBar></SearchBar>
-			  	<StudentsTable data={gradesAndStudents}></StudentsTable>
+const filterabletable = ({students}) => {
+  <YearSelectionBar></YearSelectionBar>
+  <PageHeader>marky</PageHeader>
+  <SearchBar></SearchBar>
+  <StudentsTable data={students}></StudentsTable>
+}
 						</code></pre>
 					</section>
 					<section>
-						<h2>3.level (studentstable.js)</h2>
+						<h2>3.level</h2>
 						<pre><code class="hljs" data-trim contenteditable>
-						  const createStudentsTable = (gradesAndStudents) => {
-						    let rows = [];
-						    gradesAndStudents.forEach(gradeData => {
-						      rows.push(
-						        <GradeRow grade={gradeData.get('grade')}>
-						        </GradeRow>);
+const studentstable = (students) => {
+  let rows = [];
+  students.forEach(gradeData => {
+    rows.push(
+      <GradeRow grade={gradeData.get('grade')}>
+      </GradeRow>);
 
-						      gradeData.get('students').forEach(student => {
-						        rows.push(
-						          <StudentRow student={student}>
-						          </StudentRow>);
-						      });
-						    })
-						    return rows;
-						  }
+    gradeData.get('students').forEach(student => {
+      rows.push(
+        <StudentRow student={student}>
+        </StudentRow>);
+    });
+  })
+  return rows;
+}
 						</code></pre>
 					</section>
 					<section>
@@ -149,7 +188,11 @@
 				</section>
 				<section>
 					<section>
-						<h2>identifying the ui state</h2>
+						<h3>create a mock</h3>
+						<h3>break into components</h3>
+						<h3>build a static version</h3>
+						<h3><span class="fragment highlight-blue">adding state</span></h3>
+						<h3>live demo</h3>
 					</section>
 					<section>
 						<h2>recap the app data</h2>
@@ -170,7 +213,7 @@
 						</ul>
 					</section>
 					<section id="fragments">
-						<h2>our app state</h2>
+						<h2>identifying the ui state</h2>
 						<ul>
 							<li class="fragment fade-out">the original students list</li>
 							<li><span class="fragment highlight-green">the selected year</span></li>
@@ -182,7 +225,7 @@
 				</section>
 				<section>
 					<section>
-						<h2>implememting the state with redux</h2>
+						<h2>implementing the state with redux</h2>
 					</section>
 					<section>
 						<h2>redux state diagram</h2>
