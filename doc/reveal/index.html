@@ -36,6 +36,10 @@
 					<img width="40%" data-src="img/harald_schmidt.jpg" alt="harald schmidt">
 				</section>
 				<section>
+					<h2>react? redux? immutablejs?</h2>
+					<img class="fragment current-visible" width="60%" data-src="img/javascript-frameworks-projekte-2016.jpg" alt="harald schmidt">
+				</section>
+				<section>
 					<h3><span class="fragment highlight-blue">create a mock</span></h3>
 					<h3>break into components</h3>
 					<h3>build a static version</h3>
@@ -99,7 +103,7 @@
 							const immutableMap = Immutable.fromJS(javaScriptObject);
 
 							//back to JS
-							const javascriptArray = javaScriptObject.toJS();
+							const javascriptArray = immutableList.toJS();
 
 							//full ES6 support
 							foo.map(x => x * x);
@@ -284,54 +288,46 @@ const studentstable = (students) => {
 						</ul>
 					</section>
 					<section>
-						<h2>the search containers</h2>
+						<h2>the search container</h2>
 						<pre><code class="hljs" data-trim contenteditable>
-							const SearchContainer = connect(
-							  mapStateToProps,
-							  mapDispatchToProps
-							)(SearchBar);
+const SearchContainer = connect(
+  filterChanged
+)(SearchBar);
 
-							const SearchBar = ({filterChanged, filterText}) => {
-							  const handleChange = (event) => {
-							    const input = event.target;
-							    const text = input.value;
-							    filterChanged(text);
-							  };
-							}
+const SearchBar = ({filterChanged}) => {
+  const handleChange = (filtertext) => {
+    filterChanged(filtertext);
+  };
+}
 						</code></pre>
 					</section>
 					<section>
-						<h2>the year containers</h2>
+						<h2>the year container</h2>
 						<pre><code class="hljs" data-trim contenteditable>
-						const YearContainer = connect(
-						  mapStateToProps,
-						  mapDispatchToProps
-						)(YearSelectionBar);
+const YearContainer = connect(
+  yearChanged
+)(YearSelectionBar);
 
-						const YearSelectionBar = ({year, yearChanged}) => {
-	  	    const handleSelect = (eventKey) => {
-          const text = eventKey;
-	         yearChanged(text);
-		  	   };
-						}
+const YearSelectionBar = ({yearChanged}) => {
+  const handleSelect = (year) => {
+    yearChanged(year);
+  };
+}
 						</code></pre>
 					</section>
 					<section>
-						<h2>the students containers</h2>
+						<h2>the students container</h2>
 						<pre><code class="hljs" data-trim contenteditable>
-							const mapStateToProps = (state, ownProps) => {
-					    const year = filterYear(ownProps.fullList, state.year);
-					    const students = filterStudents(year, state.search);
-					    const filteredList = filterGrades(students, state.search);
+const mapStateToProps = (state, fullList) => {
+  const filteredList = filter(fullList,state.year,state.search);
+  return {
+    studentsOfYear: filteredList
+  }
+};
 
-						   return {
-						     studentsOfYear: filteredList
-						   }
-							};
-
-							const StudentsContainer = connect(
-						   mapStateToProps
-							)(StudentsTable);
+const StudentsContainer = connect(
+  mapStateToProps
+)(StudentsTable);
 							</code></pre>
 						</section>
 						<section>
