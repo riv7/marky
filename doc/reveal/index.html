@@ -96,9 +96,6 @@
 					<section>
 						<h2>immutable js</h2>
 						<pre><code class="hljs" data-trim contenteditable>
-							//get attribute
-							gradeData.get('students')
-
 							//immutable from JS
 							const immutableMap = Immutable.fromJS(javaScriptObject);
 
@@ -273,32 +270,11 @@ const studentstable = (students) => {
 					</section>
 					<section>
 						<h2>connecting static app with state</h2>
-						<ul>
-							<li>FilterableTable</li>
-							<ul>
-								<li><span class="fragment highlight-blue">YearSelectionBar</span></li>
-								<li>HeaderBar</li>
-								<li><span class="fragment highlight-blue">SearchBar</span></li>
-								<li><span class="fragment highlight-blue">StudentsTable</span></li>
-								<ul>
-									<li>GradeRow</li>
-									<li>StudentRow</li>
-								</ul>
-							</ul>
-						</ul>
-					</section>
-					<section>
-						<h2>the search container</h2>
 						<pre><code class="hljs" data-trim contenteditable>
-const SearchContainer = connect(
-  filterChanged
-)(SearchBar);
-
-const SearchBar = ({filterChanged}) => {
-  const handleChange = (filtertext) => {
-    filterChanged(filtertext);
-  };
-}
+const StatefullReactComponent = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(StatelessReactComponent);
 						</code></pre>
 					</section>
 					<section>
@@ -311,6 +287,20 @@ const YearContainer = connect(
 const YearSelectionBar = ({yearChanged}) => {
   const handleSelect = (year) => {
     yearChanged(year);
+  };
+}
+						</code></pre>
+					</section>
+					<section>
+						<h2>the search container</h2>
+						<pre><code class="hljs" data-trim contenteditable>
+const SearchContainer = connect(
+  filterChanged
+)(SearchBar);
+
+const SearchBar = ({filterChanged}) => {
+  const handleChange = (filtertext) => {
+    filterChanged(filtertext);
   };
 }
 						</code></pre>
