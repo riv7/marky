@@ -1,6 +1,8 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
+import { Link } from 'react-router';
+
 import { Table } from 'react-bootstrap';
 import { NavItem } from 'react-bootstrap';
 import { ButtonGroup } from 'react-bootstrap';
@@ -40,11 +42,17 @@ const StudentMarkCell = ({markObject}) => {
   return <td>{markObject.get('mark')}</td>
 }
 
-const StudentTable = ({marksTableViewModel}) => {
+const StudentTable = ({marksTableViewModel, history}) => {
 
-  const addButton = (
-    <Button>add test</Button>
-  );
+  const addButton = () => {
+    const handleClick = (eventKey) => {
+      history.push('/addtest');
+    };
+
+    return (
+      <Button onClick={handleClick}>add test</Button>
+    );
+  }
 
   const createHeaders = () => {
     return (
@@ -129,7 +137,7 @@ const StudentTable = ({marksTableViewModel}) => {
   return (
     <div>
       {tableInstance}
-      {addButton}
+      {addButton()}
     </div>
   );
 }

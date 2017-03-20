@@ -5,10 +5,16 @@ require('../../build/editor/css/marky.css');
 
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import reducer from './reducer/reducer';
+import { Router } from 'react-router';
 
+import createBrowserHistory from 'history/createBrowserHistory'
+
+import reducer from './reducer/reducer';
 import { List, Map } from 'immutable';
-import MarkyEditor from './components/markyeditor'
+import MarkyEditor from './components/markyeditor';
+import AddTest from './components/addtest';
+import App from './components/application';
+
 import { createStudentsViewModel } from './uiservice/converter';
 
 const grades = List([
@@ -196,7 +202,9 @@ const store = createStore(reducer, {
 
 ReactDOM.render(
   <Provider store={store}>
-    <MarkyEditor />
+    <Router history={createBrowserHistory()} >
+      <App />
+    </Router>
   </Provider>,
   document.getElementById('react-application')
 );

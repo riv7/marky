@@ -10,7 +10,7 @@ import SubjectNavContainer from '../containers/subject';
 import StudentTableContainer from '../containers/student';
 import HeadNav from './headnav';
 
-const MarkyEditor = ({history}) => {
+const AddTest = ({history}) => {
 
   {/*const pageHeader = (
     <PageHeader>
@@ -22,7 +22,7 @@ const MarkyEditor = ({history}) => {
 
   const pageHeader = (
     <PageHeader>
-      marky <small>enter marks</small>
+      marky <small>add test</small>
     </PageHeader>
   );
 
@@ -53,4 +53,4 @@ const MarkyEditor = ({history}) => {
   return basicGrid;
 }
 
-export default MarkyEditor;
+export default AddTest;

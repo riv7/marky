@@ -61,6 +61,7 @@ gulp.task('serve-editor', ['build-editor'], function() {
   gulp.src('build/editor')
     .pipe(webserver({
       livereload: true,
+      fallback: 'index.html',
       directoryListing: false,
       open: true
     }));
