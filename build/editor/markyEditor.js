@@ -47318,14 +47318,6 @@ var _reducer2 = _interopRequireDefault(_reducer);
 
 var _immutable = require('immutable');
 
-var _markyeditor = require('./components/markyeditor');
-
-var _markyeditor2 = _interopRequireDefault(_markyeditor);
-
-var _addtest = require('./components/addtest');
-
-var _addtest2 = _interopRequireDefault(_addtest);
-
 var _application = require('./components/application');
 
 var _application2 = _interopRequireDefault(_application);
@@ -47420,7 +47412,7 @@ ReactDOM.render(React.createElement(
   )
 ), document.getElementById('react-application'));
 
-},{"../../build/editor/css/marky.css":1,"./components/addtest":476,"./components/application":477,"./components/markyeditor":479,"./reducer/reducer":486,"./uiservice/converter":490,"history/createBrowserHistory":161,"immutable":165,"react":453,"react-dom":268,"react-redux":290,"react-router":306,"redux":459}],476:[function(require,module,exports){
+},{"../../build/editor/css/marky.css":1,"./components/application":477,"./reducer/reducer":487,"./uiservice/converter":491,"history/createBrowserHistory":161,"immutable":165,"react":453,"react-dom":268,"react-redux":290,"react-router":306,"redux":459}],476:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -47429,90 +47421,88 @@ Object.defineProperty(exports, "__esModule", {
 
 var _reactBootstrap = require('react-bootstrap');
 
-var _subject = require('../containers/subject');
-
-var _subject2 = _interopRequireDefault(_subject);
-
-var _student = require('../containers/student');
-
-var _student2 = _interopRequireDefault(_student);
-
 var _headnav = require('./headnav');
 
 var _headnav2 = _interopRequireDefault(_headnav);
+
+var _markyheader = require('./markyheader');
+
+var _markyheader2 = _interopRequireDefault(_markyheader);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var AddTest = function AddTest(_ref) {
-  var history = _ref.history;
+var AddTest = function AddTest() {
 
-
-  {/*const pageHeader = (
-     <PageHeader>
-       <div className="white">
-         marky <small className="orange">enter marks</small>
-       </div>
-     </PageHeader>
-    );*/}
-
-  var pageHeader = React.createElement(
-    _reactBootstrap.PageHeader,
-    null,
-    'marky ',
+  var addTestsForm = React.createElement(
+    _reactBootstrap.Form,
+    { horizontal: true },
     React.createElement(
-      'small',
-      null,
-      'add test'
-    )
-  );
-
-  var basicGrid = React.createElement(
-    _reactBootstrap.Grid,
-    { fluid: true },
-    React.createElement(
-      _reactBootstrap.Row,
-      null,
+      _reactBootstrap.FormGroup,
+      { controlId: 'formHorizontalEmail' },
       React.createElement(
         _reactBootstrap.Col,
-        null,
-        React.createElement(_headnav2.default, null)
-      )
-    ),
-    React.createElement(
-      _reactBootstrap.Row,
-      null,
-      React.createElement(
-        _reactBootstrap.Col,
-        { md: 12 },
-        pageHeader
-      )
-    ),
-    React.createElement(_reactBootstrap.Row, null),
-    React.createElement(
-      _reactBootstrap.Row,
-      null,
-      React.createElement(
-        _reactBootstrap.Col,
-        { className: 'border-right', md: 1 },
-        React.createElement(_subject2.default, null)
+        { componentClass: _reactBootstrap.ControlLabel, sm: 2 },
+        'Email'
       ),
       React.createElement(
         _reactBootstrap.Col,
-        { md: 10 },
-        React.createElement(_student2.default, { history: history })
+        { sm: 8 },
+        React.createElement(_reactBootstrap.FormControl, { type: 'email', placeholder: 'Email' })
+      ),
+      React.createElement(_reactBootstrap.Col, { sm: 2 })
+    ),
+    React.createElement(
+      _reactBootstrap.FormGroup,
+      { controlId: 'formHorizontalPassword' },
+      React.createElement(
+        _reactBootstrap.Col,
+        { componentClass: _reactBootstrap.ControlLabel, sm: 2 },
+        'Password'
+      ),
+      React.createElement(
+        _reactBootstrap.Col,
+        { sm: 8 },
+        React.createElement(_reactBootstrap.FormControl, { type: 'password', placeholder: 'Password' })
+      ),
+      React.createElement(_reactBootstrap.Col, { sm: 2 })
+    ),
+    React.createElement(
+      _reactBootstrap.FormGroup,
+      null,
+      React.createElement(
+        _reactBootstrap.Col,
+        { smOffset: 2, sm: 10 },
+        React.createElement(
+          _reactBootstrap.Checkbox,
+          null,
+          'Remember me'
+        )
+      )
+    ),
+    React.createElement(
+      _reactBootstrap.FormGroup,
+      null,
+      React.createElement(
+        _reactBootstrap.Col,
+        { smOffset: 2, sm: 10 },
+        React.createElement(
+          _reactBootstrap.Button,
+          { type: 'submit' },
+          'Sign in'
+        )
       )
     )
   );
 
-  return basicGrid;
+  return React.createElement(_markyheader2.default, { detailText: "enter marks", dataArea: addTestsForm });
 };
 
 exports.default = AddTest;
 
-},{"../containers/student":482,"../containers/subject":483,"./headnav":478,"react":453,"react-bootstrap":257,"react-dom":268}],477:[function(require,module,exports){
+},{"./headnav":478,"./markyheader":480,"react":453,"react-bootstrap":257,"react-dom":268}],477:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -47621,9 +47611,9 @@ var _student = require('../containers/student');
 
 var _student2 = _interopRequireDefault(_student);
 
-var _headnav = require('./headnav');
+var _markyheader = require('./markyheader');
 
-var _headnav2 = _interopRequireDefault(_headnav);
+var _markyheader2 = _interopRequireDefault(_markyheader);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -47642,6 +47632,57 @@ var MarkyEditor = function MarkyEditor(_ref) {
      </PageHeader>
     );*/}
 
+  var markyEditorForm = React.createElement(
+    'div',
+    null,
+    React.createElement(
+      _reactBootstrap.Col,
+      { className: 'border-right', md: 1 },
+      React.createElement(_subject2.default, null)
+    ),
+    React.createElement(
+      _reactBootstrap.Col,
+      { md: 11 },
+      React.createElement(_student2.default, { history: history })
+    )
+  );
+
+  return React.createElement(_markyheader2.default, { detailText: "marks for teachers", dataArea: markyEditorForm });
+};
+
+exports.default = MarkyEditor;
+
+},{"../containers/student":483,"../containers/subject":484,"./markyheader":480,"react":453,"react-bootstrap":257,"react-dom":268}],480:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactBootstrap = require('react-bootstrap');
+
+var _subject = require('../containers/subject');
+
+var _subject2 = _interopRequireDefault(_subject);
+
+var _student = require('../containers/student');
+
+var _student2 = _interopRequireDefault(_student);
+
+var _headnav = require('./headnav');
+
+var _headnav2 = _interopRequireDefault(_headnav);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var React = require('react');
+var ReactDOM = require('react-dom');
+
+var MarkyHeader = function MarkyHeader(_ref) {
+  var detailText = _ref.detailText;
+  var dataArea = _ref.dataArea;
+
+
   var pageHeader = React.createElement(
     _reactBootstrap.PageHeader,
     null,
@@ -47649,7 +47690,7 @@ var MarkyEditor = function MarkyEditor(_ref) {
     React.createElement(
       'small',
       null,
-      'enter marks'
+      detailText
     )
   );
 
@@ -47675,28 +47716,15 @@ var MarkyEditor = function MarkyEditor(_ref) {
       )
     ),
     React.createElement(_reactBootstrap.Row, null),
-    React.createElement(
-      _reactBootstrap.Row,
-      null,
-      React.createElement(
-        _reactBootstrap.Col,
-        { className: 'border-right', md: 1 },
-        React.createElement(_subject2.default, null)
-      ),
-      React.createElement(
-        _reactBootstrap.Col,
-        { md: 10 },
-        React.createElement(_student2.default, { history: history })
-      )
-    )
+    dataArea
   );
 
   return basicGrid;
 };
 
-exports.default = MarkyEditor;
+exports.default = MarkyHeader;
 
-},{"../containers/student":482,"../containers/subject":483,"./headnav":478,"react":453,"react-bootstrap":257,"react-dom":268}],480:[function(require,module,exports){
+},{"../containers/student":483,"../containers/subject":484,"./headnav":478,"react":453,"react-bootstrap":257,"react-dom":268}],481:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -47929,7 +47957,7 @@ var StudentTable = function StudentTable(_ref6) {
 
 exports.default = StudentTable;
 
-},{"react":453,"react-bootstrap":257,"react-dom":268,"react-router":306}],481:[function(require,module,exports){
+},{"react":453,"react-bootstrap":257,"react-dom":268,"react-router":306}],482:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -47971,7 +47999,7 @@ var SubjectNav = function SubjectNav(_ref) {
 
 exports.default = SubjectNav;
 
-},{"react":453,"react-bootstrap":257,"react-dom":268}],482:[function(require,module,exports){
+},{"react":453,"react-bootstrap":257,"react-dom":268}],483:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48013,7 +48041,7 @@ var StudentTableContainer = (0, _reactRedux.connect)(mapStateToProps)(_studentta
 
 exports.default = StudentTableContainer;
 
-},{"../components/studenttable":480,"../uiservice/converter":490,"immutable":165,"react-redux":290}],483:[function(require,module,exports){
+},{"../components/studenttable":481,"../uiservice/converter":491,"immutable":165,"react-redux":290}],484:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48058,7 +48086,7 @@ var SubjectNavContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchT
 
 exports.default = SubjectNavContainer;
 
-},{"../actions/actions":474,"../components/subjectnav":481,"immutable":165,"react-redux":290}],484:[function(require,module,exports){
+},{"../actions/actions":474,"../components/subjectnav":482,"immutable":165,"react-redux":290}],485:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48081,7 +48109,7 @@ var categories = exports.categories = function categories() {
   }
 };
 
-},{"immutable":165}],485:[function(require,module,exports){
+},{"immutable":165}],486:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48104,7 +48132,7 @@ var grades = exports.grades = function grades() {
   }
 };
 
-},{"immutable":165}],486:[function(require,module,exports){
+},{"immutable":165}],487:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48135,7 +48163,7 @@ var reducer = (0, _redux.combineReducers)({
 
 exports.default = reducer;
 
-},{"./category":484,"./grade":485,"./students":487,"./subject":488,"./tests":489,"redux":459}],487:[function(require,module,exports){
+},{"./category":485,"./grade":486,"./students":488,"./subject":489,"./tests":490,"redux":459}],488:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48158,7 +48186,7 @@ var students = exports.students = function students() {
   }
 };
 
-},{"immutable":165}],488:[function(require,module,exports){
+},{"immutable":165}],489:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48207,7 +48235,7 @@ var subjects2students = exports.subjects2students = function subjects2students()
   }
 };
 
-},{"immutable":165}],489:[function(require,module,exports){
+},{"immutable":165}],490:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48230,7 +48258,7 @@ var tests = exports.tests = function tests() {
   }
 };
 
-},{"immutable":165}],490:[function(require,module,exports){
+},{"immutable":165}],491:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

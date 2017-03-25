@@ -11,8 +11,6 @@ import createBrowserHistory from 'history/createBrowserHistory'
 
 import reducer from './reducer/reducer';
 import { List, Map } from 'immutable';
-import MarkyEditor from './components/markyeditor';
-import AddTest from './components/addtest';
 import App from './components/application';
 
 import { createStudentsViewModel } from './uiservice/converter';

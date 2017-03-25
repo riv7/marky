@@ -1,14 +1,11 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-import { Grid } from 'react-bootstrap';
-import { Row } from 'react-bootstrap';
 import { Col } from 'react-bootstrap';
-import { PageHeader } from 'react-bootstrap';
 
 import SubjectNavContainer from '../containers/subject';
 import StudentTableContainer from '../containers/student';
-import HeadNav from './headnav';
+import MarkyHeader from './markyheader';
 
 const MarkyEditor = ({history}) => {
 
@@ -20,37 +17,20 @@ const MarkyEditor = ({history}) => {
     </PageHeader>
   );*/}
 
-  const pageHeader = (
-    <PageHeader>
-      marky <small>enter marks</small>
-    </PageHeader>
+  const markyEditorForm = (
+    <div>
+      <Col className="border-right" md={1}>
+        <SubjectNavContainer />
+      </Col>
+      <Col md={11}>
+        <StudentTableContainer history={history}/>
+      </Col>
+    </div>
   );
 
-  const basicGrid = (
-    <Grid fluid={true}>
-      <Row>
-        <Col>
-          <HeadNav />
-        </Col>
-      </Row>
-      <Row>
-        <Col md={12}>
-          {pageHeader}
-        </Col>
-      </Row>
-      <Row></Row>
-      <Row>
-        <Col className="border-right" md={1}>
-          <SubjectNavContainer />
-        </Col>
-        <Col md={10}>
-          <StudentTableContainer history={history}/>
-        </Col>
-      </Row>
-    </Grid>
+  return (
+    <MarkyHeader detailText={"marks for teachers"} dataArea= {markyEditorForm} />
   );
-
-  return basicGrid;
 }
 
 export default MarkyEditor;

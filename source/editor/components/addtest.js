@@ -1,56 +1,54 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-import { Grid } from 'react-bootstrap';
-import { Row } from 'react-bootstrap';
-import { Col } from 'react-bootstrap';
-import { PageHeader } from 'react-bootstrap';
+import { Col, Form, FormGroup, FormControl, Checkbox, ButtonGroup, ControlLabel, Button } from 'react-bootstrap';
 
-import SubjectNavContainer from '../containers/subject';
-import StudentTableContainer from '../containers/student';
 import HeadNav from './headnav';
+import MarkyHeader from './markyheader';
 
-const AddTest = ({history}) => {
+const AddTest = () => {
 
-  {/*const pageHeader = (
-    <PageHeader>
-      <div className="white">
-        marky <small className="orange">enter marks</small>
-      </div>
-    </PageHeader>
-  );*/}
+  const addTestsForm = (
+    <Form horizontal>
+      <FormGroup controlId="formHorizontalEmail">
+        <Col componentClass={ControlLabel} sm={2}>
+          Email
+        </Col>
+        <Col sm={8}>
+          <FormControl type="email" placeholder="Email" />
+        </Col>
+        <Col sm={2}></Col>
+      </FormGroup>
 
-  const pageHeader = (
-    <PageHeader>
-      marky <small>add test</small>
-    </PageHeader>
+      <FormGroup controlId="formHorizontalPassword">
+        <Col componentClass={ControlLabel} sm={2}>
+          Password
+        </Col>
+        <Col sm={8}>
+          <FormControl type="password" placeholder="Password" />
+        </Col>
+      <Col sm={2} />
+      </FormGroup>
+
+      <FormGroup>
+        <Col smOffset={2} sm={10}>
+          <Checkbox>Remember me</Checkbox>
+        </Col>
+      </FormGroup>
+
+      <FormGroup>
+        <Col smOffset={2} sm={10}>
+          <Button type="submit">
+            Sign in
+          </Button>
+        </Col>
+      </FormGroup>
+    </Form>
   );
 
-  const basicGrid = (
-    <Grid fluid={true}>
-      <Row>
-        <Col>
-          <HeadNav />
-        </Col>
-      </Row>
-      <Row>
-        <Col md={12}>
-          {pageHeader}
-        </Col>
-      </Row>
-      <Row></Row>
-      <Row>
-        <Col className="border-right" md={1}>
-          <SubjectNavContainer />
-        </Col>
-        <Col md={10}>
-          <StudentTableContainer history={history}/>
-        </Col>
-      </Row>
-    </Grid>
+  return (
+    <MarkyHeader detailText={"enter marks"} dataArea= {addTestsForm} />
   );
-
-  return basicGrid;
 }
 
 export default AddTest;
