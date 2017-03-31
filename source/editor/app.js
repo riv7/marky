@@ -11,7 +11,7 @@ import createBrowserHistory from 'history/createBrowserHistory'
 
 import reducer from './reducer/reducer';
 import { List, Map } from 'immutable';
-import App from './components/application';
+import MarkyEditor from './components/application';
 
 import { createStudentsViewModel } from './uiservice/converter';
 
@@ -201,7 +201,7 @@ const store = createStore(reducer, {
 ReactDOM.render(
   <Provider store={store}>
     <Router history={createBrowserHistory()} >
-      <App />
+      <MarkyEditor />
     </Router>
   </Provider>,
   document.getElementById('react-application')

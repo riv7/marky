@@ -1,16 +1,16 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-import MarkyEditor from './markyeditor';
-import AddTest from './addtest';
+import MainTable from './maintable';
+import AddTestContainer from '../containers/addtest';
 
 import { Route } from 'react-router';
 
-const App = () => (
+const MarkyEditor = () => (
   <div>
-    <Route exact path="/" component={MarkyEditor} />
-    <Route path="/addtest" component={AddTest} />
+    <Route exact path="/" component={MainTable} />
+    <Route path="/addtest" component={AddTestContainer} />
   </div>
 )
 
-export default App;
+export default MarkyEditor;

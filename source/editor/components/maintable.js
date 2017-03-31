@@ -7,7 +7,7 @@ import SubjectNavContainer from '../containers/subject';
 import StudentTableContainer from '../containers/student';
 import MarkyHeader from './markyheader';
 
-const MarkyEditor = ({history}) => {
+const MainTable = ({history}) => {
 
   {/*const pageHeader = (
     <PageHeader>
@@ -33,4 +33,4 @@ const MarkyEditor = ({history}) => {
   );
 }
 
-export default MarkyEditor;
+export default MainTable;
