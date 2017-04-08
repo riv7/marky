@@ -10,9 +10,13 @@ const mapStateToProps = (state) => {
     .map(sub2studFiltered => state.students.find(student => student.get('id')
     === sub2studFiltered.get('studentId')));
 
+  const selectedSubject = state.subjects
+    .filter(sub => sub.get('id') === state.selectedSubject)
+    .first();
+
   return {
     addTestData: Map({
-      subjectName: state.selectedSubject,
+      subject: selectedSubject,
       students: students
     })
   }

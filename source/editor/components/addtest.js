@@ -7,21 +7,21 @@ import MarkyHeader from './markyheader';
 
 const AddTest = ({addTestData}) => {
 
-  const TestNameRow = () => {
+  const TestMetadataRow = ({rowLabel, rowPlaceholder}) => {
     return (
-      <FormGroup bsSize="large" controlId="formHorizontalEmail">
+      <FormGroup controlId="formHorizontalEmail">
         <Col componentClass={ControlLabel} sm={2}>
-          {"test name"}
+          {rowLabel}
         </Col>
         <Col sm={8}>
-          <FormControl type="text" placeholder="enter test name (p.ex.: KA1)..." />
+          <FormControl type="text" placeholder={rowPlaceholder} />
         </Col>
         <Col sm={2}></Col>
       </FormGroup>
     );
   }
 
-  const AddTestRow = ({student}) => {
+  const StudentRow = ({student}) => {
     return (
       <FormGroup controlId="formHorizontalEmail">
         <Col componentClass={ControlLabel} sm={2}>
@@ -37,9 +37,13 @@ const AddTest = ({addTestData}) => {
 
   const addTestsForm = (
     <Form horizontal>
-      <TestNameRow />
+      <TestMetadataRow
+        rowLabel={"test name"}
+        rowPlaceholder={"enter test name (p.ex.: KA1)..."}
+      />
+      <div className="border-below"></div>
       {addTestData.get('students').map(student =>
-        <AddTestRow
+        <StudentRow
           key={student.get('id')}
           student={student}
         />
@@ -53,8 +57,6 @@ const AddTest = ({addTestData}) => {
       </FormGroup>
     </Form>
   );
-
-
 
   const addTestsForm2 = (
     <Form horizontal>
@@ -95,7 +97,11 @@ const AddTest = ({addTestData}) => {
   );
 
   return (
-    <MarkyHeader detailText={"enter marks"} dataArea= {addTestsForm} />
+    <MarkyHeader detailText={
+      "enter marks for "+
+      addTestData.get("subject").get('name')+" "+
+      addTestData.get("subject").get('scope')
+    } dataArea= {addTestsForm} />
   );
 }
 

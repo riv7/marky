@@ -6724,6 +6724,11 @@ button.close {
 .border-right {
   border-right: 1px solid #eeeeee;
 }
+.border-below {
+  border-bottom: 1px solid #eeeeee;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
 /*
 .blck {
     background-color: rgba(36,36,36,.9);
