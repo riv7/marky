@@ -47515,6 +47515,26 @@ var AddTest = function AddTest(_ref) {
     );
   };
 
+  var SubmitButton = function SubmitButton() {
+    var handleClick = function handleClick(eventKey) {
+      alert('create test object');
+    };
+
+    return React.createElement(
+      _reactBootstrap.FormGroup,
+      null,
+      React.createElement(
+        _reactBootstrap.Col,
+        { smOffset: 2, sm: 10 },
+        React.createElement(
+          _reactBootstrap.Button,
+          { onClick: handleClick, type: 'submit' },
+          'submit'
+        )
+      )
+    );
+  };
+
   var addTestsForm = React.createElement(
     _reactBootstrap.Form,
     { horizontal: true },
@@ -47537,19 +47557,7 @@ var AddTest = function AddTest(_ref) {
         student: student
       });
     }),
-    React.createElement(
-      _reactBootstrap.FormGroup,
-      null,
-      React.createElement(
-        _reactBootstrap.Col,
-        { smOffset: 2, sm: 10 },
-        React.createElement(
-          _reactBootstrap.Button,
-          { type: 'submit' },
-          'submit'
-        )
-      )
-    )
+    React.createElement(SubmitButton, null)
   );
 
   return React.createElement(_markyheader2.default, { detailText: "enter marks for " + addTestData.get("subject").get('name') + " " + addTestData.get("subject").get('scope'), dataArea: addTestsForm });

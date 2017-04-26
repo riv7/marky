@@ -46,7 +46,6 @@ const AddTest = ({addTestData}) => {
         </Col>
         <Col sm={2}></Col>
       </FormGroup>
-
     );
   }
 
@@ -60,6 +59,22 @@ const AddTest = ({addTestData}) => {
           <FormControl type="text" placeholder="Enter mark..." />
         </Col>
         <Col sm={2}></Col>
+      </FormGroup>
+    );
+  }
+
+  const SubmitButton = () => {
+    const handleClick = (eventKey) => {
+      alert('create test object')
+    };
+
+    return (
+      <FormGroup>
+        <Col smOffset={2} sm={10}>
+          <Button onClick={handleClick} type="submit">
+            submit
+          </Button>
+        </Col>
       </FormGroup>
     );
   }
@@ -87,13 +102,7 @@ const AddTest = ({addTestData}) => {
           student={student}
         />
       )}
-      <FormGroup>
-        <Col smOffset={2} sm={10}>
-          <Button type="submit">
-            submit
-          </Button>
-        </Col>
-      </FormGroup>
+      <SubmitButton />
     </Form>
   );
 
