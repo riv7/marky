@@ -14,10 +14,13 @@ const mapStateToProps = (state) => {
     .filter(sub => sub.get('id') === state.selectedSubject)
     .first();
 
+  const allCategories = state.categories;
+
   return {
     addTestData: Map({
       subject: selectedSubject,
-      students: students
+      students: students,
+      categories: allCategories
     })
   }
 }

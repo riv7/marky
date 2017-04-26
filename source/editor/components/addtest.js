@@ -9,7 +9,7 @@ const AddTest = ({addTestData}) => {
 
   const TestMetadataRow = ({rowLabel, rowPlaceholder}) => {
     return (
-      <FormGroup controlId="formHorizontalEmail">
+      <FormGroup controlId="formHorizontalText">
         <Col componentClass={ControlLabel} sm={2}>
           {rowLabel}
         </Col>
@@ -18,12 +18,41 @@ const AddTest = ({addTestData}) => {
         </Col>
         <Col sm={2}></Col>
       </FormGroup>
+
+    );
+  }
+
+  const CategoryOptionValue = ({category}) => {
+    return (
+      <option value={category.get('id')}>{category.get('name')}</option>
+    );
+  }
+
+  const CategorySelect = ({rowLabel, rowPlaceholder}) => {
+    return (
+      <FormGroup controlId="formHorizontalSelect">
+        <Col componentClass={ControlLabel} sm={2}>
+          {rowLabel}
+        </Col>
+        <Col sm={8}>
+          <FormControl componentClass="select" placeholder={rowPlaceholder} >
+            {addTestData.get('categories').map(category =>
+              <CategoryOptionValue
+                key={category.get('id')}
+                category={category}
+              />
+            )}
+          </FormControl>
+        </Col>
+        <Col sm={2}></Col>
+      </FormGroup>
+
     );
   }
 
   const StudentRow = ({student}) => {
     return (
-      <FormGroup controlId="formHorizontalEmail">
+      <FormGroup controlId="formHorizontalText">
         <Col componentClass={ControlLabel} sm={2}>
           {student.get('name')}
         </Col>
@@ -41,7 +70,17 @@ const AddTest = ({addTestData}) => {
         rowLabel={"test name"}
         rowPlaceholder={"enter test name (p.ex.: KA1)..."}
       />
+      <TestMetadataRow
+        rowLabel={"written at"}
+        rowPlaceholder={"dd.MM.yyyy"}
+      />
+      <CategorySelect
+        rowLabel={"category"}
+        rowPlaceholder={"select..."}
+      />
+
       <div className="border-below"></div>
+
       {addTestData.get('students').map(student =>
         <StudentRow
           key={student.get('id')}
@@ -58,43 +97,6 @@ const AddTest = ({addTestData}) => {
     </Form>
   );
 
-  const addTestsForm2 = (
-    <Form horizontal>
-      <FormGroup controlId="formHorizontalEmail">
-        <Col componentClass={ControlLabel} sm={2}>
-          Email
-        </Col>
-        <Col sm={8}>
-          <FormControl type="email" placeholder="Email" />
-        </Col>
-        <Col sm={2}></Col>
-      </FormGroup>
-
-      <FormGroup controlId="formHorizontalPassword">
-        <Col componentClass={ControlLabel} sm={2}>
-          Password
-        </Col>
-        <Col sm={8}>
-          <FormControl type="password" placeholder="Password" />
-        </Col>
-      <Col sm={2} />
-      </FormGroup>
-
-      <FormGroup>
-        <Col smOffset={2} sm={10}>
-          <Checkbox>Remember me</Checkbox>
-        </Col>
-      </FormGroup>
-
-      <FormGroup>
-        <Col smOffset={2} sm={10}>
-          <Button type="submit">
-            Sign in
-          </Button>
-        </Col>
-      </FormGroup>
-    </Form>
-  );
 
   return (
     <MarkyHeader detailText={
