@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import { Map } from 'immutable';
 import StudentTable from '../components/studenttable';
 import { createStudentsViewModel } from '../uiservice/converter';
+import { addTestFormInitialized } from '../actions/actions';
 
 const mapStateToProps = (state) => {
 
@@ -23,8 +24,15 @@ const mapStateToProps = (state) => {
   }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addTestFormInitialized: (students) => dispatch(addTestFormInitialized(students))
+  }
+}
+
 const StudentTableContainer = connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(StudentTable)
 
 export default StudentTableContainer

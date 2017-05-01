@@ -69,3 +69,23 @@ export const categoryAdded = (categoryName) => {
     }
   };
 }
+
+export const addTestFormChanged = (field, value, id) => {
+  return {
+    type: 'FORMDATA_CHANGED',
+    payload: {
+      field:  field,
+      value: value,
+      id: id
+    }
+  };
+}
+
+export const addTestFormInitialized = (students) => {
+  return {
+    type: 'FORMDATA_INITIALIZED',
+    payload: {
+      students: students
+    }
+  };
+}

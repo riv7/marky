@@ -47299,6 +47299,26 @@ var categoryAdded = exports.categoryAdded = function categoryAdded(categoryName)
   };
 };
 
+var addTestFormChanged = exports.addTestFormChanged = function addTestFormChanged(field, value, id) {
+  return {
+    type: 'FORMDATA_CHANGED',
+    payload: {
+      field: field,
+      value: value,
+      id: id
+    }
+  };
+};
+
+var addTestFormInitialized = exports.addTestFormInitialized = function addTestFormInitialized(students) {
+  return {
+    type: 'FORMDATA_INITIALIZED',
+    payload: {
+      students: students
+    }
+  };
+};
+
 },{}],475:[function(require,module,exports){
 'use strict';
 
@@ -47432,11 +47452,30 @@ var ReactDOM = require('react-dom');
 
 var AddTest = function AddTest(_ref) {
   var addTestData = _ref.addTestData;
+  var addTestFormChanged = _ref.addTestFormChanged;
 
 
   var TestMetadataRow = function TestMetadataRow(_ref2) {
+    var type = _ref2.type;
     var rowLabel = _ref2.rowLabel;
     var rowPlaceholder = _ref2.rowPlaceholder;
+
+
+    var handleChange = function handleChange(event) {
+      var input = event.target;
+      var text = input.value;
+      addTestFormChanged(type, text);
+    };
+
+    var formValue = void 0;
+    switch (type) {
+      case 'TEST_NAME':
+        formValue = addTestData.get('formdata').get('testname');
+        break;
+      case 'WRITTEN_AT':
+        formValue = addTestData.get('formdata').get('writtenat');
+        break;
+    }
 
     return React.createElement(
       _reactBootstrap.FormGroup,
@@ -47449,7 +47488,12 @@ var AddTest = function AddTest(_ref) {
       React.createElement(
         _reactBootstrap.Col,
         { sm: 8 },
-        React.createElement(_reactBootstrap.FormControl, { type: 'text', placeholder: rowPlaceholder })
+        React.createElement(_reactBootstrap.FormControl, {
+          type: 'text',
+          placeholder: rowPlaceholder,
+          value: formValue,
+          onChange: handleChange
+        })
       ),
       React.createElement(_reactBootstrap.Col, { sm: 2 })
     );
@@ -47469,6 +47513,15 @@ var AddTest = function AddTest(_ref) {
     var rowLabel = _ref4.rowLabel;
     var rowPlaceholder = _ref4.rowPlaceholder;
 
+
+    var handleChange = function handleChange(event) {
+      var input = event.target;
+      var text = input.value;
+      addTestFormChanged("CATEGORY", text);
+    };
+
+    var formValue = addTestData.get('formdata').get('category');
+
     return React.createElement(
       _reactBootstrap.FormGroup,
       { controlId: 'formHorizontalSelect' },
@@ -47486,7 +47539,9 @@ var AddTest = function AddTest(_ref) {
           addTestData.get('categories').map(function (category) {
             return React.createElement(CategoryOptionValue, {
               key: category.get('id'),
-              category: category
+              category: category,
+              value: formValue,
+              onChange: handleChange
             });
           })
         )
@@ -47497,6 +47552,18 @@ var AddTest = function AddTest(_ref) {
 
   var StudentRow = function StudentRow(_ref5) {
     var student = _ref5.student;
+
+
+    var handleChange = function handleChange(event) {
+      var input = event.target;
+      var text = input.value;
+      addTestFormChanged("MARKS", text), student.get('id');
+    };
+
+    var formMark = addTestData.get('formdata').get('marks').filter(function (mark) {
+      return mark.get('id') === student.get('id');
+    }).first();
+    var formValue = formMark.get('mark');
 
     return React.createElement(
       _reactBootstrap.FormGroup,
@@ -47509,7 +47576,12 @@ var AddTest = function AddTest(_ref) {
       React.createElement(
         _reactBootstrap.Col,
         { sm: 8 },
-        React.createElement(_reactBootstrap.FormControl, { type: 'text', placeholder: 'Enter mark...' })
+        React.createElement(_reactBootstrap.FormControl, {
+          type: 'text',
+          placeholder: 'Enter mark...',
+          value: formValue,
+          onChange: handleChange
+        })
       ),
       React.createElement(_reactBootstrap.Col, { sm: 2 })
     );
@@ -47539,10 +47611,12 @@ var AddTest = function AddTest(_ref) {
     _reactBootstrap.Form,
     { horizontal: true },
     React.createElement(TestMetadataRow, {
+      type: "TEST_NAME",
       rowLabel: "test name",
       rowPlaceholder: "enter test name (p.ex.: KA1)..."
     }),
     React.createElement(TestMetadataRow, {
+      type: "WRITTEN_AT",
       rowLabel: "written at",
       rowPlaceholder: "dd.MM.yyyy"
     }),
@@ -47881,7 +47955,7 @@ var StudentNameCell = function StudentNameCell(_ref4) {
   return React.createElement(
     'td',
     null,
-    data.get('studentName')
+    data.get('student').get('name')
   );
 };
 
@@ -47897,11 +47971,18 @@ var StudentMarkCell = function StudentMarkCell(_ref5) {
 
 var StudentTable = function StudentTable(_ref6) {
   var marksTableViewModel = _ref6.marksTableViewModel;
+  var addTestFormInitialized = _ref6.addTestFormInitialized;
   var history = _ref6.history;
 
 
   var addButton = function addButton() {
     var handleClick = function handleClick(eventKey) {
+
+      var students = marksTableViewModel.get('studentsTableData').map(function (data) {
+        return data.get('student');
+      });
+
+      addTestFormInitialized(students);
       history.push('/addtest');
     };
 
@@ -47981,18 +48062,18 @@ var StudentTable = function StudentTable(_ref6) {
     return marksTableViewModel.get('studentsTableData').map(function (data) {
       return React.createElement(
         'tr',
-        { key: data.get('studentId') + '_tr' },
+        { key: data.get('student').get('id') + '_tr' },
         React.createElement(StudentNameCell, {
-          key: data.get('studentId') + '_td',
+          key: data.get('student').get('id') + '_td',
           data: data
         }),
         data.get('marks').map(function (markObject, index) {
           return React.createElement(StudentMarkCell, {
-            key: data.get('studentId') + '_' + index,
+            key: data.get('student').get('id') + '_' + index,
             markObject: markObject
           });
         }),
-        React.createElement(AverageCell, { key: data.get('studentId') + '_avg', avg: data.get('avg') })
+        React.createElement(AverageCell, { key: data.get('student').get('id') + '_avg', avg: data.get('avg') })
       );
     });
   };
@@ -48077,6 +48158,8 @@ var _addtest = require('../components/addtest');
 
 var _addtest2 = _interopRequireDefault(_addtest);
 
+var _actions = require('../actions/actions');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapStateToProps = function mapStateToProps(state) {
@@ -48100,16 +48183,25 @@ var mapStateToProps = function mapStateToProps(state) {
     addTestData: (0, _immutable.Map)({
       subject: selectedSubject,
       students: students,
-      categories: allCategories
+      categories: allCategories,
+      formdata: state.testFormData
     })
   };
 };
 
-var AddTestContainer = (0, _reactRedux.connect)(mapStateToProps)(_addtest2.default);
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    addTestFormChanged: function addTestFormChanged(field, value, id) {
+      return dispatch((0, _actions.addTestFormChanged)(field, value, id));
+    }
+  };
+};
+
+var AddTestContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_addtest2.default);
 
 exports.default = AddTestContainer;
 
-},{"../components/addtest":476,"immutable":165,"react-redux":290}],484:[function(require,module,exports){
+},{"../actions/actions":474,"../components/addtest":476,"immutable":165,"react-redux":290}],484:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48125,6 +48217,8 @@ var _studenttable = require('../components/studenttable');
 var _studenttable2 = _interopRequireDefault(_studenttable);
 
 var _converter = require('../uiservice/converter');
+
+var _actions = require('../actions/actions');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -48147,11 +48241,19 @@ var mapStateToProps = function mapStateToProps(state) {
   };
 };
 
-var StudentTableContainer = (0, _reactRedux.connect)(mapStateToProps)(_studenttable2.default);
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    addTestFormInitialized: function addTestFormInitialized(students) {
+      return dispatch((0, _actions.addTestFormInitialized)(students));
+    }
+  };
+};
+
+var StudentTableContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_studenttable2.default);
 
 exports.default = StudentTableContainer;
 
-},{"../components/studenttable":481,"../uiservice/converter":492,"immutable":165,"react-redux":290}],485:[function(require,module,exports){
+},{"../actions/actions":474,"../components/studenttable":481,"../uiservice/converter":492,"immutable":165,"react-redux":290}],485:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48268,6 +48370,7 @@ var reducer = (0, _redux.combineReducers)({
   subjects2students: _subject.subjects2students,
   students: _students.students,
   tests: _tests.tests,
+  testFormData: _tests.testFormData,
   categories: _category.categories
 });
 
@@ -48351,7 +48454,9 @@ var subjects2students = exports.subjects2students = function subjects2students()
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.tests = undefined;
+exports.testFormData = exports.tests = undefined;
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _immutable = require('immutable');
 
@@ -48362,6 +48467,81 @@ var tests = exports.tests = function tests() {
   switch (action.type) {
     case 'TEST_ADDED':
       return tests.push((0, _immutable.Map)(action.payload));
+
+    default:
+      return tests;
+  }
+};
+
+var testFormData = exports.testFormData = function testFormData() {
+  var testFormData = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : (0, _immutable.Map)();
+  var action = arguments[1];
+
+  switch (action.type) {
+    case 'FORMDATA_CHANGED':
+      {
+
+        var field = action.payload.field;
+        switch (field) {
+          case 'TEST_NAME':
+            return testFormData.update('testname', function () {
+              var val = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : action.payload.value;
+              return val;
+            });
+          case 'WRITTEN_AT':
+            return testFormData.update('writtenat', function () {
+              var val = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : action.payload.value;
+              return val;
+            });
+          case 'CATEGORY':
+            return testFormData.update('category', function () {
+              var val = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : action.payload.value;
+              return val;
+            });
+          case 'MARKS':
+            {
+              var _ret = function () {
+
+                {/*omg, this can be done better*/}
+                var marks = testFormData.get('marks');
+                var marksWithoutId = marks.filterNot(function (mark) {
+                  return mark.get('id') === action.payload.id;
+                });
+                var searchedMark = marks.filter(function (mark) {
+                  return mark.get('id') === action.payload.id;
+                }).first();
+                var newMark = searchedMark.update('id', function () {
+                  var val = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : action.payload.value;
+                  return val;
+                });
+                var newMarksList = marksWithoutId.push(newMark);
+                return {
+                  v: testFormData.update('marks', function () {
+                    var val = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : newMarksList;
+                    return val;
+                  })
+                };
+              }();
+
+              if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
+            }
+        }
+      }
+
+    case 'FORMDATA_INITIALIZED':
+      {
+
+        var initialMarks = action.payload.students.map(function (student) {
+          return (0, _immutable.Map)({ id: student.get('id'), mark: "" });
+        });
+
+        return (0, _immutable.Map)({
+          testname: "",
+          writtenat: "",
+          category: "",
+          marks: initialMarks
+        });
+      }
 
     default:
       return tests;
@@ -48481,8 +48661,7 @@ var getStudentsTableData = function getStudentsTableData(students, testsSorted, 
     }) / sumFaktor);
 
     return (0, _immutable.Map)({
-      'studentId': student.get('id'),
-      'studentName': studentName,
+      'student': student,
       'marks': marksOfStudent,
       'avg': avgStudent
     });

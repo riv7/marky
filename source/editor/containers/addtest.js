@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { Map } from 'immutable';
 import AddTest from '../components/addtest';
+import { addTestFormChanged } from '../actions/actions';
 
 const mapStateToProps = (state) => {
 
@@ -20,13 +21,21 @@ const mapStateToProps = (state) => {
     addTestData: Map({
       subject: selectedSubject,
       students: students,
-      categories: allCategories
+      categories: allCategories,
+      formdata: state.testFormData
     })
   }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addTestFormChanged: (field, value, id) => dispatch(addTestFormChanged(field, value, id))
+  }
+}
+
 const AddTestContainer = connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(AddTest)
 
 export default AddTestContainer

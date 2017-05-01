@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import { selectedSubject, subjects, subjects2students} from './subject';
 import { grades} from './grade';
 import { students } from './students';
-import { tests } from './tests';
+import { tests, testFormData } from './tests';
 import { categories } from './category';
 
 const reducer = combineReducers({
@@ -12,6 +12,7 @@ const reducer = combineReducers({
   subjects2students,
   students,
   tests,
+  testFormData,
   categories
 });
 

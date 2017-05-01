@@ -35,17 +35,23 @@ const CategoryCell = ({category}) => {
 }
 
 const StudentNameCell = ({data}) => {
-  return <td>{data.get('studentName')}</td>
+  return <td>{data.get('student').get('name')}</td>
 }
 
 const StudentMarkCell = ({markObject}) => {
   return <td>{markObject.get('mark')}</td>
 }
 
-const StudentTable = ({marksTableViewModel, history}) => {
+const StudentTable = ({marksTableViewModel, addTestFormInitialized, history}) => {
 
   const addButton = () => {
     const handleClick = (eventKey) => {
+
+      const students = marksTableViewModel.get('studentsTableData').map(data =>
+        data.get('student')
+      );
+
+      addTestFormInitialized(students)
       history.push('/addtest');
     };
 
@@ -105,18 +111,18 @@ const StudentTable = ({marksTableViewModel, history}) => {
     return (
       marksTableViewModel.get('studentsTableData').map(data => {
         return (
-          <tr key={data.get('studentId')+'_tr'}>
+          <tr key={data.get('student').get('id')+'_tr'}>
             <StudentNameCell
-               key={data.get('studentId')+'_td'}
+               key={data.get('student').get('id')+'_td'}
                data={data}
             />
             {data.get('marks').map((markObject,index) =>
               <StudentMarkCell
-                key={data.get('studentId')+'_'+index}
+                key={data.get('student').get('id')+'_'+index}
                 markObject={markObject}
               />
             )}
-            <AverageCell key={data.get('studentId')+'_avg'} avg={data.get('avg')} />
+            <AverageCell key={data.get('student').get('id')+'_avg'} avg={data.get('avg')} />
           </tr>
         );
       })

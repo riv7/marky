@@ -85,8 +85,7 @@ const getStudentsTableData = (students, testsSorted, sortedByDate) => {
     const avgStudent = round2((avgOfStudentList.reduce((prev,current) => prev+current))/sumFaktor);
 
     return Map({
-      'studentId': student.get('id'),
-      'studentName': studentName,
+      'student': student,
       'marks': marksOfStudent,
       'avg': avgStudent
     });
