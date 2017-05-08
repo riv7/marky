@@ -2,7 +2,18 @@ import { Map,List } from 'immutable';
 
 export const tests = (tests=List([]), action) => {
   switch(action.type) {
-    case 'TEST_ADDED':
+    case 'TEST_ADDED': {
+      const testFormData = action.payload;
+
+      const test = Map({
+        id: testFormData.id,
+        name: testFormData.get('testname'),
+        written: testFormData.get('writtenat'),
+        marks: testFormData.get('marks'),
+        category: testFormData.get('category'),
+        subject: testFormData.get('subject')
+      })
+    }
       return tests.push(Map(action.payload));
 
     default:
@@ -17,22 +28,22 @@ export const testFormData = (testFormData=Map(), action) => {
       const field = action.payload.field;
       switch(field) {
         case 'TEST_NAME' :
-          return testFormData.update('testname', (val = action.payload.value) => val);
-        case 'WRITTEN_AT' :
-          return testFormData.update('writtenat', (val = action.payload.value) => val);
+          return testFormData.update('testname', x=> action.payload.value);
+        case 'WRITTEN_AT':
+          return testFormData.set('writtenat', action.payload.value);
         case 'CATEGORY' :
-          return testFormData.update('category', (val = action.payload.value) => val);
+          return testFormData.set('category', action.payload.value);
         case 'MARKS' : {
 
           {/*omg, this can be done better*/}
           const marks = testFormData.get('marks');
-          const marksWithoutId = marks.filterNot(mark => mark.get('id') ===
+          const marksWithoutId = marks.filterNot(mark => mark.get('student') ===
             action.payload.id);
-          const searchedMark = marks.filter(mark => mark.get('id') ===
+          const searchedMark = marks.filter(mark => mark.get('student') ===
             action.payload.id).first();
-          const newMark = searchedMark.update('id', (val = action.payload.value) => val);
+          const newMark = searchedMark.set('mark', action.payload.value);
           const newMarksList = marksWithoutId.push(newMark);
-          return testFormData.update('marks', (val = newMarksList) => val);
+          return testFormData.set('marks', newMarksList);
         }
       }
     }
@@ -40,7 +51,7 @@ export const testFormData = (testFormData=Map(), action) => {
     case 'FORMDATA_INITIALIZED': {
 
       const initialMarks = action.payload.students.map(student => {
-        return Map({id: student.get('id'), mark: ""});
+        return Map({student: student.get('id'), mark: ""});
       });
 
       return Map({
@@ -52,6 +63,6 @@ export const testFormData = (testFormData=Map(), action) => {
     }
 
     default:
-      return tests;
+      return testFormData;
   }
 }

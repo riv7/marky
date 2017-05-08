@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { Map } from 'immutable';
-import AddTest from '../components/addtest';
+import AddTest from '../components/addtest/addtest';
 import { addTestFormChanged } from '../actions/actions';
 
 const mapStateToProps = (state) => {

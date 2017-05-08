@@ -48,13 +48,12 @@ export const addedStudentToSubject = (studentId, subjectId) => {
   };
 }
 
-{/*TODO just temporary*/}
-export const testAdded = (testName) => {
+export const testAdded = (testFormData) => {
   return {
     type: 'TEST_ADDED',
     payload: {
-      id:  uid(),
-      name: testName
+      id: uid(),
+      testFormData: testFormData
     }
   };
 }

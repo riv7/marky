@@ -47277,13 +47277,12 @@ var addedStudentToSubject = exports.addedStudentToSubject = function addedStuden
   };
 };
 
-{/*TODO just temporary*/}
-var testAdded = exports.testAdded = function testAdded(testName) {
+var testAdded = exports.testAdded = function testAdded(testFormData) {
   return {
     type: 'TEST_ADDED',
     payload: {
       id: uid(),
-      name: testName
+      testFormData: testFormData
     }
   };
 };
@@ -47432,7 +47431,7 @@ ReactDOM.render(React.createElement(
   )
 ), document.getElementById('react-application'));
 
-},{"../../build/editor/css/marky.css":1,"./components/application":477,"./reducer/reducer":488,"./uiservice/converter":492,"history/createBrowserHistory":161,"immutable":165,"react":453,"react-dom":268,"react-redux":290,"react-router":306,"redux":459}],476:[function(require,module,exports){
+},{"../../build/editor/css/marky.css":1,"./components/application":481,"./reducer/reducer":492,"./uiservice/converter":496,"history/createBrowserHistory":161,"immutable":165,"react":453,"react-dom":268,"react-redux":290,"react-router":306,"redux":459}],476:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -47441,9 +47440,25 @@ Object.defineProperty(exports, "__esModule", {
 
 var _reactBootstrap = require('react-bootstrap');
 
-var _markyheader = require('./markyheader');
+var _markyheader = require('../markyheader');
 
 var _markyheader2 = _interopRequireDefault(_markyheader);
+
+var _testmetadatarow = require('./testmetadatarow');
+
+var _testmetadatarow2 = _interopRequireDefault(_testmetadatarow);
+
+var _categoryselect = require('./categoryselect');
+
+var _categoryselect2 = _interopRequireDefault(_categoryselect);
+
+var _markrows = require('./markrows');
+
+var _markrows2 = _interopRequireDefault(_markrows);
+
+var _submitbutton = require('./submitbutton');
+
+var _submitbutton2 = _interopRequireDefault(_submitbutton);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -47453,185 +47468,45 @@ var ReactDOM = require('react-dom');
 var AddTest = function AddTest(_ref) {
   var addTestData = _ref.addTestData;
   var addTestFormChanged = _ref.addTestFormChanged;
+  var testAdded = _ref.testAdded;
 
-
-  var TestMetadataRow = function TestMetadataRow(_ref2) {
-    var type = _ref2.type;
-    var rowLabel = _ref2.rowLabel;
-    var rowPlaceholder = _ref2.rowPlaceholder;
-
-
-    var handleChange = function handleChange(event) {
-      var input = event.target;
-      var text = input.value;
-      addTestFormChanged(type, text);
-    };
-
-    var formValue = void 0;
-    switch (type) {
-      case 'TEST_NAME':
-        formValue = addTestData.get('formdata').get('testname');
-        break;
-      case 'WRITTEN_AT':
-        formValue = addTestData.get('formdata').get('writtenat');
-        break;
-    }
-
-    return React.createElement(
-      _reactBootstrap.FormGroup,
-      { controlId: 'formHorizontalText' },
-      React.createElement(
-        _reactBootstrap.Col,
-        { componentClass: _reactBootstrap.ControlLabel, sm: 2 },
-        rowLabel
-      ),
-      React.createElement(
-        _reactBootstrap.Col,
-        { sm: 8 },
-        React.createElement(_reactBootstrap.FormControl, {
-          type: 'text',
-          placeholder: rowPlaceholder,
-          value: formValue,
-          onChange: handleChange
-        })
-      ),
-      React.createElement(_reactBootstrap.Col, { sm: 2 })
-    );
-  };
-
-  var CategoryOptionValue = function CategoryOptionValue(_ref3) {
-    var category = _ref3.category;
-
-    return React.createElement(
-      'option',
-      { value: category.get('id') },
-      category.get('name')
-    );
-  };
-
-  var CategorySelect = function CategorySelect(_ref4) {
-    var rowLabel = _ref4.rowLabel;
-    var rowPlaceholder = _ref4.rowPlaceholder;
-
-
-    var handleChange = function handleChange(event) {
-      var input = event.target;
-      var text = input.value;
-      addTestFormChanged("CATEGORY", text);
-    };
-
-    var formValue = addTestData.get('formdata').get('category');
-
-    return React.createElement(
-      _reactBootstrap.FormGroup,
-      { controlId: 'formHorizontalSelect' },
-      React.createElement(
-        _reactBootstrap.Col,
-        { componentClass: _reactBootstrap.ControlLabel, sm: 2 },
-        rowLabel
-      ),
-      React.createElement(
-        _reactBootstrap.Col,
-        { sm: 8 },
-        React.createElement(
-          _reactBootstrap.FormControl,
-          { componentClass: 'select', placeholder: rowPlaceholder },
-          addTestData.get('categories').map(function (category) {
-            return React.createElement(CategoryOptionValue, {
-              key: category.get('id'),
-              category: category,
-              value: formValue,
-              onChange: handleChange
-            });
-          })
-        )
-      ),
-      React.createElement(_reactBootstrap.Col, { sm: 2 })
-    );
-  };
-
-  var StudentRow = function StudentRow(_ref5) {
-    var student = _ref5.student;
-
-
-    var handleChange = function handleChange(event) {
-      var input = event.target;
-      var text = input.value;
-      addTestFormChanged("MARKS", text), student.get('id');
-    };
-
-    var formMark = addTestData.get('formdata').get('marks').filter(function (mark) {
-      return mark.get('id') === student.get('id');
-    }).first();
-    var formValue = formMark.get('mark');
-
-    return React.createElement(
-      _reactBootstrap.FormGroup,
-      { controlId: 'formHorizontalText' },
-      React.createElement(
-        _reactBootstrap.Col,
-        { componentClass: _reactBootstrap.ControlLabel, sm: 2 },
-        student.get('name')
-      ),
-      React.createElement(
-        _reactBootstrap.Col,
-        { sm: 8 },
-        React.createElement(_reactBootstrap.FormControl, {
-          type: 'text',
-          placeholder: 'Enter mark...',
-          value: formValue,
-          onChange: handleChange
-        })
-      ),
-      React.createElement(_reactBootstrap.Col, { sm: 2 })
-    );
-  };
-
-  var SubmitButton = function SubmitButton() {
-    var handleClick = function handleClick(eventKey) {
-      alert('create test object');
-    };
-
-    return React.createElement(
-      _reactBootstrap.FormGroup,
-      null,
-      React.createElement(
-        _reactBootstrap.Col,
-        { smOffset: 2, sm: 10 },
-        React.createElement(
-          _reactBootstrap.Button,
-          { onClick: handleClick, type: 'submit' },
-          'submit'
-        )
-      )
-    );
-  };
 
   var addTestsForm = React.createElement(
     _reactBootstrap.Form,
     { horizontal: true },
-    React.createElement(TestMetadataRow, {
+    React.createElement(_testmetadatarow2.default, {
+      addTestData: addTestData,
+      addTestFormChanged: addTestFormChanged,
       type: "TEST_NAME",
       rowLabel: "test name",
       rowPlaceholder: "enter test name (p.ex.: KA1)..."
     }),
-    React.createElement(TestMetadataRow, {
+    React.createElement(_testmetadatarow2.default, {
+      addTestData: addTestData,
+      addTestFormChanged: addTestFormChanged,
       type: "WRITTEN_AT",
       rowLabel: "written at",
       rowPlaceholder: "dd.MM.yyyy"
     }),
-    React.createElement(CategorySelect, {
+    React.createElement(_categoryselect2.default, {
+      addTestData: addTestData,
+      addTestFormChanged: addTestFormChanged,
       rowLabel: "category",
       rowPlaceholder: "select..."
     }),
     React.createElement('div', { className: 'border-below' }),
     addTestData.get('students').map(function (student) {
-      return React.createElement(StudentRow, {
+      return React.createElement(_markrows2.default, {
         key: student.get('id'),
+        addTestData: addTestData,
+        addTestFormChanged: addTestFormChanged,
         student: student
       });
     }),
-    React.createElement(SubmitButton, null)
+    React.createElement(_submitbutton2.default, {
+      addTestData: addTestData,
+      testAdded: testAdded
+    })
   );
 
   return React.createElement(_markyheader2.default, { detailText: "enter marks for " + addTestData.get("subject").get('name') + " " + addTestData.get("subject").get('scope'), dataArea: addTestsForm });
@@ -47639,7 +47514,250 @@ var AddTest = function AddTest(_ref) {
 
 exports.default = AddTest;
 
-},{"./markyheader":480,"react":453,"react-bootstrap":257,"react-dom":268}],477:[function(require,module,exports){
+},{"../markyheader":484,"./categoryselect":477,"./markrows":478,"./submitbutton":479,"./testmetadatarow":480,"react":453,"react-bootstrap":257,"react-dom":268}],477:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactBootstrap = require('react-bootstrap');
+
+var _markyheader = require('../markyheader');
+
+var _markyheader2 = _interopRequireDefault(_markyheader);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var React = require('react');
+var ReactDOM = require('react-dom');
+
+var CategoryOptionValue = function CategoryOptionValue(_ref) {
+  var category = _ref.category;
+
+  return React.createElement(
+    'option',
+    { value: category.get('id') },
+    category.get('name')
+  );
+};
+
+var CategorySelect = function CategorySelect(_ref2) {
+  var addTestData = _ref2.addTestData;
+  var addTestFormChanged = _ref2.addTestFormChanged;
+  var rowLabel = _ref2.rowLabel;
+  var rowPlaceholder = _ref2.rowPlaceholder;
+
+
+  var handleChange = function handleChange(event) {
+    var input = event.target;
+    var text = input.value;
+    addTestFormChanged("CATEGORY", text);
+  };
+
+  var formValue = addTestData.get('formdata').get('category');
+
+  return React.createElement(
+    _reactBootstrap.FormGroup,
+    { controlId: 'formHorizontalSelect' },
+    React.createElement(
+      _reactBootstrap.Col,
+      { componentClass: _reactBootstrap.ControlLabel, sm: 2 },
+      rowLabel
+    ),
+    React.createElement(
+      _reactBootstrap.Col,
+      { sm: 8 },
+      React.createElement(
+        _reactBootstrap.FormControl,
+        { componentClass: 'select', placeholder: rowPlaceholder },
+        addTestData.get('categories').map(function (category) {
+          return React.createElement(CategoryOptionValue, {
+            key: category.get('id'),
+            category: category,
+            value: formValue,
+            onChange: handleChange
+          });
+        })
+      )
+    ),
+    React.createElement(_reactBootstrap.Col, { sm: 2 })
+  );
+};
+
+exports.default = CategorySelect;
+
+},{"../markyheader":484,"react":453,"react-bootstrap":257,"react-dom":268}],478:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactBootstrap = require('react-bootstrap');
+
+var _markyheader = require('../markyheader');
+
+var _markyheader2 = _interopRequireDefault(_markyheader);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var React = require('react');
+var ReactDOM = require('react-dom');
+
+var MarkRow = function MarkRow(_ref) {
+  var addTestData = _ref.addTestData;
+  var addTestFormChanged = _ref.addTestFormChanged;
+  var student = _ref.student;
+
+
+  var handleChange = function handleChange(event) {
+    var input = event.target;
+    var text = input.value;
+    addTestFormChanged("MARKS", text, student.get('id'));
+  };
+
+  var formMark = addTestData.get('formdata').get('marks').filter(function (mark) {
+    return mark.get('student') === student.get('id');
+  }).first();
+  var formValue = formMark.get('mark');
+
+  return React.createElement(
+    _reactBootstrap.FormGroup,
+    { controlId: 'formHorizontalText' },
+    React.createElement(
+      _reactBootstrap.Col,
+      { componentClass: _reactBootstrap.ControlLabel, sm: 2 },
+      student.get('name')
+    ),
+    React.createElement(
+      _reactBootstrap.Col,
+      { sm: 8 },
+      React.createElement(_reactBootstrap.FormControl, {
+        type: 'text',
+        placeholder: 'Enter mark...',
+        value: formValue,
+        onChange: handleChange
+      })
+    ),
+    React.createElement(_reactBootstrap.Col, { sm: 2 })
+  );
+};
+
+exports.default = MarkRow;
+
+},{"../markyheader":484,"react":453,"react-bootstrap":257,"react-dom":268}],479:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactBootstrap = require('react-bootstrap');
+
+var _markyheader = require('../markyheader');
+
+var _markyheader2 = _interopRequireDefault(_markyheader);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var React = require('react');
+var ReactDOM = require('react-dom');
+
+var SubmitButton = function SubmitButton(_ref) {
+  var addTestData = _ref.addTestData;
+  var testAdded = _ref.testAdded;
+
+  var handleClick = function handleClick(eventKey) {
+    var result = addTestData.get('formdata').set('subject', addTestData.get('subject'));
+
+    testAdded(result);
+  };
+
+  return React.createElement(
+    _reactBootstrap.FormGroup,
+    null,
+    React.createElement(
+      _reactBootstrap.Col,
+      { smOffset: 2, sm: 10 },
+      React.createElement(
+        _reactBootstrap.Button,
+        { onClick: handleClick, type: 'submit' },
+        'submit'
+      )
+    )
+  );
+};
+
+exports.default = SubmitButton;
+
+},{"../markyheader":484,"react":453,"react-bootstrap":257,"react-dom":268}],480:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactBootstrap = require('react-bootstrap');
+
+var _markyheader = require('../markyheader');
+
+var _markyheader2 = _interopRequireDefault(_markyheader);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var React = require('react');
+var ReactDOM = require('react-dom');
+
+var TestMetadataRow = function TestMetadataRow(_ref) {
+  var addTestData = _ref.addTestData;
+  var addTestFormChanged = _ref.addTestFormChanged;
+  var type = _ref.type;
+  var rowLabel = _ref.rowLabel;
+  var rowPlaceholder = _ref.rowPlaceholder;
+
+
+  var handleChange = function handleChange(event) {
+    var input = event.target;
+    var text = input.value;
+    addTestFormChanged(type, text);
+  };
+
+  var formValue = void 0;
+  switch (type) {
+    case 'TEST_NAME':
+      formValue = addTestData.get('formdata').get('testname');
+      break;
+    case 'WRITTEN_AT':
+      formValue = addTestData.get('formdata').get('writtenat');
+      break;
+  }
+
+  return React.createElement(
+    _reactBootstrap.FormGroup,
+    { controlId: 'formHorizontalText' },
+    React.createElement(
+      _reactBootstrap.Col,
+      { componentClass: _reactBootstrap.ControlLabel, sm: 2 },
+      rowLabel
+    ),
+    React.createElement(
+      _reactBootstrap.Col,
+      { sm: 8 },
+      React.createElement(_reactBootstrap.FormControl, {
+        type: 'text',
+        placeholder: rowPlaceholder,
+        value: formValue,
+        onChange: handleChange
+      })
+    ),
+    React.createElement(_reactBootstrap.Col, { sm: 2 })
+  );
+};
+
+exports.default = TestMetadataRow;
+
+},{"../markyheader":484,"react":453,"react-bootstrap":257,"react-dom":268}],481:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -47672,7 +47790,7 @@ var MarkyEditor = function MarkyEditor() {
 
 exports.default = MarkyEditor;
 
-},{"../containers/addtest":483,"./maintable":479,"react":453,"react-dom":268,"react-router":306}],478:[function(require,module,exports){
+},{"../containers/addtest":487,"./maintable":483,"react":453,"react-dom":268,"react-router":306}],482:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -47731,7 +47849,7 @@ var HeadNav = function HeadNav() {
 
 exports.default = HeadNav;
 
-},{"react":453,"react-bootstrap":257,"react-dom":268}],479:[function(require,module,exports){
+},{"react":453,"react-bootstrap":257,"react-dom":268}],483:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -47789,7 +47907,7 @@ var MainTable = function MainTable(_ref) {
 
 exports.default = MainTable;
 
-},{"../containers/student":484,"../containers/subject":485,"./markyheader":480,"react":453,"react-bootstrap":257,"react-dom":268}],480:[function(require,module,exports){
+},{"../containers/student":488,"../containers/subject":489,"./markyheader":484,"react":453,"react-bootstrap":257,"react-dom":268}],484:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -47861,7 +47979,7 @@ var MarkyHeader = function MarkyHeader(_ref) {
 
 exports.default = MarkyHeader;
 
-},{"../containers/student":484,"../containers/subject":485,"./headnav":478,"react":453,"react-bootstrap":257,"react-dom":268}],481:[function(require,module,exports){
+},{"../containers/student":488,"../containers/subject":489,"./headnav":482,"react":453,"react-bootstrap":257,"react-dom":268}],485:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48101,7 +48219,7 @@ var StudentTable = function StudentTable(_ref6) {
 
 exports.default = StudentTable;
 
-},{"react":453,"react-bootstrap":257,"react-dom":268,"react-router":306}],482:[function(require,module,exports){
+},{"react":453,"react-bootstrap":257,"react-dom":268,"react-router":306}],486:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48143,7 +48261,7 @@ var SubjectNav = function SubjectNav(_ref) {
 
 exports.default = SubjectNav;
 
-},{"react":453,"react-bootstrap":257,"react-dom":268}],483:[function(require,module,exports){
+},{"react":453,"react-bootstrap":257,"react-dom":268}],487:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48154,7 +48272,7 @@ var _reactRedux = require('react-redux');
 
 var _immutable = require('immutable');
 
-var _addtest = require('../components/addtest');
+var _addtest = require('../components/addtest/addtest');
 
 var _addtest2 = _interopRequireDefault(_addtest);
 
@@ -48201,7 +48319,7 @@ var AddTestContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToPr
 
 exports.default = AddTestContainer;
 
-},{"../actions/actions":474,"../components/addtest":476,"immutable":165,"react-redux":290}],484:[function(require,module,exports){
+},{"../actions/actions":474,"../components/addtest/addtest":476,"immutable":165,"react-redux":290}],488:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48253,7 +48371,7 @@ var StudentTableContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatc
 
 exports.default = StudentTableContainer;
 
-},{"../actions/actions":474,"../components/studenttable":481,"../uiservice/converter":492,"immutable":165,"react-redux":290}],485:[function(require,module,exports){
+},{"../actions/actions":474,"../components/studenttable":485,"../uiservice/converter":496,"immutable":165,"react-redux":290}],489:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48298,7 +48416,7 @@ var SubjectNavContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchT
 
 exports.default = SubjectNavContainer;
 
-},{"../actions/actions":474,"../components/subjectnav":482,"immutable":165,"react-redux":290}],486:[function(require,module,exports){
+},{"../actions/actions":474,"../components/subjectnav":486,"immutable":165,"react-redux":290}],490:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48321,7 +48439,7 @@ var categories = exports.categories = function categories() {
   }
 };
 
-},{"immutable":165}],487:[function(require,module,exports){
+},{"immutable":165}],491:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48344,7 +48462,7 @@ var grades = exports.grades = function grades() {
   }
 };
 
-},{"immutable":165}],488:[function(require,module,exports){
+},{"immutable":165}],492:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48376,7 +48494,7 @@ var reducer = (0, _redux.combineReducers)({
 
 exports.default = reducer;
 
-},{"./category":486,"./grade":487,"./students":489,"./subject":490,"./tests":491,"redux":459}],489:[function(require,module,exports){
+},{"./category":490,"./grade":491,"./students":493,"./subject":494,"./tests":495,"redux":459}],493:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48399,7 +48517,7 @@ var students = exports.students = function students() {
   }
 };
 
-},{"immutable":165}],490:[function(require,module,exports){
+},{"immutable":165}],494:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48448,15 +48566,13 @@ var subjects2students = exports.subjects2students = function subjects2students()
   }
 };
 
-},{"immutable":165}],491:[function(require,module,exports){
+},{"immutable":165}],495:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.testFormData = exports.tests = undefined;
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _immutable = require('immutable');
 
@@ -48466,6 +48582,18 @@ var tests = exports.tests = function tests() {
 
   switch (action.type) {
     case 'TEST_ADDED':
+      {
+        var _testFormData = action.payload;
+
+        var test = (0, _immutable.Map)({
+          id: _testFormData.id,
+          name: _testFormData.get('testname'),
+          written: _testFormData.get('writtenat'),
+          marks: _testFormData.get('marks'),
+          category: _testFormData.get('category'),
+          subject: _testFormData.get('subject')
+        });
+      }
       return tests.push((0, _immutable.Map)(action.payload));
 
     default:
@@ -48484,46 +48612,27 @@ var testFormData = exports.testFormData = function testFormData() {
         var field = action.payload.field;
         switch (field) {
           case 'TEST_NAME':
-            return testFormData.update('testname', function () {
-              var val = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : action.payload.value;
-              return val;
+            return testFormData.update('testname', function (x) {
+              return action.payload.value;
             });
           case 'WRITTEN_AT':
-            return testFormData.update('writtenat', function () {
-              var val = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : action.payload.value;
-              return val;
-            });
+            return testFormData.set('writtenat', action.payload.value);
           case 'CATEGORY':
-            return testFormData.update('category', function () {
-              var val = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : action.payload.value;
-              return val;
-            });
+            return testFormData.set('category', action.payload.value);
           case 'MARKS':
             {
-              var _ret = function () {
 
-                {/*omg, this can be done better*/}
-                var marks = testFormData.get('marks');
-                var marksWithoutId = marks.filterNot(function (mark) {
-                  return mark.get('id') === action.payload.id;
-                });
-                var searchedMark = marks.filter(function (mark) {
-                  return mark.get('id') === action.payload.id;
-                }).first();
-                var newMark = searchedMark.update('id', function () {
-                  var val = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : action.payload.value;
-                  return val;
-                });
-                var newMarksList = marksWithoutId.push(newMark);
-                return {
-                  v: testFormData.update('marks', function () {
-                    var val = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : newMarksList;
-                    return val;
-                  })
-                };
-              }();
-
-              if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
+              {/*omg, this can be done better*/}
+              var marks = testFormData.get('marks');
+              var marksWithoutId = marks.filterNot(function (mark) {
+                return mark.get('student') === action.payload.id;
+              });
+              var searchedMark = marks.filter(function (mark) {
+                return mark.get('student') === action.payload.id;
+              }).first();
+              var newMark = searchedMark.set('mark', action.payload.value);
+              var newMarksList = marksWithoutId.push(newMark);
+              return testFormData.set('marks', newMarksList);
             }
         }
       }
@@ -48532,7 +48641,7 @@ var testFormData = exports.testFormData = function testFormData() {
       {
 
         var initialMarks = action.payload.students.map(function (student) {
-          return (0, _immutable.Map)({ id: student.get('id'), mark: "" });
+          return (0, _immutable.Map)({ student: student.get('id'), mark: "" });
         });
 
         return (0, _immutable.Map)({
@@ -48544,11 +48653,11 @@ var testFormData = exports.testFormData = function testFormData() {
       }
 
     default:
-      return tests;
+      return testFormData;
   }
 };
 
-},{"immutable":165}],492:[function(require,module,exports){
+},{"immutable":165}],496:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
