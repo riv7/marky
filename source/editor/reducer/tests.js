@@ -7,14 +7,15 @@ export const tests = (tests=List([]), action) => {
 
       const test = Map({
         id: testFormData.id,
-        name: testFormData.get('testname'),
-        written: testFormData.get('writtenat'),
-        marks: testFormData.get('marks'),
-        category: testFormData.get('category'),
-        subject: testFormData.get('subject')
-      })
+        name: testFormData.testFormData.get('testname'),
+        written: testFormData.testFormData.get('writtenat'),
+        marks: testFormData.testFormData.get('marks'),
+        category: 1,
+        subject: 0
+      });
+
+      return tests.push(test);
     }
-      return tests.push(Map(action.payload));
 
     default:
       return tests;

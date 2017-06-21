@@ -11,7 +11,7 @@ import createBrowserHistory from 'history/createBrowserHistory'
 
 import reducer from './reducer/reducer';
 import { List, Map } from 'immutable';
-import MarkyEditor from './components/application';
+import MarkyEditor from './components/markyeditor';
 
 import { createStudentsViewModel } from './uiservice/converter';
 
@@ -195,7 +195,8 @@ const store = createStore(reducer, {
   students: students,
   subjects2students: subjects2students,
   tests: tests,
-  categories: categories
+  categories: categories,
+  testFormData: Map()
 });
 
 ReactDOM.render(

@@ -9,7 +9,7 @@ import CategorySelect from './categoryselect';
 import MarkRow from './markrows';
 import SubmitButton from './submitbutton';
 
-const AddTest = ({addTestData, addTestFormChanged, testAdded}) => {
+const AddTest = ({addTestData, addTestFormChanged, testAdded, history}) => {
 
   const addTestsForm = (
     <Form horizontal>
@@ -47,6 +47,7 @@ const AddTest = ({addTestData, addTestFormChanged, testAdded}) => {
       <SubmitButton
         addTestData={addTestData}
         testAdded={testAdded}
+        history={history}
       />
     </Form>
   );

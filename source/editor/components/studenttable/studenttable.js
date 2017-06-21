@@ -10,6 +10,9 @@ import { Button } from 'react-bootstrap';
 import { Glyphicon } from 'react-bootstrap';
 import { Label } from 'react-bootstrap';
 
+import TableHeader from './tableheader';
+import CategoriesRow from './categoriesrow';
+
 const AverageCell = ({avg}) => {
   if (avg >= 5) {
     return <td><Label bsStyle="danger">{avg}</Label></td>;
@@ -18,20 +21,6 @@ const AverageCell = ({avg}) => {
   } else {
     return <td><Label bsStyle="success">{avg}</Label></td>;
   }
-}
-
-const HeaderCell = ({header}) => {
-  return <th>{header}</th>
-}
-
-const CategoryCell = ({category}) => {
-  return (
-    <td>
-      <Button bsSize="xs"><Glyphicon glyph="edit" /></Button>
-      <Button bsSize="xs"><Glyphicon glyph="remove" /></Button>
-      <h5><Label bsStyle={category.get('color')}>{category.get('name')}</Label></h5>
-    </td>
-  );
 }
 
 const StudentNameCell = ({data}) => {
@@ -60,37 +49,7 @@ const StudentTable = ({marksTableViewModel, addTestFormInitialized, history}) =>
     );
   }
 
-  const createHeaders = () => {
-    return (
-      <thead>
-        <tr>
-          <th>Pupil</th>
-          {marksTableViewModel.get('headers').map(header =>
-            <HeaderCell
-              key={header.get('testId')}
-              header={header.get('testName')}
-            />
-          )}
-          <th>Average</th>
-        </tr>
-      </thead>
-    );
-  }
 
-  const createCategoriesRow = () => {
-    return (
-      <tr>
-        <td></td>
-          {marksTableViewModel.get('cats').map(cat =>
-            <CategoryCell
-              key={cat.get('testId')+'_'+cat.get('category').get('id')}
-              category={cat.get('category')}
-            />
-          )}
-        <td></td>
-      </tr>
-    );
-  }
 
   const createAvgTestsRow = () => {
     return (
@@ -131,9 +90,13 @@ const StudentTable = ({marksTableViewModel, addTestFormInitialized, history}) =>
 
   const tableInstance = (
     <Table striped condensed hover>
-      {createHeaders()}
+      <TableHeader
+        marksTableViewModel={marksTableViewModel}
+      />
       <tbody>
-        {createCategoriesRow()}
+        <CategoriesRow
+          marksTableViewModel={marksTableViewModel}
+        />
         {createStudentRow()}
         {createAvgTestsRow()}
       </tbody>

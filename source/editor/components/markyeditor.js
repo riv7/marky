@@ -10,6 +10,7 @@ const MarkyEditor = () => (
   <div>
     <Route exact path="/" component={MainTable} />
     <Route path="/addtest" component={AddTestContainer} />
+    <Route path="/maintable" component={MainTable} />
   </div>
 )
 

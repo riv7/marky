@@ -5,13 +5,15 @@ import { Col, Form, FormGroup, FormControl, Checkbox, ButtonGroup, ControlLabel,
 
 import MarkyHeader from '../markyheader';
 
-const SubmitButton = ({addTestData, testAdded}) => {
+const SubmitButton = ({addTestData, testAdded, history}) => {
   const handleClick = (eventKey) => {
     const result = addTestData
       .get('formdata')
-      .set('subject', addTestData.get('subject'))
+      .set('subject', addTestData.get('subject'));
 
     testAdded(result);
+
+    history.push('/maintable');
   };
 
   return (

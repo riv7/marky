@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { Map } from 'immutable';
-import StudentTable from '../components/studenttable';
+import StudentTable from '../components/studenttable/studenttable';
 import { createStudentsViewModel } from '../uiservice/converter';
 import { addTestFormInitialized } from '../actions/actions';
 
