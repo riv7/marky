@@ -16,16 +16,18 @@ const CategoryCell = ({category}) => {
 const CategoriesRow = ({marksTableViewModel}) => {
 
   return (
-    <tr>
-      <td></td>
-        {marksTableViewModel.get('cats').map(cat =>
-          <CategoryCell
-            key={cat.get('testId')+'_'+cat.get('category').get('id')}
-            category={cat.get('category')}
-          />
-        )}
-      <td></td>
-    </tr>
+    <tbody>
+      <tr>
+        <td></td>
+          {marksTableViewModel.get('cats').map(cat =>
+            <CategoryCell
+              key={cat.get('testId')+'_'+cat.get('category').get('id')}
+              category={cat.get('category')}
+            />
+          )}
+        <td></td>
+      </tr>
+    </tbody>
   );
 }
 

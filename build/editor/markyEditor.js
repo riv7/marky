@@ -47432,7 +47432,7 @@ ReactDOM.render(React.createElement(
   )
 ), document.getElementById('react-application'));
 
-},{"../../build/editor/css/marky.css":1,"./components/markyeditor":483,"./reducer/reducer":494,"./uiservice/converter":498,"history/createBrowserHistory":161,"immutable":165,"react":453,"react-dom":268,"react-redux":290,"react-router":306,"redux":459}],476:[function(require,module,exports){
+},{"../../build/editor/css/marky.css":1,"./components/markyeditor":483,"./reducer/reducer":498,"./uiservice/converter":502,"history/createBrowserHistory":161,"immutable":165,"react":453,"react-dom":268,"react-redux":290,"react-router":306,"redux":459}],476:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -47445,19 +47445,19 @@ var _markyheader = require('../markyheader');
 
 var _markyheader2 = _interopRequireDefault(_markyheader);
 
-var _testmetadatarow = require('./testmetadatarow');
+var _testmetadatarow = require('./subcomponents/testmetadatarow');
 
 var _testmetadatarow2 = _interopRequireDefault(_testmetadatarow);
 
-var _categoryselect = require('./categoryselect');
+var _categoryselect = require('./subcomponents/categoryselect');
 
 var _categoryselect2 = _interopRequireDefault(_categoryselect);
 
-var _markrows = require('./markrows');
+var _markrows = require('./subcomponents/markrows');
 
 var _markrows2 = _interopRequireDefault(_markrows);
 
-var _submitbutton = require('./submitbutton');
+var _submitbutton = require('./subcomponents/submitbutton');
 
 var _submitbutton2 = _interopRequireDefault(_submitbutton);
 
@@ -47517,7 +47517,7 @@ var AddTest = function AddTest(_ref) {
 
 exports.default = AddTest;
 
-},{"../markyheader":484,"./categoryselect":477,"./markrows":478,"./submitbutton":479,"./testmetadatarow":480,"react":453,"react-bootstrap":257,"react-dom":268}],477:[function(require,module,exports){
+},{"../markyheader":484,"./subcomponents/categoryselect":477,"./subcomponents/markrows":478,"./subcomponents/submitbutton":479,"./subcomponents/testmetadatarow":480,"react":453,"react-bootstrap":257,"react-dom":268}],477:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -47525,12 +47525,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var _reactBootstrap = require('react-bootstrap');
-
-var _markyheader = require('../markyheader');
-
-var _markyheader2 = _interopRequireDefault(_markyheader);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var React = require('react');
 var ReactDOM = require('react-dom');
@@ -47590,7 +47584,7 @@ var CategorySelect = function CategorySelect(_ref2) {
 
 exports.default = CategorySelect;
 
-},{"../markyheader":484,"react":453,"react-bootstrap":257,"react-dom":268}],478:[function(require,module,exports){
+},{"react":453,"react-bootstrap":257,"react-dom":268}],478:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -47598,12 +47592,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var _reactBootstrap = require('react-bootstrap');
-
-var _markyheader = require('../markyheader');
-
-var _markyheader2 = _interopRequireDefault(_markyheader);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var React = require('react');
 var ReactDOM = require('react-dom');
@@ -47649,7 +47637,7 @@ var MarkRow = function MarkRow(_ref) {
 
 exports.default = MarkRow;
 
-},{"../markyheader":484,"react":453,"react-bootstrap":257,"react-dom":268}],479:[function(require,module,exports){
+},{"react":453,"react-bootstrap":257,"react-dom":268}],479:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -47657,12 +47645,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var _reactBootstrap = require('react-bootstrap');
-
-var _markyheader = require('../markyheader');
-
-var _markyheader2 = _interopRequireDefault(_markyheader);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var React = require('react');
 var ReactDOM = require('react-dom');
@@ -47697,7 +47679,7 @@ var SubmitButton = function SubmitButton(_ref) {
 
 exports.default = SubmitButton;
 
-},{"../markyheader":484,"react":453,"react-bootstrap":257,"react-dom":268}],480:[function(require,module,exports){
+},{"react":453,"react-bootstrap":257,"react-dom":268}],480:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -47705,12 +47687,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var _reactBootstrap = require('react-bootstrap');
-
-var _markyheader = require('../markyheader');
-
-var _markyheader2 = _interopRequireDefault(_markyheader);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var React = require('react');
 var ReactDOM = require('react-dom');
@@ -47763,7 +47739,7 @@ var TestMetadataRow = function TestMetadataRow(_ref) {
 
 exports.default = TestMetadataRow;
 
-},{"../markyheader":484,"react":453,"react-bootstrap":257,"react-dom":268}],481:[function(require,module,exports){
+},{"react":453,"react-bootstrap":257,"react-dom":268}],481:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -47880,7 +47856,7 @@ var MainTable = function MainTable(_ref) {
 
 exports.default = MainTable;
 
-},{"../containers/student":490,"../containers/subject":491,"./markyheader":484,"react":453,"react-bootstrap":257,"react-dom":268}],483:[function(require,module,exports){
+},{"../containers/student":494,"../containers/subject":495,"./markyheader":484,"react":453,"react-bootstrap":257,"react-dom":268}],483:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -47914,7 +47890,7 @@ var MarkyEditor = function MarkyEditor() {
 
 exports.default = MarkyEditor;
 
-},{"../containers/addtest":489,"./maintable":482,"react":453,"react-dom":268,"react-router":306}],484:[function(require,module,exports){
+},{"../containers/addtest":493,"./maintable":482,"react":453,"react-dom":268,"react-router":306}],484:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -47986,7 +47962,211 @@ var MarkyHeader = function MarkyHeader(_ref) {
 
 exports.default = MarkyHeader;
 
-},{"../containers/student":490,"../containers/subject":491,"./headnav":481,"react":453,"react-bootstrap":257,"react-dom":268}],485:[function(require,module,exports){
+},{"../containers/student":494,"../containers/subject":495,"./headnav":481,"react":453,"react-bootstrap":257,"react-dom":268}],485:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactRouter = require('react-router');
+
+var _reactBootstrap = require('react-bootstrap');
+
+var _tableheader = require('./subcomponents/tableheader');
+
+var _tableheader2 = _interopRequireDefault(_tableheader);
+
+var _categoriesrow = require('./subcomponents/categoriesrow');
+
+var _categoriesrow2 = _interopRequireDefault(_categoriesrow);
+
+var _averagerow = require('./subcomponents/averagerow');
+
+var _averagerow2 = _interopRequireDefault(_averagerow);
+
+var _studentrow = require('./subcomponents/studentrow');
+
+var _studentrow2 = _interopRequireDefault(_studentrow);
+
+var _addbutton = require('./subcomponents/addbutton');
+
+var _addbutton2 = _interopRequireDefault(_addbutton);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var React = require('react');
+var ReactDOM = require('react-dom');
+
+var StudentTable = function StudentTable(_ref) {
+  var marksTableViewModel = _ref.marksTableViewModel;
+  var addTestFormInitialized = _ref.addTestFormInitialized;
+  var history = _ref.history;
+
+
+  var tableInstance = React.createElement(
+    _reactBootstrap.Table,
+    { striped: true, condensed: true, hover: true },
+    React.createElement(_tableheader2.default, { marksTableViewModel: marksTableViewModel }),
+    React.createElement(_categoriesrow2.default, { marksTableViewModel: marksTableViewModel }),
+    React.createElement(_studentrow2.default, { marksTableViewModel: marksTableViewModel }),
+    React.createElement(_averagerow2.default, { marksTableViewModel: marksTableViewModel })
+  );
+
+  return React.createElement(
+    'div',
+    null,
+    React.createElement(
+      _reactBootstrap.Table,
+      { striped: true, condensed: true, hover: true },
+      React.createElement(_tableheader2.default, { marksTableViewModel: marksTableViewModel }),
+      React.createElement(_categoriesrow2.default, { marksTableViewModel: marksTableViewModel }),
+      React.createElement(_studentrow2.default, { marksTableViewModel: marksTableViewModel }),
+      React.createElement(_averagerow2.default, { marksTableViewModel: marksTableViewModel })
+    ),
+    React.createElement(_addbutton2.default, {
+      marksTableViewModel: marksTableViewModel,
+      addTestFormInitialized: addTestFormInitialized,
+      history: history })
+  );
+};
+
+exports.default = StudentTable;
+
+},{"./subcomponents/addbutton":486,"./subcomponents/averagerow":488,"./subcomponents/categoriesrow":489,"./subcomponents/studentrow":490,"./subcomponents/tableheader":491,"react":453,"react-bootstrap":257,"react-dom":268,"react-router":306}],486:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactBootstrap = require('react-bootstrap');
+
+var React = require('react');
+var ReactDOM = require('react-dom');
+
+var AddButton = function AddButton(_ref) {
+  var marksTableViewModel = _ref.marksTableViewModel;
+  var addTestFormInitialized = _ref.addTestFormInitialized;
+  var history = _ref.history;
+
+
+  var handleClick = function handleClick(eventKey) {
+    var students = marksTableViewModel.get('studentsTableData').map(function (data) {
+      return data.get('student');
+    });
+    addTestFormInitialized(students);
+    history.push('/addtest');
+  };
+
+  return React.createElement(
+    _reactBootstrap.Button,
+    { onClick: handleClick },
+    'add test'
+  );
+};
+
+exports.default = AddButton;
+
+},{"react":453,"react-bootstrap":257,"react-dom":268}],487:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactBootstrap = require('react-bootstrap');
+
+var React = require('react');
+var ReactDOM = require('react-dom');
+
+var AverageCell = function AverageCell(_ref) {
+  var avg = _ref.avg;
+
+  if (avg >= 5) {
+    return React.createElement(
+      'td',
+      null,
+      React.createElement(
+        _reactBootstrap.Label,
+        { bsStyle: 'danger' },
+        avg
+      )
+    );
+  } else if (avg >= 4) {
+    return React.createElement(
+      'td',
+      null,
+      React.createElement(
+        _reactBootstrap.Label,
+        { bsStyle: 'warning' },
+        avg
+      )
+    );
+  } else {
+    return React.createElement(
+      'td',
+      null,
+      React.createElement(
+        _reactBootstrap.Label,
+        { bsStyle: 'success' },
+        avg
+      )
+    );
+  }
+};
+
+exports.default = AverageCell;
+
+},{"react":453,"react-bootstrap":257,"react-dom":268}],488:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _averagecell = require('./averagecell');
+
+var _averagecell2 = _interopRequireDefault(_averagecell);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var React = require('react');
+var ReactDOM = require('react-dom');
+
+var AverageRow = function AverageRow(_ref) {
+  var marksTableViewModel = _ref.marksTableViewModel;
+
+
+  return React.createElement(
+    'tbody',
+    null,
+    React.createElement(
+      'tr',
+      null,
+      React.createElement(
+        'td',
+        null,
+        React.createElement(
+          'b',
+          null,
+          'Average'
+        )
+      ),
+      marksTableViewModel.get('avgOfTests').map(function (avg) {
+        return React.createElement(_averagecell2.default, {
+          key: avg.get('testId') + '_' + 'avg',
+          avg: avg.get('testAvg')
+        });
+      }),
+      React.createElement('td', null)
+    )
+  );
+};
+
+exports.default = AverageRow;
+
+},{"./averagecell":487,"react":453,"react-dom":268}],489:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48031,83 +48211,43 @@ var CategoriesRow = function CategoriesRow(_ref2) {
 
 
   return React.createElement(
-    'tr',
+    'tbody',
     null,
-    React.createElement('td', null),
-    marksTableViewModel.get('cats').map(function (cat) {
-      return React.createElement(CategoryCell, {
-        key: cat.get('testId') + '_' + cat.get('category').get('id'),
-        category: cat.get('category')
-      });
-    }),
-    React.createElement('td', null)
+    React.createElement(
+      'tr',
+      null,
+      React.createElement('td', null),
+      marksTableViewModel.get('cats').map(function (cat) {
+        return React.createElement(CategoryCell, {
+          key: cat.get('testId') + '_' + cat.get('category').get('id'),
+          category: cat.get('category')
+        });
+      }),
+      React.createElement('td', null)
+    )
   );
 };
 
 exports.default = CategoriesRow;
 
-},{"react":453,"react-bootstrap":257,"react-dom":268}],486:[function(require,module,exports){
+},{"react":453,"react-bootstrap":257,"react-dom":268}],490:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _reactRouter = require('react-router');
+var _averagecell = require('./averagecell');
 
-var _reactBootstrap = require('react-bootstrap');
-
-var _tableheader = require('./tableheader');
-
-var _tableheader2 = _interopRequireDefault(_tableheader);
-
-var _categoriesrow = require('./categoriesrow');
-
-var _categoriesrow2 = _interopRequireDefault(_categoriesrow);
+var _averagecell2 = _interopRequireDefault(_averagecell);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var AverageCell = function AverageCell(_ref) {
-  var avg = _ref.avg;
-
-  if (avg >= 5) {
-    return React.createElement(
-      'td',
-      null,
-      React.createElement(
-        _reactBootstrap.Label,
-        { bsStyle: 'danger' },
-        avg
-      )
-    );
-  } else if (avg >= 4) {
-    return React.createElement(
-      'td',
-      null,
-      React.createElement(
-        _reactBootstrap.Label,
-        { bsStyle: 'warning' },
-        avg
-      )
-    );
-  } else {
-    return React.createElement(
-      'td',
-      null,
-      React.createElement(
-        _reactBootstrap.Label,
-        { bsStyle: 'success' },
-        avg
-      )
-    );
-  }
-};
-
-var StudentNameCell = function StudentNameCell(_ref2) {
-  var data = _ref2.data;
+var StudentNameCell = function StudentNameCell(_ref) {
+  var data = _ref.data;
 
   return React.createElement(
     'td',
@@ -48116,8 +48256,8 @@ var StudentNameCell = function StudentNameCell(_ref2) {
   );
 };
 
-var StudentMarkCell = function StudentMarkCell(_ref3) {
-  var markObject = _ref3.markObject;
+var StudentMarkCell = function StudentMarkCell(_ref2) {
+  var markObject = _ref2.markObject;
 
   return React.createElement(
     'td',
@@ -48126,55 +48266,13 @@ var StudentMarkCell = function StudentMarkCell(_ref3) {
   );
 };
 
-var StudentTable = function StudentTable(_ref4) {
-  var marksTableViewModel = _ref4.marksTableViewModel;
-  var addTestFormInitialized = _ref4.addTestFormInitialized;
-  var history = _ref4.history;
+var StudentRows = function StudentRows(_ref3) {
+  var marksTableViewModel = _ref3.marksTableViewModel;
 
-
-  var addButton = function addButton() {
-    var handleClick = function handleClick(eventKey) {
-
-      var students = marksTableViewModel.get('studentsTableData').map(function (data) {
-        return data.get('student');
-      });
-
-      addTestFormInitialized(students);
-      history.push('/addtest');
-    };
-
-    return React.createElement(
-      _reactBootstrap.Button,
-      { onClick: handleClick },
-      'add test'
-    );
-  };
-
-  var createAvgTestsRow = function createAvgTestsRow() {
-    return React.createElement(
-      'tr',
-      null,
-      React.createElement(
-        'td',
-        null,
-        React.createElement(
-          'b',
-          null,
-          'Average'
-        )
-      ),
-      marksTableViewModel.get('avgOfTests').map(function (avg) {
-        return React.createElement(AverageCell, {
-          key: avg.get('testId') + '_' + 'avg',
-          avg: avg.get('testAvg')
-        });
-      }),
-      React.createElement('td', null)
-    );
-  };
-
-  var createStudentRow = function createStudentRow() {
-    return marksTableViewModel.get('studentsTableData').map(function (data) {
+  return React.createElement(
+    'tbody',
+    null,
+    marksTableViewModel.get('studentsTableData').map(function (data) {
       return React.createElement(
         'tr',
         { key: data.get('student').get('id') + '_tr' },
@@ -48188,39 +48286,15 @@ var StudentTable = function StudentTable(_ref4) {
             markObject: markObject
           });
         }),
-        React.createElement(AverageCell, { key: data.get('student').get('id') + '_avg', avg: data.get('avg') })
+        React.createElement(_averagecell2.default, { key: data.get('student').get('id') + '_avg', avg: data.get('avg') })
       );
-    });
-  };
-
-  var tableInstance = React.createElement(
-    _reactBootstrap.Table,
-    { striped: true, condensed: true, hover: true },
-    React.createElement(_tableheader2.default, {
-      marksTableViewModel: marksTableViewModel
-    }),
-    React.createElement(
-      'tbody',
-      null,
-      React.createElement(_categoriesrow2.default, {
-        marksTableViewModel: marksTableViewModel
-      }),
-      createStudentRow(),
-      createAvgTestsRow()
-    )
-  );
-
-  return React.createElement(
-    'div',
-    null,
-    tableInstance,
-    addButton()
+    })
   );
 };
 
-exports.default = StudentTable;
+exports.default = StudentRows;
 
-},{"./categoriesrow":485,"./tableheader":487,"react":453,"react-bootstrap":257,"react-dom":268,"react-router":306}],487:[function(require,module,exports){
+},{"./averagecell":487,"react":453,"react-dom":268}],491:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48271,7 +48345,7 @@ var TableHeader = function TableHeader(_ref2) {
 
 exports.default = TableHeader;
 
-},{"react":453,"react-dom":268}],488:[function(require,module,exports){
+},{"react":453,"react-dom":268}],492:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48313,7 +48387,7 @@ var SubjectNav = function SubjectNav(_ref) {
 
 exports.default = SubjectNav;
 
-},{"react":453,"react-bootstrap":257,"react-dom":268}],489:[function(require,module,exports){
+},{"react":453,"react-bootstrap":257,"react-dom":268}],493:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48374,7 +48448,7 @@ var AddTestContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToPr
 
 exports.default = AddTestContainer;
 
-},{"../actions/actions":474,"../components/addtest/addtest":476,"immutable":165,"react-redux":290}],490:[function(require,module,exports){
+},{"../actions/actions":474,"../components/addtest/addtest":476,"immutable":165,"react-redux":290}],494:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48426,7 +48500,7 @@ var StudentTableContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatc
 
 exports.default = StudentTableContainer;
 
-},{"../actions/actions":474,"../components/studenttable/studenttable":486,"../uiservice/converter":498,"immutable":165,"react-redux":290}],491:[function(require,module,exports){
+},{"../actions/actions":474,"../components/studenttable/studenttable":485,"../uiservice/converter":502,"immutable":165,"react-redux":290}],495:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48471,7 +48545,7 @@ var SubjectNavContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchT
 
 exports.default = SubjectNavContainer;
 
-},{"../actions/actions":474,"../components/subjectnav":488,"immutable":165,"react-redux":290}],492:[function(require,module,exports){
+},{"../actions/actions":474,"../components/subjectnav":492,"immutable":165,"react-redux":290}],496:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48494,7 +48568,7 @@ var categories = exports.categories = function categories() {
   }
 };
 
-},{"immutable":165}],493:[function(require,module,exports){
+},{"immutable":165}],497:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48517,7 +48591,7 @@ var grades = exports.grades = function grades() {
   }
 };
 
-},{"immutable":165}],494:[function(require,module,exports){
+},{"immutable":165}],498:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48549,7 +48623,7 @@ var reducer = (0, _redux.combineReducers)({
 
 exports.default = reducer;
 
-},{"./category":492,"./grade":493,"./students":495,"./subject":496,"./tests":497,"redux":459}],495:[function(require,module,exports){
+},{"./category":496,"./grade":497,"./students":499,"./subject":500,"./tests":501,"redux":459}],499:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48572,7 +48646,7 @@ var students = exports.students = function students() {
   }
 };
 
-},{"immutable":165}],496:[function(require,module,exports){
+},{"immutable":165}],500:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48621,7 +48695,7 @@ var subjects2students = exports.subjects2students = function subjects2students()
   }
 };
 
-},{"immutable":165}],497:[function(require,module,exports){
+},{"immutable":165}],501:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48713,7 +48787,7 @@ var testFormData = exports.testFormData = function testFormData() {
   }
 };
 
-},{"immutable":165}],498:[function(require,module,exports){
+},{"immutable":165}],502:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

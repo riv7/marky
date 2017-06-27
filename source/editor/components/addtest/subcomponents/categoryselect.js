@@ -3,8 +3,6 @@ var ReactDOM = require('react-dom');
 
 import { Col, Form, FormGroup, FormControl, Checkbox, ButtonGroup, ControlLabel, Button } from 'react-bootstrap';
 
-import MarkyHeader from '../markyheader';
-
 const CategoryOptionValue = ({category}) => {
   return (
     <option value={category.get('id')}>{category.get('name')}</option>

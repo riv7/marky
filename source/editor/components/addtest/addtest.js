@@ -4,10 +4,10 @@ var ReactDOM = require('react-dom');
 import { Col, Form, FormGroup, FormControl, Checkbox, ButtonGroup, ControlLabel, Button } from 'react-bootstrap';
 
 import MarkyHeader from '../markyheader';
-import TestMetadataRow from './testmetadatarow';
-import CategorySelect from './categoryselect';
-import MarkRow from './markrows';
-import SubmitButton from './submitbutton';
+import TestMetadataRow from './subcomponents/testmetadatarow';
+import CategorySelect from './subcomponents/categoryselect';
+import MarkRow from './subcomponents/markrows';
+import SubmitButton from './subcomponents/submitbutton';
 
 const AddTest = ({addTestData, addTestFormChanged, testAdded, history}) => {
 

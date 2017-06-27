@@ -3,37 +3,41 @@ var ReactDOM = require('react-dom');
 
 import { Col, Form, FormGroup, FormControl, Checkbox, ButtonGroup, ControlLabel, Button } from 'react-bootstrap';
 
-import MarkyHeader from '../markyheader';
-
-const MarkRow = ({addTestData, addTestFormChanged, student}) => {
+const TestMetadataRow = ({addTestData, addTestFormChanged, type, rowLabel, rowPlaceholder}) => {
 
   const handleChange = (event) => {
     const input = event.target;
     const text = input.value;
-    addTestFormChanged("MARKS", text, student.get('id'));
+    addTestFormChanged(type, text);
   };
 
-  const formMark = addTestData.get('formdata').get('marks')
-    .filter(mark => mark.get('student') === student.get('id'))
-    .first();
-  const formValue = formMark.get('mark');
+  let formValue;
+  switch(type) {
+    case 'TEST_NAME' :
+      formValue = addTestData.get('formdata').get('testname');
+      break;
+    case 'WRITTEN_AT' :
+      formValue = addTestData.get('formdata').get('writtenat');
+      break;
+  }
 
   return (
     <FormGroup controlId="formHorizontalText">
       <Col componentClass={ControlLabel} sm={2}>
-        {student.get('name')}
+        {rowLabel}
       </Col>
       <Col sm={8}>
         <FormControl
           type="text"
-          placeholder="Enter mark..."
+          placeholder={rowPlaceholder}
           value={formValue}
           onChange={handleChange}
-        />
+           />
       </Col>
       <Col sm={2}></Col>
     </FormGroup>
+
   );
 }
 
-export default MarkRow;
+export default TestMetadataRow;
