@@ -35,10 +35,7 @@ const StudentTable = ({marksTableViewModel, addTestFormInitialized, history}) =>
         <StudentRows marksTableViewModel={marksTableViewModel} />
         <AverageRow marksTableViewModel={marksTableViewModel} />
       </Table>
-      <AddButton
-        marksTableViewModel={marksTableViewModel}
-        addTestFormInitialized={addTestFormInitialized}
-        history={history} />
+      <AddButton history={history} />
     </div>
   );
 }

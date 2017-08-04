@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { Map } from 'immutable';
-import AddTest from '../components/addtest/addtest';
+import AddTestPage from '../components/addtest0/addtestpage';
 import { addTestFormChanged, testAdded } from '../actions/actions';
 
 const mapStateToProps = (state) => {
@@ -29,7 +29,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addTestFormChanged: (field, value, id) => dispatch(addTestFormChanged(field, value, id)),
     testAdded: (testFormData) => dispatch(testAdded(testFormData))
   }
 }
@@ -37,6 +36,6 @@ const mapDispatchToProps = (dispatch) => {
 const AddTestContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(AddTest)
+)(AddTestPage)
 
 export default AddTestContainer

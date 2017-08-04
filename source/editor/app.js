@@ -195,8 +195,7 @@ const store = createStore(reducer, {
   students: students,
   subjects2students: subjects2students,
   tests: tests,
-  categories: categories,
-  testFormData: Map()
+  categories: categories
 });
 
 ReactDOM.render(

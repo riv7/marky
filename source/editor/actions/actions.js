@@ -53,7 +53,7 @@ export const testAdded = (testFormData) => {
     type: 'TEST_ADDED',
     payload: {
       id: uid(),
-      testFormData: testFormData
+      testFormData
     }
   };
 }
@@ -69,7 +69,7 @@ export const categoryAdded = (categoryName) => {
   };
 }
 
-export const addTestFormChanged = (field, value, id) => {
+{/*export const addTestFormChanged = (field, value, id) => {
   return {
     type: 'FORMDATA_CHANGED',
     payload: {
@@ -87,4 +87,4 @@ export const addTestFormInitialized = (students) => {
       students: students
     }
   };
-}
+}*/}

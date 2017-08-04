@@ -1,9 +1,17 @@
 @import "../lib/bootstrap-3.3.7/less/bootstrap.less";
+
+@import "../lib/bootstrap-3.3.7/less/forms.less";
+
+@import "../lib/bootstrap-3.3.7/less/mixins.less";
+
+@import (reference) '../lib/bootstrap-3.3.7/less/bootstrap.less';
 //@body-bg:     red; // test background color
 
 @import "markyvariables.less";
 
 //@icon-font-path: "../fonts/bootstrap/"
+
+
 
 .border-right {
   border-right: 1px solid @gray-lighter;
@@ -26,4 +34,43 @@
 */
 .orange {
     color: rgba(227,130,98,.8);
+}
+
+//added manually, since i didnt succeed in importing @media from bootrap as a mixin
+.controlLabel {
+  text-align: right;
+  margin-bottom: 0;
+  padding-top: (@padding-base-vertical + 1); // Default padding plus a border
+}
+
+.addTestForm {
+  &:extend(.form-horizontal);
+
+  .addTestRow {
+    &:extend(.form-group);
+    .make-row();
+
+    .addTestLabel {
+      .make-sm-column(2);
+      &:extend(.controlLabel);
+    }
+
+    .addTestInput {
+      .make-sm-column(8);
+
+      .addTestField {
+        &:extend(.form-control);
+      }
+    }
+
+    .addTestGroup {
+      .make-sm-column-offset(2);
+      .make-sm-column(8);
+
+      .addTestButton {
+        &:extend(.btn);
+        &:extend(.btn-default);
+      }
+    }
+  }
 }

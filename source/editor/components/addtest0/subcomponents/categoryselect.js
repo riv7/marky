@@ -2,6 +2,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 import { Col, Form, FormGroup, FormControl, Checkbox, ButtonGroup, ControlLabel, Button } from 'react-bootstrap';
+import { Field } from 'redux-form'
 
 const CategoryOptionValue = ({category}) => {
   return (
@@ -9,35 +10,29 @@ const CategoryOptionValue = ({category}) => {
   );
 }
 
-const CategorySelect = ({addTestData, addTestFormChanged, rowLabel, rowPlaceholder}) => {
+const CategorySelect = ({addTestData, rowLabel, placeholder}) => {
 
   const handleChange = (event) => {
     const input = event.target;
     const text = input.value;
-    addTestFormChanged("CATEGORY", text);
+    alert("text: "+text);
   };
 
-  const formValue = addTestData.get('formdata').get('category');
-
   return (
-    <FormGroup controlId="formHorizontalSelect">
-      <Col componentClass={ControlLabel} sm={2}>
-        {rowLabel}
-      </Col>
-      <Col sm={8}>
-        <FormControl componentClass="select" placeholder={rowPlaceholder} >
+    <div className="addTestRow">
+      <label className="addTestLabel">{rowLabel}</label>
+      <div className="addTestInput">
+        <Field name="addTestSelect" className="addTestField" component="select" placeholder={placeholder}>
           {addTestData.get('categories').map(category =>
             <CategoryOptionValue
               key={category.get('id')}
               category={category}
-              value={formValue}
               onChange={handleChange}
             />
           )}
-        </FormControl>
-      </Col>
-      <Col sm={2}></Col>
-    </FormGroup>
+        </Field>
+      </div>      
+    </div>
   );
 }
 

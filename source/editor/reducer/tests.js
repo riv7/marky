@@ -22,7 +22,7 @@ export const tests = (tests=List([]), action) => {
   }
 }
 
-export const testFormData = (testFormData=Map(), action) => {
+{/*export const testFormData = (testFormData=Map(), action) => {
   switch(action.type) {
     case 'FORMDATA_CHANGED': {
 
@@ -35,9 +35,9 @@ export const testFormData = (testFormData=Map(), action) => {
         case 'CATEGORY' :
           return testFormData.set('category', action.payload.value);
         case 'MARKS' : {
-
+*/}
           {/*omg, this can be done better*/}
-          const marks = testFormData.get('marks');
+          {/*const marks = testFormData.get('marks');
           const marksWithoutId = marks.filterNot(mark => mark.get('student') ===
             action.payload.id);
           const searchedMark = marks.filter(mark => mark.get('student') ===
@@ -66,4 +66,4 @@ export const testFormData = (testFormData=Map(), action) => {
     default:
       return testFormData;
   }
-}
+}*/}
