@@ -9,16 +9,8 @@ import AddTestForm from './form/addtestform';
 const AddTestPage = ({addTestData, testAdded, history}) => {
 
   const submit = (testFormValues) => {
-
-    {/*const testFormTO = Map({
-      testName: testFormValues.addTestName,
-      writtenAt: testFormValues.addTestWrittenAt,
-      categoryId: testFormValues.addTestSelect
-      marks:
-    }*/}
-
-    // print the form values to the console
-     alert(values)
+    testAdded(testFormValues);
+    history.push('/maintable');
   }
 
   return (

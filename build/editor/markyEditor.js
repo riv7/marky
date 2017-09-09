@@ -58459,6 +58459,32 @@ var AddTestPage = function AddTestPage(_ref) {
 
   var submit = function submit(testFormValues) {
 
+    testAdded(testFormValues);
+
+    history.push('/maintable');
+
+    /*
+    Map({
+       id: 2,
+       name: 'Mündlich',
+       written: '2017-01-01',
+       marks: List([
+         Map({student: 0, mark: 3.0}),
+         Map({student: 1, mark: 1.5}),
+         Map({student: 2, mark: 1.5}),
+         Map({student: 3, mark: 5.5}),
+         Map({student: 4, mark: 1.5}),
+         Map({student: 5, mark: 1.5}),
+         Map({student: 6, mark: 3.0}),
+         Map({student: 7, mark: 1.5}),
+         Map({student: 8, mark: 1.5}),
+         Map({student: 9, mark: 1.5}),
+       ]),
+       category: 2,
+       subject: 0
+     }),
+     */
+
     {} /*const testFormTO = Map({
         testName: testFormValues.addTestName,
         writtenAt: testFormValues.addTestWrittenAt,
@@ -58467,7 +58493,7 @@ var AddTestPage = function AddTestPage(_ref) {
        }*/
 
     // print the form values to the console
-    alert(values);
+    //alert(testFormValues)
   };
 
   return React.createElement(_markyheader2.default, {
@@ -58489,6 +58515,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _reduxForm = require('redux-form');
 
 var _testmetadatarow = require('../subcomponents/testmetadatarow');
@@ -58509,44 +58537,93 @@ var _submitbutton2 = _interopRequireDefault(_submitbutton);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var AddTestForm = function AddTestForm(_ref) {
-  var addTestData = _ref.addTestData;
-  var testAdded = _ref.testAdded;
-  var history = _ref.history;
-  var handleSubmit = _ref.handleSubmit;
+var AddTestForm = function (_React$Component) {
+  _inherits(AddTestForm, _React$Component);
+
+  function AddTestForm(props) {
+    _classCallCheck(this, AddTestForm);
+
+    return _possibleConstructorReturn(this, (AddTestForm.__proto__ || Object.getPrototypeOf(AddTestForm)).call(this, props));
+  }
+
+  _createClass(AddTestForm, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _props = this.props;
+      var addTestData = _props.addTestData;
+      var testAdded = _props.testAdded;
+      var history = _props.history;
+      var handleSubmit = _props.handleSubmit;
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _props2 = this.props;
+      var addTestData = _props2.addTestData;
+      var testAdded = _props2.testAdded;
+      var history = _props2.history;
+      var handleSubmit = _props2.handleSubmit;
 
 
-  return React.createElement(
-    'form',
-    { className: 'addTestForm', onSubmit: handleSubmit },
-    React.createElement(_testmetadatarow2.default, {
-      name: 'addTestName',
-      rowLabel: "test name",
-      placeholder: "enter test name (p.ex.: KA1)..." }),
-    React.createElement(_testmetadatarow2.default, {
-      name: 'addTestWrittenAt',
-      rowLabel: "written at",
-      placeholder: "dd.MM.yyyy" }),
-    React.createElement(_categoryselect2.default, {
-      addTestData: addTestData,
-      rowLabel: "category",
-      placeholder: "select..." }),
-    React.createElement('div', { className: 'border-below' }),
-    addTestData.get('students').map(function (student) {
-      return React.createElement(_markrows2.default, {
-        key: student.get('id'),
-        student: student
-      });
-    }),
-    React.createElement(_submitbutton2.default, null)
-  );
-};
+      {/*const markFields = ({fields,meta}) => {
+         //addTestData.get('students').forEach(student => fields.push(student.get('id')))
+          return (
+           <div>
+             {fields.map(student =>
+               <MarkRow
+                 key={student.get('id')}
+                 student={student}
+               />
+             )}
+           </div>
+         )
+        }*/}
+
+      return React.createElement(
+        'form',
+        { className: 'addTestForm', onSubmit: handleSubmit },
+        React.createElement(_testmetadatarow2.default, {
+          name: 'addTestName',
+          rowLabel: "test name",
+          placeholder: "enter test name (p.ex.: KA1)..." }),
+        React.createElement(_testmetadatarow2.default, {
+          name: 'addTestWrittenAt',
+          rowLabel: "written at",
+          placeholder: "dd.MM.yyyy" }),
+        React.createElement(_categoryselect2.default, {
+          addTestData: addTestData,
+          rowLabel: "category",
+          placeholder: "select..." }),
+        React.createElement('div', { className: 'border-below' }),
+        React.createElement(
+          _reduxForm.FormSection,
+          { name: 'marks' },
+          addTestData.get('students').map(function (student) {
+            return React.createElement(_markrows2.default, {
+              key: student.get('id'),
+              student: student
+            });
+          })
+        ),
+        React.createElement(_submitbutton2.default, null)
+      );
+    }
+  }]);
+
+  return AddTestForm;
+}(React.Component);
 
 exports.default = (0, _reduxForm.reduxForm)({
-  form: 'addtestform' // a unique identifier for this form
+  form: 'addtestform'
 })(AddTestForm);
 
 },{"../subcomponents/categoryselect":722,"../subcomponents/markrows":723,"../subcomponents/submitbutton":724,"../subcomponents/testmetadatarow":725,"react":463,"react-dom":278,"redux-form":509}],722:[function(require,module,exports){
@@ -58652,7 +58729,7 @@ var MarkRow = function MarkRow(_ref) {
         className: 'addTestField',
         name: "markrow-" + student.get('id'),
         component: 'input',
-        type: 'text' })
+        type: 'number' })
     )
   );
 };
@@ -59702,6 +59779,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.tests = undefined;
 
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 var _immutable = require('immutable');
 
 var tests = exports.tests = function tests() {
@@ -59711,13 +59790,26 @@ var tests = exports.tests = function tests() {
   switch (action.type) {
     case 'TEST_ADDED':
       {
-        var testFormData = action.payload;
+        var _action$payload = action.payload;
+        var id = _action$payload.id;
+        var testFormData = _action$payload.testFormData;
+
+
+        var allMarks = (0, _immutable.List)(Object.entries(testFormData.marks)).map(function (_ref) {
+          var _ref2 = _slicedToArray(_ref, 2);
+
+          var key = _ref2[0];
+          var value = _ref2[1];
+
+          var studentId = key.split("-")[1];
+          return (0, _immutable.Map)({ student: parseFloat(studentId), mark: parseFloat(value) });
+        });
 
         var test = (0, _immutable.Map)({
-          id: testFormData.id,
-          name: testFormData.testFormData.get('testname'),
-          written: testFormData.testFormData.get('writtenat'),
-          marks: testFormData.testFormData.get('marks'),
+          id: id,
+          name: testFormData.addTestName,
+          written: testFormData.addTestWrittenAt,
+          marks: allMarks,
           category: 1,
           subject: 0
         });
@@ -59729,6 +59821,56 @@ var tests = exports.tests = function tests() {
       return tests;
   }
 };
+/*
+
+Object.entries(obj).forEach(([key, value]) => {
+    console.log(key + ' ' + value); // "a 5", "b 7", "c 9"
+});
+
+action.payload
+
+Map({
+   id: 2,
+   name: 'Mündlich',
+   written: '2017-01-01',
+   marks: List([
+     Map({student: 0, mark: 3.0}),
+     Map({student: 1, mark: 1.5}),
+     Map({student: 2, mark: 1.5}),
+     Map({student: 3, mark: 5.5}),
+     Map({student: 4, mark: 1.5}),
+     Map({student: 5, mark: 1.5}),
+     Map({student: 6, mark: 3.0}),
+     Map({student: 7, mark: 1.5}),
+     Map({student: 8, mark: 1.5}),
+     Map({student: 9, mark: 1.5}),
+   ]),
+   category: 2,
+   subject: 0
+ }),
+ */
+/*
+/*
+Map({
+   id: 2,
+   name: 'Mündlich',
+   written: '2017-01-01',
+   marks: List([
+     Map({student: 0, mark: 3.0}),
+     Map({student: 1, mark: 1.5}),
+     Map({student: 2, mark: 1.5}),
+     Map({student: 3, mark: 5.5}),
+     Map({student: 4, mark: 1.5}),
+     Map({student: 5, mark: 1.5}),
+     Map({student: 6, mark: 3.0}),
+     Map({student: 7, mark: 1.5}),
+     Map({student: 8, mark: 1.5}),
+     Map({student: 9, mark: 1.5}),
+   ]),
+   category: 2,
+   subject: 0
+ }),
+ */
 
 {/*export const testFormData = (testFormData=Map(), action) => {
    switch(action.type) {
