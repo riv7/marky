@@ -20,21 +20,7 @@ class AddTestForm extends React.Component {
 
   render() {
     const {addTestData, testAdded, history, handleSubmit} = this.props;
-
-    {/*const markFields = ({fields,meta}) => {
-      //addTestData.get('students').forEach(student => fields.push(student.get('id')))
-
-      return (
-        <div>
-          {fields.map(student =>
-            <MarkRow
-              key={student.get('id')}
-              student={student}
-            />
-          )}
-        </div>
-      )
-    }*/}
+    const isNewTest = addTestData.get('test').isEmpty();
 
     return (
       <form className="addTestForm" onSubmit={handleSubmit}>
@@ -52,14 +38,12 @@ class AddTestForm extends React.Component {
           placeholder={"select..."} />
         <div className="border-below"></div>
         <FormSection name="marks">
-        {
-          addTestData.get('students').map(student =>
+        {addTestData.get('students').map(student =>
             <MarkRow
               key={student.get('id')}
               student={student}
             />
-          )
-        }
+        )}
         </FormSection>
         <SubmitButton />
       </form>

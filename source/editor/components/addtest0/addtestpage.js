@@ -8,10 +8,31 @@ import AddTestForm from './form/addtestform';
 
 const AddTestPage = ({addTestData, testAdded, history}) => {
 
+  const isNewTest = addTestData.get('test').isEmpty();
+  const existingId = isNewTest ? -1 : addTestData.get('test').get('id');
+
   const submit = (testFormValues) => {
-    testAdded(testFormValues);
+    testFormValues["addTestSubject"] = addTestData.get("subject").get('id');
+    testAdded(testFormValues, existingId);
     history.push('/maintable');
   }
+
+  const testMarks = () => {
+    let result = {};
+    addTestData.get('test').get('marks').forEach(entry =>
+      result["markrow-"+entry.get('student')] = entry.get('mark')
+    )
+    return result;
+  }
+
+  const initData = (isNewTest) ? {} :
+    {
+      addTestName: addTestData.get('test').get('name'),
+      addTestWrittenAt: addTestData.get('test').get('written'),
+      addTestSelect: addTestData.get('test').get('category'),
+      marks: testMarks()
+    }
+
 
   return (
     <MarkyHeader
@@ -22,6 +43,7 @@ const AddTestPage = ({addTestData, testAdded, history}) => {
       }
       dataArea={
         <AddTestForm
+          initialValues={initData}
           addTestData={addTestData}
           testAdded={testAdded}
           history={history}

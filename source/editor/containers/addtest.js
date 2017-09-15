@@ -17,19 +17,22 @@ const mapStateToProps = (state) => {
 
   const allCategories = state.categories;
 
+  const testToEdit = (state.selectedTest === -1) ? Map() :
+    state.tests.find(test => test.get('id') === state.selectedTest)
+
   return {
     addTestData: Map({
       subject: selectedSubject,
       students: students,
       categories: allCategories,
-      formdata: state.testFormData
+      test: testToEdit
     })
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    testAdded: (testFormData) => dispatch(testAdded(testFormData))
+    testAdded: (testFormData, existingId) => dispatch(testAdded(testFormData, existingId))
   }
 }
 

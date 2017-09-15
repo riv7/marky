@@ -16,26 +16,22 @@ import AverageRow from './subcomponents/averagerow';
 import StudentRows from './subcomponents/studentrow';
 import AddButton from './subcomponents/addbutton';
 
-const StudentTable = ({marksTableViewModel, addTestFormInitialized, history}) => {
-
-  const tableInstance = (
-    <Table striped condensed hover>
-      <TableHeader marksTableViewModel={marksTableViewModel} />
-      <CategoriesRow marksTableViewModel={marksTableViewModel} />
-      <StudentRows marksTableViewModel={marksTableViewModel} />
-      <AverageRow marksTableViewModel={marksTableViewModel} />
-    </Table>
-  );
+const StudentTable = ({marksTableViewModel, testSelected, history}) => {
 
   return (
     <div>
       <Table striped condensed hover>
         <TableHeader marksTableViewModel={marksTableViewModel} />
-        <CategoriesRow marksTableViewModel={marksTableViewModel} />
+        <CategoriesRow
+          marksTableViewModel={marksTableViewModel}
+          testSelected={testSelected}
+          history={history} />
         <StudentRows marksTableViewModel={marksTableViewModel} />
         <AverageRow marksTableViewModel={marksTableViewModel} />
       </Table>
-      <AddButton history={history} />
+      <AddButton 
+        testSelected={testSelected}
+        history={history} />
     </div>
   );
 }

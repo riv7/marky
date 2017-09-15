@@ -3,15 +3,10 @@ var ReactDOM = require('react-dom');
 
 import {Button} from 'react-bootstrap';
 
-const AddButton = ({history}) => {
+const AddButton = ({testSelected, history}) => {
 
   const handleClick = (eventKey) => {
-    {/*const students = marksTableViewModel.get('studentsTableData').map(data =>
-      data.get('student')
-    );
-    addTestFormInitialized(students)
-    history.push('/addtest');*/}
-
+    testSelected(-1)
     history.push('/addtest');
   };
 

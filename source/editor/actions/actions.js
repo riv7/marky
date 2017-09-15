@@ -48,13 +48,21 @@ export const addedStudentToSubject = (studentId, subjectId) => {
   };
 }
 
-export const testAdded = (testFormData) => {
+export const testAdded = (testFormData, existingId) => {
   return {
     type: 'TEST_ADDED',
     payload: {
       id: uid(),
-      testFormData
+      testFormData,
+      existingId: existingId
     }
+  };
+}
+
+export const testSelected = (testId) => {
+  return {
+    type: 'TEST_SELECTED',
+    payload: testId
   };
 }
 

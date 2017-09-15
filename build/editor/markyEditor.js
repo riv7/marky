@@ -58276,13 +58276,21 @@ var addedStudentToSubject = exports.addedStudentToSubject = function addedStuden
   };
 };
 
-var testAdded = exports.testAdded = function testAdded(testFormData) {
+var testAdded = exports.testAdded = function testAdded(testFormData, existingId) {
   return {
     type: 'TEST_ADDED',
     payload: {
       id: uid(),
-      testFormData: testFormData
+      testFormData: testFormData,
+      existingId: existingId
     }
+  };
+};
+
+var testSelected = exports.testSelected = function testSelected(testId) {
+  return {
+    type: 'TEST_SELECTED',
+    payload: testId
   };
 };
 
@@ -58457,48 +58465,34 @@ var AddTestPage = function AddTestPage(_ref) {
   var history = _ref.history;
 
 
+  var isNewTest = addTestData.get('test').isEmpty();
+  var existingId = isNewTest ? -1 : addTestData.get('test').get('id');
+
   var submit = function submit(testFormValues) {
-
-    testAdded(testFormValues);
-
+    testFormValues["addTestSubject"] = addTestData.get("subject").get('id');
+    testAdded(testFormValues, existingId);
     history.push('/maintable');
+  };
 
-    /*
-    Map({
-       id: 2,
-       name: 'Mündlich',
-       written: '2017-01-01',
-       marks: List([
-         Map({student: 0, mark: 3.0}),
-         Map({student: 1, mark: 1.5}),
-         Map({student: 2, mark: 1.5}),
-         Map({student: 3, mark: 5.5}),
-         Map({student: 4, mark: 1.5}),
-         Map({student: 5, mark: 1.5}),
-         Map({student: 6, mark: 3.0}),
-         Map({student: 7, mark: 1.5}),
-         Map({student: 8, mark: 1.5}),
-         Map({student: 9, mark: 1.5}),
-       ]),
-       category: 2,
-       subject: 0
-     }),
-     */
+  var testMarks = function testMarks() {
+    var result = {};
+    addTestData.get('test').get('marks').forEach(function (entry) {
+      return result["markrow-" + entry.get('student')] = entry.get('mark');
+    });
+    return result;
+  };
 
-    {} /*const testFormTO = Map({
-        testName: testFormValues.addTestName,
-        writtenAt: testFormValues.addTestWrittenAt,
-        categoryId: testFormValues.addTestSelect
-        marks:
-       }*/
-
-    // print the form values to the console
-    //alert(testFormValues)
+  var initData = isNewTest ? {} : {
+    addTestName: addTestData.get('test').get('name'),
+    addTestWrittenAt: addTestData.get('test').get('written'),
+    addTestSelect: addTestData.get('test').get('category'),
+    marks: testMarks()
   };
 
   return React.createElement(_markyheader2.default, {
     detailText: "enter marks for " + addTestData.get("subject").get('name') + " " + addTestData.get("subject").get('scope'),
     dataArea: React.createElement(_addtestform2.default, {
+      initialValues: initData,
       addTestData: addTestData,
       testAdded: testAdded,
       history: history,
@@ -58573,20 +58567,7 @@ var AddTestForm = function (_React$Component) {
       var history = _props2.history;
       var handleSubmit = _props2.handleSubmit;
 
-
-      {/*const markFields = ({fields,meta}) => {
-         //addTestData.get('students').forEach(student => fields.push(student.get('id')))
-          return (
-           <div>
-             {fields.map(student =>
-               <MarkRow
-                 key={student.get('id')}
-                 student={student}
-               />
-             )}
-           </div>
-         )
-        }*/}
+      var isNewTest = addTestData.get('test').isEmpty();
 
       return React.createElement(
         'form',
@@ -58632,8 +58613,6 @@ exports.default = (0, _reduxForm.reduxForm)({
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _reactBootstrap = require('react-bootstrap');
 
 var _reduxForm = require('redux-form');
 
@@ -58690,7 +58669,7 @@ var CategorySelect = function CategorySelect(_ref2) {
 
 exports.default = CategorySelect;
 
-},{"react":463,"react-bootstrap":267,"react-dom":278,"redux-form":509}],723:[function(require,module,exports){
+},{"react":463,"react-dom":278,"redux-form":509}],723:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -59079,18 +59058,9 @@ var ReactDOM = require('react-dom');
 
 var StudentTable = function StudentTable(_ref) {
   var marksTableViewModel = _ref.marksTableViewModel;
-  var addTestFormInitialized = _ref.addTestFormInitialized;
+  var testSelected = _ref.testSelected;
   var history = _ref.history;
 
-
-  var tableInstance = React.createElement(
-    _reactBootstrap.Table,
-    { striped: true, condensed: true, hover: true },
-    React.createElement(_tableheader2.default, { marksTableViewModel: marksTableViewModel }),
-    React.createElement(_categoriesrow2.default, { marksTableViewModel: marksTableViewModel }),
-    React.createElement(_studentrow2.default, { marksTableViewModel: marksTableViewModel }),
-    React.createElement(_averagerow2.default, { marksTableViewModel: marksTableViewModel })
-  );
 
   return React.createElement(
     'div',
@@ -59099,11 +59069,16 @@ var StudentTable = function StudentTable(_ref) {
       _reactBootstrap.Table,
       { striped: true, condensed: true, hover: true },
       React.createElement(_tableheader2.default, { marksTableViewModel: marksTableViewModel }),
-      React.createElement(_categoriesrow2.default, { marksTableViewModel: marksTableViewModel }),
+      React.createElement(_categoriesrow2.default, {
+        marksTableViewModel: marksTableViewModel,
+        testSelected: testSelected,
+        history: history }),
       React.createElement(_studentrow2.default, { marksTableViewModel: marksTableViewModel }),
       React.createElement(_averagerow2.default, { marksTableViewModel: marksTableViewModel })
     ),
-    React.createElement(_addbutton2.default, { history: history })
+    React.createElement(_addbutton2.default, {
+      testSelected: testSelected,
+      history: history })
   );
 };
 
@@ -59122,16 +59097,12 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 var AddButton = function AddButton(_ref) {
+  var testSelected = _ref.testSelected;
   var history = _ref.history;
 
 
   var handleClick = function handleClick(eventKey) {
-    {/*const students = marksTableViewModel.get('studentsTableData').map(data =>
-       data.get('student')
-      );
-      addTestFormInitialized(students)
-      history.push('/addtest');*/}
-
+    testSelected(-1);
     history.push('/addtest');
   };
 
@@ -59256,13 +59227,22 @@ var ReactDOM = require('react-dom');
 
 var CategoryCell = function CategoryCell(_ref) {
   var category = _ref.category;
+  var testId = _ref.testId;
+  var testSelected = _ref.testSelected;
+  var history = _ref.history;
+
+
+  var handleClick = function handleClick(event) {
+    testSelected(testId);
+    history.push('/addtest');
+  };
 
   return React.createElement(
     'td',
     null,
     React.createElement(
       _reactBootstrap.Button,
-      { bsSize: 'xs' },
+      { bsSize: 'xs', onClick: handleClick },
       React.createElement(_reactBootstrap.Glyphicon, { glyph: 'edit' })
     ),
     React.createElement(
@@ -59284,6 +59264,8 @@ var CategoryCell = function CategoryCell(_ref) {
 
 var CategoriesRow = function CategoriesRow(_ref2) {
   var marksTableViewModel = _ref2.marksTableViewModel;
+  var testSelected = _ref2.testSelected;
+  var history = _ref2.history;
 
 
   return React.createElement(
@@ -59296,7 +59278,10 @@ var CategoriesRow = function CategoriesRow(_ref2) {
       marksTableViewModel.get('cats').map(function (cat) {
         return React.createElement(CategoryCell, {
           key: cat.get('testId') + '_' + cat.get('category').get('id'),
-          category: cat.get('category')
+          category: cat.get('category'),
+          testId: cat.get('testId'),
+          testSelected: testSelected,
+          history: history
         });
       }),
       React.createElement('td', null)
@@ -59499,20 +59484,24 @@ var mapStateToProps = function mapStateToProps(state) {
 
   var allCategories = state.categories;
 
+  var testToEdit = state.selectedTest === -1 ? (0, _immutable.Map)() : state.tests.find(function (test) {
+    return test.get('id') === state.selectedTest;
+  });
+
   return {
     addTestData: (0, _immutable.Map)({
       subject: selectedSubject,
       students: students,
       categories: allCategories,
-      formdata: state.testFormData
+      test: testToEdit
     })
   };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    testAdded: function testAdded(testFormData) {
-      return dispatch((0, _actions.testAdded)(testFormData));
+    testAdded: function testAdded(testFormData, existingId) {
+      return dispatch((0, _actions.testAdded)(testFormData, existingId));
     }
   };
 };
@@ -59563,8 +59552,8 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    addTestFormInitialized: function addTestFormInitialized(students) {
-      return dispatch((0, _actions.addTestFormInitialized)(students));
+    testSelected: function testSelected(test) {
+      return dispatch((0, _actions.testSelected)(test));
     }
   };
 };
@@ -59692,7 +59681,7 @@ var reducer = (0, _redux.combineReducers)({
   subjects2students: _subject.subjects2students,
   students: _students.students,
   tests: _tests.tests,
-  testFormData: _tests.testFormData,
+  selectedTest: _tests.selectedTest,
   categories: _category.categories,
   form: _reduxForm.reducer
 });
@@ -59777,11 +59766,26 @@ var subjects2students = exports.subjects2students = function subjects2students()
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.tests = undefined;
+exports.tests = exports.selectedTest = undefined;
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
 var _immutable = require('immutable');
+
+var selectedTest = exports.selectedTest = function selectedTest() {
+  var test = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : -1;
+  var action = arguments[1];
+
+  switch (action.type) {
+    case 'TEST_SELECTED':
+      return action.payload;
+
+    default:
+      return test;
+  }
+};
 
 var tests = exports.tests = function tests() {
   var tests = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : (0, _immutable.List)([]);
@@ -59790,128 +59794,48 @@ var tests = exports.tests = function tests() {
   switch (action.type) {
     case 'TEST_ADDED':
       {
-        var _action$payload = action.payload;
-        var id = _action$payload.id;
-        var testFormData = _action$payload.testFormData;
+        var _ret = function () {
+          var _action$payload = action.payload;
+          var id = _action$payload.id;
+          var testFormData = _action$payload.testFormData;
+          var existingId = _action$payload.existingId;
 
 
-        var allMarks = (0, _immutable.List)(Object.entries(testFormData.marks)).map(function (_ref) {
-          var _ref2 = _slicedToArray(_ref, 2);
+          var allMarks = (0, _immutable.List)(Object.entries(testFormData.marks)).map(function (_ref) {
+            var _ref2 = _slicedToArray(_ref, 2);
 
-          var key = _ref2[0];
-          var value = _ref2[1];
+            var key = _ref2[0];
+            var value = _ref2[1];
 
-          var studentId = key.split("-")[1];
-          return (0, _immutable.Map)({ student: parseFloat(studentId), mark: parseFloat(value) });
-        });
+            var studentId = key.split("-")[1];
+            return (0, _immutable.Map)({ student: parseFloat(studentId), mark: parseFloat(value) });
+          });
 
-        var test = (0, _immutable.Map)({
-          id: id,
-          name: testFormData.addTestName,
-          written: testFormData.addTestWrittenAt,
-          marks: allMarks,
-          category: 1,
-          subject: 0
-        });
+          var test = (0, _immutable.Map)({
+            id: existingId === -1 ? id : existingId,
+            name: testFormData.addTestName,
+            written: testFormData.addTestWrittenAt,
+            marks: allMarks,
+            category: parseFloat(testFormData.addTestSelect),
+            subject: testFormData.addTestSubject
+          });
 
-        return tests.push(test);
+          var index = existingId === -1 ? -1 : tests.findIndex(function (t) {
+            return t.get('id') === existingId;
+          });
+
+          return {
+            v: index === -1 ? tests.push(test) : tests.set(index, test)
+          };
+        }();
+
+        if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
       }
 
     default:
       return tests;
   }
 };
-/*
-
-Object.entries(obj).forEach(([key, value]) => {
-    console.log(key + ' ' + value); // "a 5", "b 7", "c 9"
-});
-
-action.payload
-
-Map({
-   id: 2,
-   name: 'Mündlich',
-   written: '2017-01-01',
-   marks: List([
-     Map({student: 0, mark: 3.0}),
-     Map({student: 1, mark: 1.5}),
-     Map({student: 2, mark: 1.5}),
-     Map({student: 3, mark: 5.5}),
-     Map({student: 4, mark: 1.5}),
-     Map({student: 5, mark: 1.5}),
-     Map({student: 6, mark: 3.0}),
-     Map({student: 7, mark: 1.5}),
-     Map({student: 8, mark: 1.5}),
-     Map({student: 9, mark: 1.5}),
-   ]),
-   category: 2,
-   subject: 0
- }),
- */
-/*
-/*
-Map({
-   id: 2,
-   name: 'Mündlich',
-   written: '2017-01-01',
-   marks: List([
-     Map({student: 0, mark: 3.0}),
-     Map({student: 1, mark: 1.5}),
-     Map({student: 2, mark: 1.5}),
-     Map({student: 3, mark: 5.5}),
-     Map({student: 4, mark: 1.5}),
-     Map({student: 5, mark: 1.5}),
-     Map({student: 6, mark: 3.0}),
-     Map({student: 7, mark: 1.5}),
-     Map({student: 8, mark: 1.5}),
-     Map({student: 9, mark: 1.5}),
-   ]),
-   category: 2,
-   subject: 0
- }),
- */
-
-{/*export const testFormData = (testFormData=Map(), action) => {
-   switch(action.type) {
-     case 'FORMDATA_CHANGED': {
-        const field = action.payload.field;
-       switch(field) {
-         case 'TEST_NAME' :
-           return testFormData.update('testname', x=> action.payload.value);
-         case 'WRITTEN_AT':
-           return testFormData.set('writtenat', action.payload.value);
-         case 'CATEGORY' :
-           return testFormData.set('category', action.payload.value);
-         case 'MARKS' : {
-  */}
-{/*omg, this can be done better*/}
-{/*const marks = testFormData.get('marks');
-  const marksWithoutId = marks.filterNot(mark => mark.get('student') ===
-   action.payload.id);
-  const searchedMark = marks.filter(mark => mark.get('student') ===
-   action.payload.id).first();
-  const newMark = searchedMark.set('mark', action.payload.value);
-  const newMarksList = marksWithoutId.push(newMark);
-  return testFormData.set('marks', newMarksList);
-  }
-  }
-  }
-  case 'FORMDATA_INITIALIZED': {
-  const initialMarks = action.payload.students.map(student => {
-  return Map({student: student.get('id'), mark: ""});
-  });
-  return Map({
-  testname: "",
-  writtenat: "",
-  category: "",
-  marks: initialMarks
-  });
-  }
-  default:
-  return testFormData;
-  }
-  }*/}
 
 },{"immutable":166}],747:[function(require,module,exports){
 'use strict';

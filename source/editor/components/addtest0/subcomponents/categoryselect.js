@@ -1,7 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-import { Col, Form, FormGroup, FormControl, Checkbox, ButtonGroup, ControlLabel, Button } from 'react-bootstrap';
 import { Field } from 'redux-form'
 
 const CategoryOptionValue = ({category}) => {
@@ -31,7 +30,7 @@ const CategorySelect = ({addTestData, rowLabel, placeholder}) => {
             />
           )}
         </Field>
-      </div>      
+      </div>
     </div>
   );
 }

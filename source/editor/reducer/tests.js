@@ -1,9 +1,19 @@
 import { Map,List } from 'immutable';
 
+export const selectedTest = (test=-1, action) => {
+  switch(action.type) {
+    case 'TEST_SELECTED':
+      return action.payload;
+
+    default:
+      return test;
+  }
+}
+
 export const tests = (tests=List([]), action) => {
   switch(action.type) {
     case 'TEST_ADDED': {
-      const {id, testFormData} = action.payload;
+      const {id, testFormData, existingId} = action.payload;
 
       const allMarks = List(Object.entries(testFormData.marks))
       .map(([key, value]) => {
@@ -11,17 +21,19 @@ export const tests = (tests=List([]), action) => {
         return Map({student: parseFloat(studentId), mark: parseFloat(value)});
       });
 
-
       const test = Map({
-        id: id,
+        id: existingId === -1 ? id : existingId,
         name: testFormData.addTestName,
         written: testFormData.addTestWrittenAt,
         marks: allMarks,
-        category: 1,
-        subject: 0
+        category: parseFloat(testFormData.addTestSelect),
+        subject: testFormData.addTestSubject
       });
 
-      return tests.push(test);
+      const index = existingId === -1 ?
+        -1 : tests.findIndex(t => t.get('id') === existingId);
+
+      return (index === -1) ? tests.push(test) : tests.set(index, test);
     }
 
     default:
