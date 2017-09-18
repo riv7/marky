@@ -3,7 +3,7 @@ var ReactDOM = require('react-dom');
 
 import { Field } from 'redux-form'
 
-const TestMetadataRow = ({name, rowLabel, placeholder}) => {
+const TestMetadataRow = ({name, rowLabel, placeholder, disabled}) => {
 
   const handleChange = (event) => {
     const input = event.target;
@@ -20,7 +20,8 @@ const TestMetadataRow = ({name, rowLabel, placeholder}) => {
           name={name}
           component="input"
           type="text"
-          placeholder={placeholder} />
+          placeholder={placeholder}
+          disabled={disabled} />
       </div>
     </div>
   );

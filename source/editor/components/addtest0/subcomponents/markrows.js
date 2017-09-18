@@ -4,7 +4,7 @@ var ReactDOM = require('react-dom');
 import { Col, Form, FormGroup, FormControl, Checkbox, ButtonGroup, ControlLabel, Button } from 'react-bootstrap';
 import { Field } from 'redux-form'
 
-const MarkRow = ({ student }) => {
+const MarkRow = ({ student, disabled }) => {
 
   const handleChange = (event) => {
     const input = event.target;
@@ -20,7 +20,8 @@ const MarkRow = ({ student }) => {
           className="addTestField"
           name={"markrow-"+student.get('id')}
           component="input"
-          type="number" />
+          type="number"
+          disabled={disabled} />
       </div>
     </div>
   );

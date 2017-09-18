@@ -59,7 +59,7 @@
       .make-sm-column(8);
 
       .addTestField {
-        &:extend(.form-control);
+        .form-control;
       }
     }
 
@@ -68,8 +68,9 @@
       .make-sm-column(8);
 
       .addTestButton {
-        &:extend(.btn);
-        &:extend(.btn-default);
+        .btn;
+        .btn-default;
+        margin-right: 5px;
       }
     }
   }
