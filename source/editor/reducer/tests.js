@@ -36,6 +36,12 @@ export const tests = (tests=List([]), action) => {
       return (index === -1) ? tests.push(test) : tests.set(index, test);
     }
 
+    case 'TEST_REMOVED': {
+      const testId = action.payload;
+      const index = tests.findIndex(t => t.get('id') === testId);
+      return tests.delete(index);
+    }
+
     default:
       return tests;
   }

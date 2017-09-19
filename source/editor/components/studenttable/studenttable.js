@@ -16,7 +16,7 @@ import AverageRow from './subcomponents/averagerow';
 import StudentRows from './subcomponents/studentrow';
 import AddButton from './subcomponents/addbutton';
 
-const StudentTable = ({marksTableViewModel, testSelected, history}) => {
+const StudentTable = ({marksTableViewModel, testSelected, testRemoved, history}) => {
 
   return (
     <div>
@@ -25,11 +25,12 @@ const StudentTable = ({marksTableViewModel, testSelected, history}) => {
         <CategoriesRow
           marksTableViewModel={marksTableViewModel}
           testSelected={testSelected}
+          testRemoved={testRemoved}
           history={history} />
         <StudentRows marksTableViewModel={marksTableViewModel} />
         <AverageRow marksTableViewModel={marksTableViewModel} />
       </Table>
-      <AddButton 
+      <AddButton
         testSelected={testSelected}
         history={history} />
     </div>

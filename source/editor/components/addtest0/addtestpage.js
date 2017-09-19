@@ -25,8 +25,10 @@ const AddTestPage = ({addTestData, testAdded, history}) => {
     return result;
   }
 
-  const initData = (isNewTest) ? {} :
+  const initData = (isNewTest) ? 
     {
+      addTestSelect: 0
+    } : {
       addTestName: addTestData.get('test').get('name'),
       addTestWrittenAt: addTestData.get('test').get('written'),
       addTestSelect: addTestData.get('test').get('category'),

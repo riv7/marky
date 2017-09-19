@@ -59,6 +59,13 @@ export const testAdded = (testFormData, existingId) => {
   };
 }
 
+export const testRemoved = (testId) => {
+  return {
+    type: 'TEST_REMOVED',
+    payload: testId
+  };
+}
+
 export const testSelected = (testId) => {
   return {
     type: 'TEST_SELECTED',

@@ -3,23 +3,27 @@ var ReactDOM = require('react-dom');
 
 import {Button, Glyphicon, Label } from 'react-bootstrap';
 
-const CategoryCell = ({category, testId, testSelected, history}) => {
+const CategoryCell = ({category, testId, testSelected, testRemoved, history}) => {
 
-  const handleClick = (event) => {
-    testSelected(testId)
+  const handleEditClick = (event) => {
+    testSelected(testId);
     history.push('/addtest');
+  };
+
+  const handleDeleteClick = (event) => {
+    testRemoved(testId);
   };
 
   return (
     <td>
-      <Button bsSize="xs" onClick={handleClick}><Glyphicon glyph="edit" /></Button>
-      <Button bsSize="xs"><Glyphicon glyph="remove" /></Button>
+      <Button bsSize="xs" onClick={handleEditClick}><Glyphicon glyph="edit" /></Button>
+      <Button bsSize="xs" onClick={handleDeleteClick}><Glyphicon glyph="remove" /></Button>
       <h5><Label bsStyle={category.get('color')}>{category.get('name')}</Label></h5>
     </td>
   );
 }
 
-const CategoriesRow = ({marksTableViewModel, testSelected, history}) => {
+const CategoriesRow = ({marksTableViewModel, testSelected, testRemoved, history}) => {
 
   return (
     <tbody>
@@ -31,6 +35,7 @@ const CategoriesRow = ({marksTableViewModel, testSelected, history}) => {
               category={cat.get('category')}
               testId={cat.get('testId')}
               testSelected={testSelected}
+              testRemoved={testRemoved}
               history={history}
             />
           )}

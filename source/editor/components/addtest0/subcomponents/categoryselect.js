@@ -24,7 +24,7 @@ const CategorySelect = ({addTestData, rowLabel, placeholder, disabled}) => {
       <label className="addTestLabel">{rowLabel}</label>
       <div className="addTestInput">
         <Field name="addTestSelect"
-           className="addTestField"
+           className="addTestField"           
            component="select"
            disabled={disabled}
            placeholder={placeholder}>

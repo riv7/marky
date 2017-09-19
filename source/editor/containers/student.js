@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { Map } from 'immutable';
 import StudentTable from '../components/studenttable/studenttable';
 import { createStudentsViewModel } from '../uiservice/converter';
-import { testSelected } from '../actions/actions';
+import { testSelected, testRemoved } from '../actions/actions';
 
 const mapStateToProps = (state) => {
 
@@ -26,7 +26,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    testSelected: test => dispatch(testSelected(test))
+    testSelected: test => dispatch(testSelected(test)),
+    testRemoved: test => dispatch(testRemoved(test))
   }
 }
 

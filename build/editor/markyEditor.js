@@ -58287,6 +58287,13 @@ var testAdded = exports.testAdded = function testAdded(testFormData, existingId)
   };
 };
 
+var testRemoved = exports.testRemoved = function testRemoved(testId) {
+  return {
+    type: 'TEST_REMOVED',
+    payload: testId
+  };
+};
+
 var testSelected = exports.testSelected = function testSelected(testId) {
   return {
     type: 'TEST_SELECTED',
@@ -58482,7 +58489,9 @@ var AddTestPage = function AddTestPage(_ref) {
     return result;
   };
 
-  var initData = isNewTest ? {} : {
+  var initData = isNewTest ? {
+    addTestSelect: 0
+  } : {
     addTestName: addTestData.get('test').get('name'),
     addTestWrittenAt: addTestData.get('test').get('written'),
     addTestSelect: addTestData.get('test').get('category'),
@@ -59115,6 +59124,7 @@ var ReactDOM = require('react-dom');
 var StudentTable = function StudentTable(_ref) {
   var marksTableViewModel = _ref.marksTableViewModel;
   var testSelected = _ref.testSelected;
+  var testRemoved = _ref.testRemoved;
   var history = _ref.history;
 
 
@@ -59128,6 +59138,7 @@ var StudentTable = function StudentTable(_ref) {
       React.createElement(_categoriesrow2.default, {
         marksTableViewModel: marksTableViewModel,
         testSelected: testSelected,
+        testRemoved: testRemoved,
         history: history }),
       React.createElement(_studentrow2.default, { marksTableViewModel: marksTableViewModel }),
       React.createElement(_averagerow2.default, { marksTableViewModel: marksTableViewModel })
@@ -59285,12 +59296,17 @@ var CategoryCell = function CategoryCell(_ref) {
   var category = _ref.category;
   var testId = _ref.testId;
   var testSelected = _ref.testSelected;
+  var testRemoved = _ref.testRemoved;
   var history = _ref.history;
 
 
-  var handleClick = function handleClick(event) {
+  var handleEditClick = function handleEditClick(event) {
     testSelected(testId);
     history.push('/addtest');
+  };
+
+  var handleDeleteClick = function handleDeleteClick(event) {
+    testRemoved(testId);
   };
 
   return React.createElement(
@@ -59298,12 +59314,12 @@ var CategoryCell = function CategoryCell(_ref) {
     null,
     React.createElement(
       _reactBootstrap.Button,
-      { bsSize: 'xs', onClick: handleClick },
+      { bsSize: 'xs', onClick: handleEditClick },
       React.createElement(_reactBootstrap.Glyphicon, { glyph: 'edit' })
     ),
     React.createElement(
       _reactBootstrap.Button,
-      { bsSize: 'xs' },
+      { bsSize: 'xs', onClick: handleDeleteClick },
       React.createElement(_reactBootstrap.Glyphicon, { glyph: 'remove' })
     ),
     React.createElement(
@@ -59321,6 +59337,7 @@ var CategoryCell = function CategoryCell(_ref) {
 var CategoriesRow = function CategoriesRow(_ref2) {
   var marksTableViewModel = _ref2.marksTableViewModel;
   var testSelected = _ref2.testSelected;
+  var testRemoved = _ref2.testRemoved;
   var history = _ref2.history;
 
 
@@ -59337,6 +59354,7 @@ var CategoriesRow = function CategoriesRow(_ref2) {
           category: cat.get('category'),
           testId: cat.get('testId'),
           testSelected: testSelected,
+          testRemoved: testRemoved,
           history: history
         });
       }),
@@ -59610,6 +59628,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     testSelected: function testSelected(test) {
       return dispatch((0, _actions.testSelected)(test));
+    },
+    testRemoved: function testRemoved(test) {
+      return dispatch((0, _actions.testRemoved)(test));
     }
   };
 };
@@ -59886,6 +59907,21 @@ var tests = exports.tests = function tests() {
         }();
 
         if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
+      }
+
+    case 'TEST_REMOVED':
+      {
+        var _ret2 = function () {
+          var testId = action.payload;
+          var index = tests.findIndex(function (t) {
+            return t.get('id') === testId;
+          });
+          return {
+            v: tests.delete(index)
+          };
+        }();
+
+        if ((typeof _ret2 === 'undefined' ? 'undefined' : _typeof(_ret2)) === "object") return _ret2.v;
       }
 
     default:
