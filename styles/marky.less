@@ -51,21 +51,25 @@
     .make-row();
 
     .addTestLabel {
-      .make-sm-column(2);
+      .make-sm-column(4);
       &:extend(.controlLabel);
     }
 
     .addTestInput {
-      .make-sm-column(8);
+      .make-sm-column(4);
 
       .addTestField {
         .form-control;
       }
+
+      .addTestValidation {
+        .make-sm-column(4);
+      }
     }
 
-    .addTestGroup {
-      .make-sm-column-offset(2);
-      .make-sm-column(8);
+    .addTestButtonGroup {
+      .make-sm-column(12);
+      .text-center;
 
       .addTestButton {
         .btn;

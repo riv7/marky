@@ -2,26 +2,24 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 import { Col, Form, FormGroup, FormControl, Checkbox, ButtonGroup, ControlLabel, Button } from 'react-bootstrap';
-import { Field } from 'redux-form'
+import { Field } from 'redux-form';
+
+import {renderField} from '../../validation/renderfield';
+import {required, number, maxValue6} from '../../validation/rules'
+
 
 const MarkRow = ({ student, disabled }) => {
-
-  const handleChange = (event) => {
-    const input = event.target;
-    const text = input.value;
-    alert("MARKS: "+text);
-  };
 
   return (
     <div className="addTestRow">
       <label className="addTestLabel">{student.get('name')}</label>
       <div className="addTestInput">
         <Field
-          className="addTestField"
           name={"markrow-"+student.get('id')}
-          component="input"
           type="number"
-          disabled={disabled} />
+          component={renderField}
+          disabled={disabled}
+          validate={maxValue6} />
       </div>
     </div>
   );

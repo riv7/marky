@@ -6764,7 +6764,7 @@ select[multiple].input-lg {
 @media (min-width: 768px) {
   .addTestForm .addTestRow .addTestLabel {
     float: left;
-    width: 16.66666667%;
+    width: 33.33333333%;
   }
 }
 .addTestForm .addTestRow .addTestInput {
@@ -6776,7 +6776,7 @@ select[multiple].input-lg {
 @media (min-width: 768px) {
   .addTestForm .addTestRow .addTestInput {
     float: left;
-    width: 66.66666667%;
+    width: 33.33333333%;
   }
 }
 .addTestForm .addTestRow .addTestInput .addTestField {
@@ -6830,24 +6830,32 @@ fieldset[disabled] .addTestForm .addTestRow .addTestInput .addTestField {
 textarea.addTestForm .addTestRow .addTestInput .addTestField {
   height: auto;
 }
-.addTestForm .addTestRow .addTestGroup {
+.addTestForm .addTestRow .addTestInput .addTestValidation {
   position: relative;
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
 }
 @media (min-width: 768px) {
-  .addTestForm .addTestRow .addTestGroup {
-    margin-left: 16.66666667%;
+  .addTestForm .addTestRow .addTestInput .addTestValidation {
+    float: left;
+    width: 33.33333333%;
   }
+}
+.addTestForm .addTestRow .addTestButtonGroup {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+  text-align: center;
 }
 @media (min-width: 768px) {
-  .addTestForm .addTestRow .addTestGroup {
+  .addTestForm .addTestRow .addTestButtonGroup {
     float: left;
-    width: 66.66666667%;
+    width: 100%;
   }
 }
-.addTestForm .addTestRow .addTestGroup .addTestButton {
+.addTestForm .addTestRow .addTestButtonGroup .addTestButton {
   display: inline-block;
   margin-bottom: 0;
   font-weight: normal;
@@ -6871,90 +6879,90 @@ textarea.addTestForm .addTestRow .addTestInput .addTestField {
   border-color: #ccc;
   margin-right: 5px;
 }
-.addTestForm .addTestRow .addTestGroup .addTestButton:focus,
-.addTestForm .addTestRow .addTestGroup .addTestButton:active:focus,
-.addTestForm .addTestRow .addTestGroup .addTestButton.active:focus,
-.addTestForm .addTestRow .addTestGroup .addTestButton.focus,
-.addTestForm .addTestRow .addTestGroup .addTestButton:active.focus,
-.addTestForm .addTestRow .addTestGroup .addTestButton.active.focus {
+.addTestForm .addTestRow .addTestButtonGroup .addTestButton:focus,
+.addTestForm .addTestRow .addTestButtonGroup .addTestButton:active:focus,
+.addTestForm .addTestRow .addTestButtonGroup .addTestButton.active:focus,
+.addTestForm .addTestRow .addTestButtonGroup .addTestButton.focus,
+.addTestForm .addTestRow .addTestButtonGroup .addTestButton:active.focus,
+.addTestForm .addTestRow .addTestButtonGroup .addTestButton.active.focus {
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
-.addTestForm .addTestRow .addTestGroup .addTestButton:hover,
-.addTestForm .addTestRow .addTestGroup .addTestButton:focus,
-.addTestForm .addTestRow .addTestGroup .addTestButton.focus {
+.addTestForm .addTestRow .addTestButtonGroup .addTestButton:hover,
+.addTestForm .addTestRow .addTestButtonGroup .addTestButton:focus,
+.addTestForm .addTestRow .addTestButtonGroup .addTestButton.focus {
   color: #333;
   text-decoration: none;
 }
-.addTestForm .addTestRow .addTestGroup .addTestButton:active,
-.addTestForm .addTestRow .addTestGroup .addTestButton.active {
+.addTestForm .addTestRow .addTestButtonGroup .addTestButton:active,
+.addTestForm .addTestRow .addTestButtonGroup .addTestButton.active {
   outline: 0;
   background-image: none;
   -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
   box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 }
-.addTestForm .addTestRow .addTestGroup .addTestButton.disabled,
-.addTestForm .addTestRow .addTestGroup .addTestButton[disabled],
-fieldset[disabled] .addTestForm .addTestRow .addTestGroup .addTestButton {
+.addTestForm .addTestRow .addTestButtonGroup .addTestButton.disabled,
+.addTestForm .addTestRow .addTestButtonGroup .addTestButton[disabled],
+fieldset[disabled] .addTestForm .addTestRow .addTestButtonGroup .addTestButton {
   cursor: not-allowed;
   opacity: 0.65;
   filter: alpha(opacity=65);
   -webkit-box-shadow: none;
   box-shadow: none;
 }
-a.addTestForm .addTestRow .addTestGroup .addTestButton.disabled,
-fieldset[disabled] a.addTestForm .addTestRow .addTestGroup .addTestButton {
+a.addTestForm .addTestRow .addTestButtonGroup .addTestButton.disabled,
+fieldset[disabled] a.addTestForm .addTestRow .addTestButtonGroup .addTestButton {
   pointer-events: none;
 }
-.addTestForm .addTestRow .addTestGroup .addTestButton:focus,
-.addTestForm .addTestRow .addTestGroup .addTestButton.focus {
+.addTestForm .addTestRow .addTestButtonGroup .addTestButton:focus,
+.addTestForm .addTestRow .addTestButtonGroup .addTestButton.focus {
   color: #333;
   background-color: #e6e6e6;
   border-color: #8c8c8c;
 }
-.addTestForm .addTestRow .addTestGroup .addTestButton:hover {
+.addTestForm .addTestRow .addTestButtonGroup .addTestButton:hover {
   color: #333;
   background-color: #e6e6e6;
   border-color: #adadad;
 }
-.addTestForm .addTestRow .addTestGroup .addTestButton:active,
-.addTestForm .addTestRow .addTestGroup .addTestButton.active,
-.open > .dropdown-toggle.addTestForm .addTestRow .addTestGroup .addTestButton {
+.addTestForm .addTestRow .addTestButtonGroup .addTestButton:active,
+.addTestForm .addTestRow .addTestButtonGroup .addTestButton.active,
+.open > .dropdown-toggle.addTestForm .addTestRow .addTestButtonGroup .addTestButton {
   color: #333;
   background-color: #e6e6e6;
   border-color: #adadad;
 }
-.addTestForm .addTestRow .addTestGroup .addTestButton:active:hover,
-.addTestForm .addTestRow .addTestGroup .addTestButton.active:hover,
-.open > .dropdown-toggle.addTestForm .addTestRow .addTestGroup .addTestButton:hover,
-.addTestForm .addTestRow .addTestGroup .addTestButton:active:focus,
-.addTestForm .addTestRow .addTestGroup .addTestButton.active:focus,
-.open > .dropdown-toggle.addTestForm .addTestRow .addTestGroup .addTestButton:focus,
-.addTestForm .addTestRow .addTestGroup .addTestButton:active.focus,
-.addTestForm .addTestRow .addTestGroup .addTestButton.active.focus,
-.open > .dropdown-toggle.addTestForm .addTestRow .addTestGroup .addTestButton.focus {
+.addTestForm .addTestRow .addTestButtonGroup .addTestButton:active:hover,
+.addTestForm .addTestRow .addTestButtonGroup .addTestButton.active:hover,
+.open > .dropdown-toggle.addTestForm .addTestRow .addTestButtonGroup .addTestButton:hover,
+.addTestForm .addTestRow .addTestButtonGroup .addTestButton:active:focus,
+.addTestForm .addTestRow .addTestButtonGroup .addTestButton.active:focus,
+.open > .dropdown-toggle.addTestForm .addTestRow .addTestButtonGroup .addTestButton:focus,
+.addTestForm .addTestRow .addTestButtonGroup .addTestButton:active.focus,
+.addTestForm .addTestRow .addTestButtonGroup .addTestButton.active.focus,
+.open > .dropdown-toggle.addTestForm .addTestRow .addTestButtonGroup .addTestButton.focus {
   color: #333;
   background-color: #d4d4d4;
   border-color: #8c8c8c;
 }
-.addTestForm .addTestRow .addTestGroup .addTestButton:active,
-.addTestForm .addTestRow .addTestGroup .addTestButton.active,
-.open > .dropdown-toggle.addTestForm .addTestRow .addTestGroup .addTestButton {
+.addTestForm .addTestRow .addTestButtonGroup .addTestButton:active,
+.addTestForm .addTestRow .addTestButtonGroup .addTestButton.active,
+.open > .dropdown-toggle.addTestForm .addTestRow .addTestButtonGroup .addTestButton {
   background-image: none;
 }
-.addTestForm .addTestRow .addTestGroup .addTestButton.disabled:hover,
-.addTestForm .addTestRow .addTestGroup .addTestButton[disabled]:hover,
-fieldset[disabled] .addTestForm .addTestRow .addTestGroup .addTestButton:hover,
-.addTestForm .addTestRow .addTestGroup .addTestButton.disabled:focus,
-.addTestForm .addTestRow .addTestGroup .addTestButton[disabled]:focus,
-fieldset[disabled] .addTestForm .addTestRow .addTestGroup .addTestButton:focus,
-.addTestForm .addTestRow .addTestGroup .addTestButton.disabled.focus,
-.addTestForm .addTestRow .addTestGroup .addTestButton[disabled].focus,
-fieldset[disabled] .addTestForm .addTestRow .addTestGroup .addTestButton.focus {
+.addTestForm .addTestRow .addTestButtonGroup .addTestButton.disabled:hover,
+.addTestForm .addTestRow .addTestButtonGroup .addTestButton[disabled]:hover,
+fieldset[disabled] .addTestForm .addTestRow .addTestButtonGroup .addTestButton:hover,
+.addTestForm .addTestRow .addTestButtonGroup .addTestButton.disabled:focus,
+.addTestForm .addTestRow .addTestButtonGroup .addTestButton[disabled]:focus,
+fieldset[disabled] .addTestForm .addTestRow .addTestButtonGroup .addTestButton:focus,
+.addTestForm .addTestRow .addTestButtonGroup .addTestButton.disabled.focus,
+.addTestForm .addTestRow .addTestButtonGroup .addTestButton[disabled].focus,
+fieldset[disabled] .addTestForm .addTestRow .addTestButtonGroup .addTestButton.focus {
   background-color: #fff;
   border-color: #ccc;
 }
-.addTestForm .addTestRow .addTestGroup .addTestButton .badge {
+.addTestForm .addTestRow .addTestButtonGroup .addTestButton .badge {
   color: #fff;
   background-color: #333;
 }

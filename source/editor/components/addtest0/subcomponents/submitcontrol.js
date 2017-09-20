@@ -10,7 +10,7 @@ const SubmitControl = ({isNewTest, disabled, onEnabledClick}) => {
   if (isNewTest) {
     return (
       <div className="addTestRow">
-        <div className="addTestGroup">
+        <div className="addTestButtonGroup">
           <button className="addTestButton" type="submit" >
             add test
           </button>
@@ -20,7 +20,7 @@ const SubmitControl = ({isNewTest, disabled, onEnabledClick}) => {
   } else {
     return (
       <div className="addTestRow">
-        <div className="addTestGroup">
+        <div className="addTestButtonGroup">
           <button className="addTestButton" disabled={disabled} type="submit" >
             save
           </button>

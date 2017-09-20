@@ -12,19 +12,12 @@ const CategoryOptionValue = ({category, disabled}) => {
 }
 
 const CategorySelect = ({addTestData, rowLabel, placeholder, disabled}) => {
-
-  const handleChange = (event) => {
-    const input = event.target;
-    const text = input.value;
-    alert("text: "+text);
-  };
-
   return (
     <div className="addTestRow">
       <label className="addTestLabel">{rowLabel}</label>
       <div className="addTestInput">
         <Field name="addTestSelect"
-           className="addTestField"           
+           className="addTestField"
            component="select"
            disabled={disabled}
            placeholder={placeholder}>
@@ -32,8 +25,7 @@ const CategorySelect = ({addTestData, rowLabel, placeholder, disabled}) => {
             <CategoryOptionValue
               key={category.get('id')}
               category={category}
-              disabled={disabled}
-              onChange={handleChange}
+              disabled={disabled}            
             />
           )}
         </Field>

@@ -28,7 +28,7 @@ const MarkyHeader = ({detailText, dataArea}) => {
         </Col>
       </Row>
       <Row>
-        <Col md={12}>
+        <Col md={12} className="text-center">
           {pageHeader}
         </Col>
       </Row>
