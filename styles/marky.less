@@ -43,6 +43,54 @@
   padding-top: (@padding-base-vertical + 1); // Default padding plus a border
 }
 
+.netoJumbotron {
+  .jumbotron;
+
+  .centerFullWidth {
+    .container;
+    .text-center;
+
+    .smallTitle {
+      .lead;
+    }
+  }
+}
+
+.netoCenterPage {
+  .container;
+
+  .netoGridRow {
+    .make-row();
+
+    .leftSpace {
+      .make-md-column(2);
+    }
+
+    .dataSpace {
+      .make-md-column(8);
+    }
+
+    .rightSpace {
+      .make-md-column(2);
+    }
+  }
+}
+
+.netoList {
+  .list-group;
+
+  .netoListItem {
+    .list-group-item;
+  }
+}
+
+.netoInputForm {
+  .netoButton {
+    .btn;
+    .btn-default;
+  }
+}
+
 .addTestForm {
   &:extend(.form-horizontal);
 

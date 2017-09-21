@@ -63,8 +63,36 @@ gulp.task('serve-editor', ['build-editor'], function() {
       livereload: true,
       fallback: 'index.html',
       directoryListing: false,
-      open: true
+      open: true,
+      proxies: {
+        source: '/odata',
+        target: 'http://localhost:8080/DemoService/DemoService.svc/Products'
+      }
     }));
 });
+
+gulp.task('build-neto', ['css-editor'], function () {
+  return browserify('./source/neto/app.js')
+        .transform(browserifycss, {global: true})
+        .transform(babelify, {presets: ["es2015", "react"]})
+        .bundle()
+        .pipe(source('markyNeto.js'))
+        .pipe(gulp.dest('./build/neto'));
+});
+
+gulp.task('serve-neto', ['build-neto'], function() {
+  gulp.src('build/neto')
+    .pipe(webserver({
+      livereload: true,
+      fallback: 'index.html',
+      directoryListing: false,
+      open: true,
+      proxies: [{
+        source: '/DemoService',
+        target: 'http://localhost:8080/DemoService'
+      }]
+    }));
+});
+
 
 gulp.task('default', ['serve-editor']);

@@ -28,10 +28,12 @@
     "react": "^15.3.2",
     "react-bootstrap": "^0.30.6",
     "react-dom": "^15.3.2",
+    "react-odata": "^7.0.1",
     "react-redux": "^4.4.5",
     "react-router": "^4.0.0",
     "react-router-redux": "^5.0.0-alpha.3",
     "redux": "^3.6.0",
-    "redux-form": "^7.0.0"
+    "redux-form": "^7.0.0",
+    "redux-thunk": "^2.2.0"
   }
 }
