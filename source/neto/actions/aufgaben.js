@@ -15,7 +15,7 @@ export function aufgabenIsLoading(bool) {
 export function aufgabenFetchDataSuccess(tasks) {
     return {
         type: 'AUFGABEN_FETCH_DATA_SUCCESS',
-        aufgaben: tasks.value
+        aufgaben: tasks
     };
 }
 

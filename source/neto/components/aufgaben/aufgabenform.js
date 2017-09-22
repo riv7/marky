@@ -9,7 +9,7 @@ const AufgabenForm = ({handleSubmit}) => {
     <form className="netoInputForm" onSubmit={handleSubmit}>
       <div className="form-group">
         <div className="input-group">
-          <span className="input-group-addon" id="basic-addon3">"http://oData/service"</span>
+          <span className="input-group-addon" id="basic-addon3">http://oData/service</span>
           <Field
             name="serviceUrl"
             component="input"
@@ -21,7 +21,7 @@ const AufgabenForm = ({handleSubmit}) => {
       </div>
       <div className="form-group">
         <div className="input-group">
-          <span className="input-group-addon" id="basic-addon3">"queryFilter"</span>
+          <span className="input-group-addon" id="basic-addon3">queryFilter</span>
           <Field
             name="queryFilter"
             component="input"
@@ -40,6 +40,7 @@ const AufgabenForm = ({handleSubmit}) => {
 export default reduxForm({
   form: 'aufgabenform',
   initialValues: {
-    serviceUrl: "/DemoService/DemoService.svc/Products?$format=application/json;odata.metadata=minimal"
-  }
+    serviceUrl: "/DemoService/DemoService.svc/Products"
+  },
+  destroyOnUnmount:false
 })(AufgabenForm)

@@ -35646,7 +35646,7 @@ function aufgabenIsLoading(bool) {
 function aufgabenFetchDataSuccess(tasks) {
     return {
         type: 'AUFGABEN_FETCH_DATA_SUCCESS',
-        aufgaben: tasks.value
+        aufgaben: tasks
     };
 }
 
@@ -35719,7 +35719,45 @@ ReactDOM.render(React.createElement(
   )
 ), document.getElementById('react-application'));
 
-},{"../../build/editor/css/marky.css":1,"./containers/aufgabenlistcontainer":475,"./reducer/reducer":477,"history/createBrowserHistory":32,"react":215,"react-dom":49,"react-redux":52,"react-router":68,"redux":456,"redux-thunk":450}],470:[function(require,module,exports){
+},{"../../build/editor/css/marky.css":1,"./containers/aufgabenlistcontainer":476,"./reducer/reducer":478,"history/createBrowserHistory":32,"react":215,"react-dom":49,"react-redux":52,"react-router":68,"redux":456,"redux-thunk":450}],470:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var React = require('react');
+var ReactDOM = require('react-dom');
+
+var AufgabenAlert = function AufgabenAlert(_ref) {
+  var response = _ref.response;
+
+
+  return React.createElement(
+    'div',
+    { className: 'alert alert-success', role: 'alert' },
+    React.createElement('br', null),
+    React.createElement(
+      'h4',
+      { className: 'alert-heading' },
+      'Well done!'
+    ),
+    React.createElement(
+      'p',
+      null,
+      response
+    ),
+    React.createElement('hr', null),
+    React.createElement(
+      'p',
+      { className: 'mb-0' },
+      'Great data.'
+    )
+  );
+};
+
+exports.default = AufgabenAlert;
+
+},{"react":215,"react-dom":49}],471:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -35747,7 +35785,7 @@ var AufgabenForm = function AufgabenForm(_ref) {
         React.createElement(
           'span',
           { className: 'input-group-addon', id: 'basic-addon3' },
-          '"http://oData/service"'
+          'http://oData/service'
         ),
         React.createElement(_reduxForm.Field, {
           name: 'serviceUrl',
@@ -35767,7 +35805,7 @@ var AufgabenForm = function AufgabenForm(_ref) {
         React.createElement(
           'span',
           { className: 'input-group-addon', id: 'basic-addon3' },
-          '"queryFilter"'
+          'queryFilter'
         ),
         React.createElement(_reduxForm.Field, {
           name: 'queryFilter',
@@ -35786,11 +35824,12 @@ var AufgabenForm = function AufgabenForm(_ref) {
 exports.default = (0, _reduxForm.reduxForm)({
   form: 'aufgabenform',
   initialValues: {
-    serviceUrl: "/DemoService/DemoService.svc/Products?$format=application/json;odata.metadata=minimal"
-  }
+    serviceUrl: "/DemoService/DemoService.svc/Products"
+  },
+  destroyOnUnmount: false
 })(AufgabenForm);
 
-},{"react":215,"react-dom":49,"redux-form":261}],471:[function(require,module,exports){
+},{"react":215,"react-dom":49,"redux-form":261}],472:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -35824,7 +35863,7 @@ var AufgabenList = function AufgabenList(_ref) {
 
 exports.default = AufgabenList;
 
-},{"react":215,"react-dom":49}],472:[function(require,module,exports){
+},{"react":215,"react-dom":49}],473:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -35848,6 +35887,10 @@ var _aufgabenlist2 = _interopRequireDefault(_aufgabenlist);
 var _aufgabenform = require('./aufgabenform');
 
 var _aufgabenform2 = _interopRequireDefault(_aufgabenform);
+
+var _aufgabenalert = require('./aufgabenalert');
+
+var _aufgabenalert2 = _interopRequireDefault(_aufgabenalert);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -35883,6 +35926,7 @@ var AufgabenPage = function (_React$Component) {
       var aufgaben = _props.aufgaben;
       var hasErrored = _props.hasErrored;
       var isLoading = _props.isLoading;
+      var serverResponse = _props.serverResponse;
       var fetchData = _props.fetchData;
 
       if (hasErrored) {
@@ -35912,7 +35956,11 @@ var AufgabenPage = function (_React$Component) {
       }
 
       var submit = function submit(formValues) {
-        fetchData(formValues.serviceUrl);
+        var serviceUrl = formValues.serviceUrl;
+        var queryFilter = formValues.queryFilter === undefined ? "" : "?$".concat(encodeURI(formValues.queryFilter).trim());
+        var completeUrl = serviceUrl.concat(queryFilter);
+
+        fetchData(completeUrl);
       };
 
       return React.createElement(
@@ -35923,7 +35971,8 @@ var AufgabenPage = function (_React$Component) {
             'div',
             null,
             React.createElement(_aufgabenform2.default, { onSubmit: submit }),
-            React.createElement(_aufgabenlist2.default, { aufgaben: aufgaben })
+            React.createElement(_aufgabenlist2.default, { aufgaben: aufgaben }),
+            React.createElement(_aufgabenalert2.default, { response: serverResponse })
           ) })
       );
     }
@@ -35934,7 +35983,7 @@ var AufgabenPage = function (_React$Component) {
 
 exports.default = AufgabenPage;
 
-},{"../basicgrid":473,"../jumbotron":474,"./aufgabenform":470,"./aufgabenlist":471,"react":215,"react-dom":49}],473:[function(require,module,exports){
+},{"../basicgrid":474,"../jumbotron":475,"./aufgabenalert":470,"./aufgabenform":471,"./aufgabenlist":472,"react":215,"react-dom":49}],474:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -35968,7 +36017,7 @@ var BasicGrid = function BasicGrid(_ref) {
 
 exports.default = BasicGrid;
 
-},{"react":215,"react-dom":49}],474:[function(require,module,exports){
+},{"react":215,"react-dom":49}],475:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -36019,7 +36068,7 @@ var Jumbotron = function Jumbotron() {
 
 exports.default = Jumbotron;
 
-},{"react":215,"react-dom":49}],475:[function(require,module,exports){
+},{"react":215,"react-dom":49}],476:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -36040,7 +36089,8 @@ var mapStateToProps = function mapStateToProps(state) {
   return {
     aufgaben: state.aufgaben,
     hasErrored: state.aufgabenHasErrored,
-    isLoading: state.aufgabenIsLoading
+    isLoading: state.aufgabenIsLoading,
+    serverResponse: state.aufgabenServerResponse
   };
 };
 
@@ -36056,7 +36106,7 @@ var AufgabenListContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatc
 
 exports.default = AufgabenListContainer;
 
-},{"../actions/aufgaben":468,"../components/aufgaben/aufgabenpage":472,"react-redux":52}],476:[function(require,module,exports){
+},{"../actions/aufgaben":468,"../components/aufgaben/aufgabenpage":473,"react-redux":52}],477:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -36065,6 +36115,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.aufgabenHasErrored = aufgabenHasErrored;
 exports.aufgabenIsLoading = aufgabenIsLoading;
 exports.aufgaben = aufgaben;
+exports.aufgabenServerResponse = aufgabenServerResponse;
 function aufgabenHasErrored() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
     var action = arguments[1];
@@ -36097,14 +36148,35 @@ function aufgaben() {
 
     switch (action.type) {
         case 'AUFGABEN_FETCH_DATA_SUCCESS':
-            return action.aufgaben;
+            {
+                if (action.aufgaben.value === undefined) {
+                    return [];
+                } else if (!Array.isArray(action.aufgaben.value)) {
+                    return [];
+                } else {
+                    return action.aufgaben.value;
+                }
+            }
 
         default:
             return state;
     }
 }
 
-},{}],477:[function(require,module,exports){
+function aufgabenServerResponse() {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+    var action = arguments[1];
+
+    switch (action.type) {
+        case 'AUFGABEN_FETCH_DATA_SUCCESS':
+            return JSON.stringify(action.aufgaben);
+
+        default:
+            return state;
+    }
+}
+
+},{}],478:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -36121,9 +36193,10 @@ var reducer = (0, _redux.combineReducers)({
   aufgaben: _aufgaben.aufgaben,
   aufgabenHasErrored: _aufgaben.aufgabenHasErrored,
   aufgabenIsLoading: _aufgaben.aufgabenIsLoading,
+  aufgabenServerResponse: _aufgaben.aufgabenServerResponse,
   form: _reduxForm.reducer
 });
 
 exports.default = reducer;
 
-},{"./aufgaben":476,"redux":456,"redux-form":261}]},{},[469]);
+},{"./aufgaben":477,"redux":456,"redux-form":261}]},{},[469]);

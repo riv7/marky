@@ -5,6 +5,7 @@ import Jumbotron from '../jumbotron';
 import BasicGrid from '../basicgrid';
 import AufgabenList from './aufgabenlist';
 import AufgabenForm from './aufgabenform';
+import AufgabenAlert from './aufgabenalert';
 
 class AufgabenPage extends React.Component {
 
@@ -14,7 +15,7 @@ class AufgabenPage extends React.Component {
   }*/
 
   render() {
-    const {aufgaben, hasErrored, isLoading, fetchData} = this.props;
+    const {aufgaben, hasErrored, isLoading, serverResponse, fetchData} = this.props;
     if (hasErrored) {
       return (
         <div>
@@ -34,7 +35,12 @@ class AufgabenPage extends React.Component {
     }
 
     const submit = (formValues) => {
-      fetchData(formValues.serviceUrl);
+      const serviceUrl = formValues.serviceUrl;
+      const queryFilter = formValues.queryFilter === undefined ?
+        "" : "?$".concat(encodeURI(formValues.queryFilter).trim());
+      const completeUrl = serviceUrl.concat(queryFilter);
+
+      fetchData(completeUrl);
     }
 
     return (
@@ -44,6 +50,7 @@ class AufgabenPage extends React.Component {
             <div>
               <AufgabenForm onSubmit={submit}/>
               <AufgabenList aufgaben={aufgaben} />
+              <AufgabenAlert response={serverResponse} />
             </div>
           } />
       </div>

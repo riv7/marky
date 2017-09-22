@@ -6,7 +6,8 @@ const mapStateToProps = (state) => {
   return {
     aufgaben: state.aufgaben,
     hasErrored: state.aufgabenHasErrored,
-    isLoading: state.aufgabenIsLoading
+    isLoading: state.aufgabenIsLoading,
+    serverResponse: state.aufgabenServerResponse
   };
 };
 

@@ -20,8 +20,25 @@ export function aufgabenIsLoading(state = false, action) {
 
 export function aufgaben(state = [], action) {
     switch (action.type) {
+        case 'AUFGABEN_FETCH_DATA_SUCCESS': {
+          if (action.aufgaben.value === undefined) {
+            return [];
+          } else if (!Array.isArray(action.aufgaben.value)) {
+            return [];
+          } else {
+            return action.aufgaben.value;
+          }
+        }
+
+        default:
+            return state;
+    }
+}
+
+export function aufgabenServerResponse(state = "", action) {
+    switch (action.type) {
         case 'AUFGABEN_FETCH_DATA_SUCCESS':
-            return action.aufgaben;
+            return JSON.stringify(action.aufgaben);
 
         default:
             return state;
