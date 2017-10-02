@@ -3,9 +3,10 @@ var ReactDOM = require('react-dom');
 
 require('../../build/editor/css/marky.css');
 
-import { createStore } from 'redux';
+import {applyMiddleware, createStore} from 'redux';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
+import thunk from 'redux-thunk';
 
 import createBrowserHistory from 'history/createBrowserHistory'
 
@@ -13,7 +14,6 @@ import reducer from './reducer/reducer';
 import { List, Map } from 'immutable';
 import MarkyEditor from './components/markyeditor';
 
-import { createStudentsViewModel } from './uiservice/converter';
 
 const grades = List([
   Map({id: 0, name: 'Klasse 7a'}),
@@ -191,12 +191,12 @@ const categories = List([
 //sort
 const store = createStore(reducer, {
   grades: grades,
-  subjects: subjects,
+  //subjects: subjects,
   students: students,
   subjects2students: subjects2students,
   tests: tests,
   categories: categories
-});
+}, applyMiddleware(thunk));
 
 ReactDOM.render(
   <Provider store={store}>

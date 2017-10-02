@@ -1,4 +1,4 @@
-import { List, Map } from 'immutable';
+import { Map } from 'immutable';
 
 export const createStudentsViewModel = (students, tests, categories) => {
 
@@ -24,7 +24,14 @@ export const createStudentsViewModel = (students, tests, categories) => {
     'studentsTableData': studentsTableData,
     'avgOfTests': avgOfTests
   });
-}
+};
+
+export const wrapLoadingState = (hasErrored, isLoading) => {
+  return Map({
+      'hasErrored' : hasErrored,
+      'isLoading' : isLoading
+  });
+};
 
 const groupByCategoryAndSorted = (tests, categories) => {
   //sort by category (sortingrank) and date
@@ -42,7 +49,7 @@ const groupByCategoryAndSorted = (tests, categories) => {
   return groupedByCategory.map(group => {
     return group.sort((a, b) => a.get('written').localeCompare(b.get('written')));
   });
-}
+};
 
 const getAveragesOfTests = (testsSorted) => {
   return testsSorted.map(test => {
@@ -52,9 +59,9 @@ const getAveragesOfTests = (testsSorted) => {
     return Map({
       testId: test.get('id'),
       testAvg: round2(sumTest / test.get('marks').size)
-    })
+    });
   });
-}
+};
 
 const getStudentsTableData = (students, testsSorted, sortedByDate) => {
 
@@ -66,8 +73,7 @@ const getStudentsTableData = (students, testsSorted, sortedByDate) => {
     .map(tuple => tuple.faktor)
     .reduce((prev,current) => prev+current);
 
-  const studentsTableData = students.map(student => {
-    const studentName = student.get('name');
+  return students.map(student => {
     const marksOfStudent = testsSorted.map(test =>
       test
         .get('marks')
@@ -90,10 +96,10 @@ const getStudentsTableData = (students, testsSorted, sortedByDate) => {
       'avg': avgStudent
     });
   });
-
-  return studentsTableData;
-}
+};
 
 const round2 = (doublevalue) => {
-  return Math.round(doublevalue * 100) / 100
-}
+  return Math.round(doublevalue * 100) / 100;
+};
+
+

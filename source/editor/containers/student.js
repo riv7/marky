@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
-import { Map } from 'immutable';
 import StudentTable from '../components/studenttable/studenttable';
-import { createStudentsViewModel } from '../uiservice/converter';
+import { createStudentsViewModel, wrapLoadingState } from '../uiservice/converter';
 import { testSelected, testRemoved } from '../actions/actions';
+import { fetchData } from '../actions/fetch';
 
 const mapStateToProps = (state) => {
 
@@ -15,25 +15,29 @@ const mapStateToProps = (state) => {
     test.get("subject") === state.selectedSubject
   );
 
+  const loadingState = wrapLoadingState(state.hasErrored, state.isLoading);
+
   return {
     marksTableViewModel: createStudentsViewModel(
       students,
       tests,
       state.categories
-    )
-  }
-}
+    ),
+    loadingState: loadingState
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
     testSelected: test => dispatch(testSelected(test)),
-    testRemoved: test => dispatch(testRemoved(test))
-  }
-}
+    testRemoved: test => dispatch(testRemoved(test)),
+    fetchData: (url) => dispatch(fetchData(url))
+  };
+};
 
 const StudentTableContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(StudentTable)
+)(StudentTable);
 
 export default StudentTableContainer

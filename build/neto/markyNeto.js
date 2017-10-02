@@ -35750,7 +35750,7 @@ var AufgabenAlert = function AufgabenAlert(_ref) {
     React.createElement(
       'p',
       { className: 'mb-0' },
-      'Great data.'
+      'Great oData.'
     )
   );
 };

@@ -22,4 +22,4 @@ const AufgabenListContainer = connect(
   mapDispatchToProps
 )(AufgabenPage)
 
-export default AufgabenListContainer
+export default AufgabenListContainer;

@@ -64,10 +64,10 @@ gulp.task('serve-editor', ['build-editor'], function() {
       fallback: 'index.html',
       directoryListing: false,
       open: true,
-      proxies: {
-        source: '/odata',
-        target: 'http://localhost:8080/DemoService/DemoService.svc/Products'
-      }
+      proxies: [{
+        source: '/v1',
+        target: 'http://localhost:8080/v1'
+      }]
     }));
 });
 

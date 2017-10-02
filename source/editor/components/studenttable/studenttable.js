@@ -1,40 +1,56 @@
 var React = require('react');
-var ReactDOM = require('react-dom');
-
-import { Link } from 'react-router';
 
 import { Table } from 'react-bootstrap';
-import { NavItem } from 'react-bootstrap';
-import { ButtonGroup } from 'react-bootstrap';
-import { Button } from 'react-bootstrap';
-import { Glyphicon } from 'react-bootstrap';
-import { Label } from 'react-bootstrap';
-
 import TableHeader from './subcomponents/tableheader';
 import CategoriesRow from './subcomponents/categoriesrow';
 import AverageRow from './subcomponents/averagerow';
 import StudentRows from './subcomponents/studentrow';
 import AddButton from './subcomponents/addbutton';
 
-const StudentTable = ({marksTableViewModel, testSelected, testRemoved, history}) => {
+class StudentTable extends React.Component {
 
-  return (
-    <div>
-      <Table striped condensed hover>
-        <TableHeader marksTableViewModel={marksTableViewModel} />
-        <CategoriesRow
-          marksTableViewModel={marksTableViewModel}
-          testSelected={testSelected}
-          testRemoved={testRemoved}
-          history={history} />
-        <StudentRows marksTableViewModel={marksTableViewModel} />
-        <AverageRow marksTableViewModel={marksTableViewModel} />
-      </Table>
-      <AddButton
-        testSelected={testSelected}
-        history={history} />
-    </div>
-  );
+    componentDidMount() {
+        const {fetchData} = this.props;
+        fetchData("/v1/api/subjects");
+    }
+
+    render() {
+        const {marksTableViewModel, loadingState, testSelected, testRemoved, history} = this.props;
+
+        if (loadingState.hasErrored) {
+            return (
+                <div>
+                    <p>Sorry! There was an error loading the items</p>
+                </div>
+            );
+        }
+
+        if (loadingState.isLoading) {
+            return (
+                <div>
+                    <p>Loading…</p>
+                </div>
+            );
+        }
+
+        return (
+            <div>
+                <Table striped condensed hover>
+                    <TableHeader marksTableViewModel={marksTableViewModel}/>
+                    <CategoriesRow
+                        marksTableViewModel={marksTableViewModel}
+                        testSelected={testSelected}
+                        testRemoved={testRemoved}
+                        history={history}/>
+                    <StudentRows marksTableViewModel={marksTableViewModel}/>
+                    <AverageRow marksTableViewModel={marksTableViewModel}/>
+                </Table>
+                <AddButton
+                    testSelected={testSelected}
+                    history={history}/>
+            </div>
+        );
+    }
 }
 
 export default StudentTable;

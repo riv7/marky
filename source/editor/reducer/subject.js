@@ -1,4 +1,4 @@
-import { Map,List } from 'immutable';
+import { Map,List, fromJS } from 'immutable';
 
 export const selectedSubject = (subject=0, action) => {
   switch(action.type) {
@@ -14,6 +14,10 @@ export const subjects = (subjects=List([]), action) => {
   switch(action.type) {
     case 'SUBJECT_ADDED':
       return subjects.push(Map(action.payload));
+    case 'FETCH_DATA_SUCCESS': {
+      const fetchedData = fromJS(action.payload);
+      return fetchedData;
+    }
 
     default:
       return subjects;
