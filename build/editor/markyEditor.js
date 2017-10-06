@@ -58362,7 +58362,7 @@ function fetchIsLoading(bool) {
 
 function fetchDataSuccess(data) {
     return {
-        type: 'FETCH_DATA_SUCCESS',
+        type: 'FETCH_YEAR',
         payload: data
     };
 }
@@ -58381,8 +58381,8 @@ function fetchData(url) {
             return response;
         }).then(function (response) {
             return response.json();
-        }).then(function (all) {
-            return dispatch(fetchDataSuccess(all));
+        }).then(function (data) {
+            return dispatch(fetchDataSuccess(data));
         }).catch(function () {
             return dispatch(fetchHasErrored(true));
         });
@@ -58423,76 +58423,79 @@ var ReactDOM = require('react-dom');
 
 require('../../build/editor/css/marky.css');
 
-var grades = (0, _immutable.List)([(0, _immutable.Map)({ id: 0, name: 'Klasse 7a' }), (0, _immutable.Map)({ id: 1, name: 'Klasse 8b' }), (0, _immutable.Map)({ id: 2, name: 'Klasse 10a' }), (0, _immutable.Map)({ id: 3, name: 'Klasse 10c' })]);
+var grades = (0, _immutable.List)([(0, _immutable.Map)({ id: 1, name: 'Klasse 7a' }), (0, _immutable.Map)({ id: 2, name: 'Klasse 8b' }), (0, _immutable.Map)({ id: 3, name: 'Klasse 10a' }), (0, _immutable.Map)({ id: 4, name: 'Klasse 10c' })]);
 
-var subjects = (0, _immutable.List)([(0, _immutable.Map)({ id: 0, name: 'Mathe', scope: '7a' }), (0, _immutable.Map)({ id: 1, name: 'Physik', scope: '8b' }), (0, _immutable.Map)({ id: 2, name: 'Religion', scope: '10' })]);
+var subjects = (0, _immutable.List)([(0, _immutable.Map)({ id: 1, name: 'Mathe', scope: '7a' }), (0, _immutable.Map)({ id: 2, name: 'Physik', scope: '8b' }), (0, _immutable.Map)({ id: 3, name: 'Religion', scope: '10' })]);
 
-var students = (0, _immutable.List)([(0, _immutable.Map)({ id: 0, name: 'Nico Rosberg', grade: 0 }), (0, _immutable.Map)({ id: 1, name: 'Lewis Hamilton', grade: 0 }), (0, _immutable.Map)({ id: 2, name: 'Sebastian Vettel', grade: 0 }), (0, _immutable.Map)({ id: 3, name: 'Kimi Räikkönen', grade: 0 }), (0, _immutable.Map)({ id: 4, name: 'Dani Ricciardo', grade: 0 }), (0, _immutable.Map)({ id: 5, name: 'Max Verstappen', grade: 0 }), (0, _immutable.Map)({ id: 6, name: 'Nico Hülkenberg', grade: 0 }), (0, _immutable.Map)({ id: 7, name: 'Sergio Perez', grade: 0 }), (0, _immutable.Map)({ id: 8, name: 'Fernando Alonso', grade: 0 }), (0, _immutable.Map)({ id: 9, name: 'Stoffel van Doorn', grade: 0 }), (0, _immutable.Map)({ id: 10, name: 'Valtteri Bottas', grade: 1 }), (0, _immutable.Map)({ id: 11, name: 'Felipe Massa', grade: 1 }), (0, _immutable.Map)({ id: 12, name: 'Pascal Wehrlein', grade: 1 }), (0, _immutable.Map)({ id: 13, name: 'Esteban Ocon', grade: 1 }), (0, _immutable.Map)({ id: 14, name: 'Romain Grosjean', grade: 2 }), (0, _immutable.Map)({ id: 15, name: 'Esteban Gutierez', grade: 3 })]);
+var students = (0, _immutable.List)([(0, _immutable.Map)({ id: 1, name: 'Nico Rosberg', gradeId: 1 }), (0, _immutable.Map)({ id: 2, name: 'Lewis Hamilton', gradeId: 1 }), (0, _immutable.Map)({ id: 3, name: 'Sebastian Vettel', gradeId: 1 }), (0, _immutable.Map)({ id: 4, name: 'Kimi Räikkönen', gradeId: 1 }), (0, _immutable.Map)({ id: 5, name: 'Dani Ricciardo', gradeId: 1 }), (0, _immutable.Map)({ id: 6, name: 'Max Verstappen', gradeId: 1 }), (0, _immutable.Map)({ id: 7, name: 'Nico Hülkenberg', gradeId: 1 }), (0, _immutable.Map)({ id: 8, name: 'Joylon Palmer', gradeId: 1 }), (0, _immutable.Map)({ id: 9, name: 'Sergio Perez', gradeId: 1 }), (0, _immutable.Map)({ id: 10, name: 'Esteban Ocon', gradeId: 1 }), (0, _immutable.Map)({ id: 11, name: 'Fernando Alonso', gradeId: 1 }), (0, _immutable.Map)({ id: 12, name: 'Stoffel van Doorn', gradeId: 1 }), (0, _immutable.Map)({ id: 13, name: 'Felipe Massa', gradeId: 2 }), (0, _immutable.Map)({ id: 14, name: 'Lance Stroll', gradeId: 2 }), (0, _immutable.Map)({ id: 15, name: 'Pascal Wehrlein', gradeId: 2 }), (0, _immutable.Map)({ id: 16, name: 'Marcus Ericsson', gradeId: 2 }), (0, _immutable.Map)({ id: 16, name: 'Romain Grosjean', gradeId: 3 }), (0, _immutable.Map)({ id: 16, name: 'Carlos Sainz Jr.', gradeId: 4 })]);
 
-var subjects2students = (0, _immutable.List)([(0, _immutable.Map)({ subjectId: 0, studentId: 0 }), (0, _immutable.Map)({ subjectId: 0, studentId: 1 }), (0, _immutable.Map)({ subjectId: 0, studentId: 2 }), (0, _immutable.Map)({ subjectId: 0, studentId: 3 }), (0, _immutable.Map)({ subjectId: 0, studentId: 4 }), (0, _immutable.Map)({ subjectId: 0, studentId: 5 }), (0, _immutable.Map)({ subjectId: 0, studentId: 6 }), (0, _immutable.Map)({ subjectId: 0, studentId: 7 }), (0, _immutable.Map)({ subjectId: 0, studentId: 8 }), (0, _immutable.Map)({ subjectId: 0, studentId: 9 }), (0, _immutable.Map)({ subjectId: 1, studentId: 10 }), (0, _immutable.Map)({ subjectId: 1, studentId: 11 }), (0, _immutable.Map)({ subjectId: 1, studentId: 12 }), (0, _immutable.Map)({ subjectId: 1, studentId: 13 }), (0, _immutable.Map)({ subjectId: 2, studentId: 14 }), (0, _immutable.Map)({ subjectId: 2, studentId: 15 })]);
+var subjects2students = (0, _immutable.List)([(0, _immutable.Map)({ subjectId: 1, studentId: 1 }), (0, _immutable.Map)({ subjectId: 1, studentId: 2 }), (0, _immutable.Map)({ subjectId: 1, studentId: 3 }), (0, _immutable.Map)({ subjectId: 1, studentId: 4 }), (0, _immutable.Map)({ subjectId: 1, studentId: 5 }), (0, _immutable.Map)({ subjectId: 1, studentId: 6 }), (0, _immutable.Map)({ subjectId: 1, studentId: 7 }), (0, _immutable.Map)({ subjectId: 1, studentId: 8 }), (0, _immutable.Map)({ subjectId: 1, studentId: 9 }), (0, _immutable.Map)({ subjectId: 1, studentId: 10 }), (0, _immutable.Map)({ subjectId: 1, studentId: 11 }), (0, _immutable.Map)({ subjectId: 1, studentId: 12 }), (0, _immutable.Map)({ subjectId: 2, studentId: 13 }), (0, _immutable.Map)({ subjectId: 2, studentId: 14 }), (0, _immutable.Map)({ subjectId: 2, studentId: 15 }), (0, _immutable.Map)({ subjectId: 2, studentId: 16 }), (0, _immutable.Map)({ subjectId: 3, studentId: 17 }), (0, _immutable.Map)({ subjectId: 3, studentId: 18 })]);
 
 var tests = (0, _immutable.List)([(0, _immutable.Map)({
-  id: 2,
+  id: 3,
   name: 'Mündlich',
   written: '2017-01-01',
-  marks: (0, _immutable.List)([(0, _immutable.Map)({ student: 0, mark: 3.0 }), (0, _immutable.Map)({ student: 1, mark: 1.5 }), (0, _immutable.Map)({ student: 2, mark: 1.5 }), (0, _immutable.Map)({ student: 3, mark: 5.5 }), (0, _immutable.Map)({ student: 4, mark: 1.5 }), (0, _immutable.Map)({ student: 5, mark: 1.5 }), (0, _immutable.Map)({ student: 6, mark: 3.0 }), (0, _immutable.Map)({ student: 7, mark: 1.5 }), (0, _immutable.Map)({ student: 8, mark: 1.5 }), (0, _immutable.Map)({ student: 9, mark: 1.5 })]),
-  category: 2,
-  subject: 0
+  marks: (0, _immutable.List)([(0, _immutable.Map)({ studentId: 1, mark: 3.0 }), (0, _immutable.Map)({ studentId: 2, mark: 1.5 }), (0, _immutable.Map)({ studentId: 3, mark: 1.5 }), (0, _immutable.Map)({ studentId: 4, mark: 5.5 }), (0, _immutable.Map)({ studentId: 5, mark: 1.5 }), (0, _immutable.Map)({ studentId: 6, mark: 1.5 }), (0, _immutable.Map)({ studentId: 7, mark: 3.0 }), (0, _immutable.Map)({ studentId: 8, mark: 1.5 }), (0, _immutable.Map)({ studentId: 9, mark: 1.5 }), (0, _immutable.Map)({ studentId: 10, mark: 1.5 }), (0, _immutable.Map)({ studentId: 11, mark: 1.5 }), (0, _immutable.Map)({ studentId: 12, mark: 1.5 })]),
+  category: 3,
+  subject: 1
 }), (0, _immutable.Map)({
-  id: 1,
+  id: 2,
   name: 'KA2',
   written: '2016-08-01',
-  marks: (0, _immutable.List)([(0, _immutable.Map)({ student: 0, mark: 1.5 }), (0, _immutable.Map)({ student: 1, mark: 2.5 }), (0, _immutable.Map)({ student: 2, mark: 1.5 }), (0, _immutable.Map)({ student: 3, mark: 4.5 }), (0, _immutable.Map)({ student: 4, mark: 1.5 }), (0, _immutable.Map)({ student: 5, mark: 1.5 }), (0, _immutable.Map)({ student: 6, mark: 4.5 }), (0, _immutable.Map)({ student: 7, mark: 1.0 }), (0, _immutable.Map)({ student: 8, mark: 1.5 }), (0, _immutable.Map)({ student: 9, mark: 2.0 })]),
-  category: 0,
-  subject: 0
+  marks: (0, _immutable.List)([(0, _immutable.Map)({ studentId: 1, mark: 1.5 }), (0, _immutable.Map)({ studentId: 2, mark: 2.5 }), (0, _immutable.Map)({ studentId: 3, mark: 1.5 }), (0, _immutable.Map)({ studentId: 4, mark: 4.5 }), (0, _immutable.Map)({ studentId: 5, mark: 1.5 }), (0, _immutable.Map)({ studentId: 6, mark: 1.5 }), (0, _immutable.Map)({ studentId: 7, mark: 4.5 }), (0, _immutable.Map)({ studentId: 8, mark: 1.0 }), (0, _immutable.Map)({ studentId: 9, mark: 1.5 }), (0, _immutable.Map)({ studentId: 10, mark: 2.0 }), (0, _immutable.Map)({ studentId: 11, mark: 2.0 }), (0, _immutable.Map)({ studentId: 12, mark: 2.0 })]),
+  category: 1,
+  subject: 1
 }), (0, _immutable.Map)({
-  id: 0,
+  id: 1,
   name: 'KA1',
   written: '2016-01-01',
-  marks: (0, _immutable.List)([(0, _immutable.Map)({ student: 0, mark: 4.0 }), (0, _immutable.Map)({ student: 1, mark: 2.5 }), (0, _immutable.Map)({ student: 2, mark: 1.5 }), (0, _immutable.Map)({ student: 3, mark: 4.5 }), (0, _immutable.Map)({ student: 4, mark: 1.5 }), (0, _immutable.Map)({ student: 5, mark: 5.5 }), (0, _immutable.Map)({ student: 6, mark: 4.5 }), (0, _immutable.Map)({ student: 7, mark: 1.0 }), (0, _immutable.Map)({ student: 8, mark: 1.5 }), (0, _immutable.Map)({ student: 9, mark: 2.0 })]),
-  category: 0,
-  subject: 0
-}), (0, _immutable.Map)({
-  id: 3,
-  name: 'KA3',
-  written: '2017-07-07',
-  marks: (0, _immutable.List)([(0, _immutable.Map)({ student: 0, mark: 2.5 }), (0, _immutable.Map)({ student: 1, mark: 2.5 }), (0, _immutable.Map)({ student: 2, mark: 4.5 }), (0, _immutable.Map)({ student: 3, mark: 5.5 }), (0, _immutable.Map)({ student: 4, mark: 3.5 }), (0, _immutable.Map)({ student: 5, mark: 4.0 }), (0, _immutable.Map)({ student: 6, mark: 4.5 }), (0, _immutable.Map)({ student: 7, mark: 2.0 }), (0, _immutable.Map)({ student: 8, mark: 1.5 }), (0, _immutable.Map)({ student: 9, mark: 2.0 })]),
-  category: 0,
-  subject: 0
+  marks: (0, _immutable.List)([(0, _immutable.Map)({ studentId: 1, mark: 4.0 }), (0, _immutable.Map)({ studentId: 2, mark: 2.5 }), (0, _immutable.Map)({ studentId: 3, mark: 1.5 }), (0, _immutable.Map)({ studentId: 4, mark: 4.5 }), (0, _immutable.Map)({ studentId: 5, mark: 1.5 }), (0, _immutable.Map)({ studentId: 6, mark: 5.5 }), (0, _immutable.Map)({ studentId: 7, mark: 4.5 }), (0, _immutable.Map)({ studentId: 8, mark: 1.0 }), (0, _immutable.Map)({ studentId: 9, mark: 1.5 }), (0, _immutable.Map)({ studentId: 10, mark: 2.0 }), (0, _immutable.Map)({ studentId: 11, mark: 2.0 }), (0, _immutable.Map)({ studentId: 12, mark: 2.0 })]),
+  category: 1,
+  subject: 1
 }), (0, _immutable.Map)({
   id: 4,
-  name: 'Mündl',
-  written: '2017-05-05',
-  marks: (0, _immutable.List)([(0, _immutable.Map)({ student: 10, mark: 1.5 }), (0, _immutable.Map)({ student: 11, mark: 2.5 }), (0, _immutable.Map)({ student: 12, mark: 3.5 }), (0, _immutable.Map)({ student: 13, mark: 4.5 })]),
-  category: 2,
+  name: 'KA3',
+  written: '2017-07-07',
+  marks: (0, _immutable.List)([(0, _immutable.Map)({ studentId: 1, mark: 2.5 }), (0, _immutable.Map)({ studentId: 2, mark: 2.5 }), (0, _immutable.Map)({ studentId: 3, mark: 4.5 }), (0, _immutable.Map)({ studentId: 4, mark: 5.5 }), (0, _immutable.Map)({ studentId: 5, mark: 3.5 }), (0, _immutable.Map)({ studentId: 6, mark: 4.0 }), (0, _immutable.Map)({ studentId: 7, mark: 4.5 }), (0, _immutable.Map)({ studentId: 8, mark: 2.0 }), (0, _immutable.Map)({ studentId: 9, mark: 1.5 }), (0, _immutable.Map)({ studentId: 10, mark: 2.0 }), (0, _immutable.Map)({ studentId: 11, mark: 2.0 }), (0, _immutable.Map)({ studentId: 12, mark: 2.0 })]),
+  category: 1,
   subject: 1
 }), (0, _immutable.Map)({
   id: 5,
-  name: 'KA1',
-  written: '2017-07-05',
-  marks: (0, _immutable.List)([(0, _immutable.Map)({ student: 10, mark: 5.5 }), (0, _immutable.Map)({ student: 11, mark: 3.5 }), (0, _immutable.Map)({ student: 12, mark: 3.5 }), (0, _immutable.Map)({ student: 13, mark: 4.5 })]),
-  category: 0,
-  subject: 1
-}), (0, _immutable.Map)({
-  id: 6,
   name: 'Mündl',
   written: '2017-05-05',
-  marks: (0, _immutable.List)([(0, _immutable.Map)({ student: 14, mark: 3.5 }), (0, _immutable.Map)({ student: 15, mark: 4.5 })]),
+  marks: (0, _immutable.List)([(0, _immutable.Map)({ studentId: 13, mark: 1.5 }), (0, _immutable.Map)({ studentId: 14, mark: 2.5 }), (0, _immutable.Map)({ studentId: 15, mark: 3.5 }), (0, _immutable.Map)({ studentId: 16, mark: 4.5 })]),
+  category: 3,
+  subject: 2
+}), (0, _immutable.Map)({
+  id: 6,
+  name: 'KA1',
+  written: '2017-07-05',
+  marks: (0, _immutable.List)([(0, _immutable.Map)({ studentId: 13, mark: 5.5 }), (0, _immutable.Map)({ studentId: 14, mark: 3.5 }), (0, _immutable.Map)({ studentId: 15, mark: 3.5 }), (0, _immutable.Map)({ studentId: 16, mark: 4.5 })]),
   category: 1,
   subject: 2
+}), (0, _immutable.Map)({
+  id: 7,
+  name: 'Mündl',
+  written: '2017-05-05',
+  marks: (0, _immutable.List)([(0, _immutable.Map)({ studentId: 17, mark: 3.5 }), (0, _immutable.Map)({ studentId: 18, mark: 4.5 })]),
+  category: 2,
+  subject: 3
 })]);
 
-var categories = (0, _immutable.List)([(0, _immutable.Map)({ id: 0, name: 'schriftlich', color: "danger", sortingrank: "A", faktor: 6 }), (0, _immutable.Map)({ id: 1, name: 'test', color: "warning", sortingrank: "A", faktor: 6 }), (0, _immutable.Map)({ id: 2, name: 'mündlich', color: "info", sortingrank: "B", faktor: 7 })]);
+var categories = (0, _immutable.List)([(0, _immutable.Map)({ id: 1, name: 'schriftlich', color: "danger", sortingrank: "A", faktor: 6 }), (0, _immutable.Map)({ id: 2, name: 'test', color: "warning", sortingrank: "A", faktor: 6 }), (0, _immutable.Map)({ id: 3, name: 'mündlich', color: "info", sortingrank: "B", faktor: 7 })]);
 
-//sort
-var store = (0, _redux.createStore)(_reducer2.default, {
-  grades: grades,
-  //subjects: subjects,
-  students: students,
-  subjects2students: subjects2students,
-  tests: tests,
-  categories: categories
-}, (0, _redux.applyMiddleware)(_reduxThunk2.default));
+//store
+var store = (0, _redux.createStore)(_reducer2.default, {}, (0, _redux.applyMiddleware)(_reduxThunk2.default));
+
+// store which is filled with local mocks initially
+// const store = createStore(reducer, {
+//   grades: grades,
+//   subjects: subjects,
+//   students: students,
+//   subjects2students: subjects2students,
+//   tests: tests,
+//   categories: categories
+// }, applyMiddleware(thunk));
 
 ReactDOM.render(React.createElement(
   _reactRedux.Provider,
@@ -58544,7 +58547,7 @@ var AddTestPage = function AddTestPage(_ref) {
   var testMarks = function testMarks() {
     var result = {};
     addTestData.get('test').get('marks').forEach(function (entry) {
-      return result["markrow-" + entry.get('student')] = entry.get('mark');
+      return result["markrow-" + entry.get('studentId')] = entry.get('mark');
     });
     return result;
   };
@@ -59188,7 +59191,7 @@ var StudentTable = function (_React$Component) {
         value: function componentDidMount() {
             var fetchData = this.props.fetchData;
 
-            fetchData("/v1/api/subjects");
+            fetchData("/v1/api/years/20162017");
         }
     }, {
         key: 'render',
@@ -59867,6 +59870,12 @@ var categories = exports.categories = function categories() {
   var action = arguments[1];
 
   switch (action.type) {
+    case 'FETCH_YEAR':
+      {
+        var fetchedData = (0, _immutable.fromJS)(action.payload);
+        var _categories = fetchedData.get('categories');
+        return _categories;
+      }
     case 'CATEGORY_ADDED':
       return categories.push((0, _immutable.Map)(action.payload));
 
@@ -59890,6 +59899,12 @@ var grades = exports.grades = function grades() {
   var action = arguments[1];
 
   switch (action.type) {
+    case 'FETCH_YEAR':
+      {
+        var fetchedData = (0, _immutable.fromJS)(action.payload);
+        var _grades = fetchedData.get('grades');
+        return _grades;
+      }
     case 'GRADE_ADDED':
       return grades.push((0, _immutable.Map)(action.payload));
 
@@ -59948,6 +59963,12 @@ var students = exports.students = function students() {
   var action = arguments[1];
 
   switch (action.type) {
+    case 'FETCH_YEAR':
+      {
+        var fetchedData = (0, _immutable.fromJS)(action.payload);
+        var _students = fetchedData.get('students');
+        return _students;
+      }
     case 'STUDENT_ADDED':
       return students.push((0, _immutable.Map)(action.payload));
 
@@ -59986,10 +60007,11 @@ var subjects = exports.subjects = function subjects() {
   switch (action.type) {
     case 'SUBJECT_ADDED':
       return subjects.push((0, _immutable.Map)(action.payload));
-    case 'FETCH_DATA_SUCCESS':
+    case 'FETCH_YEAR':
       {
         var fetchedData = (0, _immutable.fromJS)(action.payload);
-        return fetchedData;
+        var subjectsData = fetchedData.get('subjects');
+        return subjectsData;
       }
 
     default:
@@ -60002,6 +60024,12 @@ var subjects2students = exports.subjects2students = function subjects2students()
   var action = arguments[1];
 
   switch (action.type) {
+    case 'FETCH_YEAR':
+      {
+        var fetchedData = (0, _immutable.fromJS)(action.payload);
+        var _subjects2students = fetchedData.get('subjects2students');
+        return _subjects2students;
+      }
     case 'ADDED_STUDENT_TO_SUBJECT':
       return subjects2students.push((0, _immutable.Map)(action.payload));
 
@@ -60042,6 +60070,12 @@ var tests = exports.tests = function tests() {
   var action = arguments[1];
 
   switch (action.type) {
+    case 'FETCH_YEAR':
+      {
+        var fetchedData = (0, _immutable.fromJS)(action.payload);
+        var _tests = fetchedData.get('tests');
+        return _tests;
+      }
     case 'TEST_ADDED':
       {
         var _ret = function () {
@@ -60167,7 +60201,7 @@ var groupByCategoryAndSorted = function groupByCategoryAndSorted(tests, categori
   });
   return groupedByCategory.map(function (group) {
     return group.sort(function (a, b) {
-      return a.get('written').localeCompare(b.get('written'));
+      return a.get('written') < b.get('written') ? -1 : 1;
     });
   });
 };
@@ -60201,7 +60235,7 @@ var getStudentsTableData = function getStudentsTableData(students, testsSorted, 
   return students.map(function (student) {
     var marksOfStudent = testsSorted.map(function (test) {
       return test.get('marks').filter(function (mark) {
-        return mark.get('student') === student.get('id');
+        return mark.get('studentId') === student.get('id');
       }).first();
     });
     var sliceValue = 0;

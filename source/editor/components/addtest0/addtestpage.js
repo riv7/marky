@@ -20,7 +20,7 @@ const AddTestPage = ({addTestData, testAdded, history}) => {
   const testMarks = () => {
     let result = {};
     addTestData.get('test').get('marks').forEach(entry =>
-      result["markrow-"+entry.get('student')] = entry.get('mark')
+      result["markrow-"+entry.get('studentId')] = entry.get('mark')
     )
     return result;
   }

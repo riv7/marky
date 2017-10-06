@@ -14,7 +14,7 @@ export function fetchIsLoading(bool) {
 
 export function fetchDataSuccess(data) {
     return {
-        type: 'FETCH_DATA_SUCCESS',
+        type: 'FETCH_YEAR',
         payload: data
     };
 }
@@ -34,7 +34,7 @@ export function fetchData(url) {
                 return response;
             })
             .then((response) => response.json())
-            .then((all) => dispatch(fetchDataSuccess(all)))
+            .then((data) => dispatch(fetchDataSuccess(data)))
             .catch(() => dispatch(fetchHasErrored(true)));
     };
 }

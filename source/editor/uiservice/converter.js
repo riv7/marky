@@ -47,7 +47,7 @@ const groupByCategoryAndSorted = (tests, categories) => {
 
   const groupedByCategory = sortedByRank.groupBy(x => x.get('category').get('id'));
   return groupedByCategory.map(group => {
-    return group.sort((a, b) => a.get('written').localeCompare(b.get('written')));
+    return group.sort((a, b) => a.get('written') < (b.get('written')) ? -1 : 1);
   });
 };
 
@@ -67,7 +67,7 @@ const getStudentsTableData = (students, testsSorted, sortedByDate) => {
 
   //get temp data to calculate averages of students
   const faktorSizeTuple = sortedByDate.toList().map(x => {
-     return ({'faktor': x.first().get('category').get('faktor'), 'size': x.size})
+     return ({'faktor': x.first().get('category').get('faktor'), 'size': x.size});
    });
   const sumFaktor = faktorSizeTuple
     .map(tuple => tuple.faktor)
@@ -77,7 +77,7 @@ const getStudentsTableData = (students, testsSorted, sortedByDate) => {
     const marksOfStudent = testsSorted.map(test =>
       test
         .get('marks')
-        .filter(mark => mark.get('student') === student.get('id'))
+        .filter(mark => mark.get('studentId') === student.get('id'))
         .first()
       );
     let sliceValue = 0;

@@ -1,4 +1,4 @@
-import { Map,List } from 'immutable';
+import { Map,List,fromJS } from 'immutable';
 
 export const selectedTest = (test=-1, action) => {
   switch(action.type) {
@@ -12,6 +12,11 @@ export const selectedTest = (test=-1, action) => {
 
 export const tests = (tests=List([]), action) => {
   switch(action.type) {
+    case 'FETCH_YEAR': {
+      const fetchedData = fromJS(action.payload);
+      const tests = fetchedData.get('tests');
+      return tests;
+    }
     case 'TEST_ADDED': {
       const {id, testFormData, existingId} = action.payload;
 
