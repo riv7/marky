@@ -5,4 +5,4 @@
 /usr/libexec/s2i/assemble
 
 # gulp tasks
-node node_modules/gulp/bin/gulp.js inject
+node node_modules/gulp/bin/gulp.js build-editor
