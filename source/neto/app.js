@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import thunk from 'redux-thunk';
 
-import createBrowserHistory from 'history/createBrowserHistory'
+import createBrowserHistory from 'history/createBrowserHistory';
 
 import reducer from './reducer/reducer';
 import AufgabenListContainer from './containers/aufgabenlistcontainer';
