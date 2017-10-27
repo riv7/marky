@@ -4,8 +4,7 @@
   "description": "Marks for teachers",
   "main": "build/editor/markyEditor.js",
   "scripts": {
-    "start": "node build/editor/markyEditor.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js"
   },
   "author": "Wolfram Gulde",
   "license": "ISC",
