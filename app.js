@@ -4,7 +4,6 @@ var webserver = require('gulp-webserver');
 gulp.src('build/editor')
     .pipe(webserver({
         livereload: true,
-        port: 8080,
         fallback: 'index.html',
         directoryListing: false,
         open: true,
