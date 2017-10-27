@@ -2,4 +2,3 @@ node_modules
 build/css
 build/editor/markyEditor.js
 build/viewer/markyViewer.js
-lib
