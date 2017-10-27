@@ -11,7 +11,7 @@ class StudentTable extends React.Component {
 
     componentDidMount() {
         const {fetchData} = this.props;
-        fetchData("/v1/api/years/20162017");
+        fetchData("/api/years/20162017");
     }
 
     render() {
