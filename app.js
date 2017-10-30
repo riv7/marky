@@ -8,7 +8,7 @@ gulp.src('build/editor')
     .pipe(webserver({
         host: server_ip_address,
         port: server_port,
-        livereload: true,
+        livereload: false,
         fallback: 'index.html',
         directoryListing: false,
         open: true,
