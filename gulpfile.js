@@ -65,8 +65,8 @@ gulp.task('serve-editor', ['build-editor'], function() {
       directoryListing: false,
       open: true,
       proxies: [{
-        source: '/v1',
-        target: 'http://localhost:8080/v1'
+        source: '/api',
+        target: 'http://marky-server-marky.192.168.99.100.nip.io/api'
       }]
     }));
 });
